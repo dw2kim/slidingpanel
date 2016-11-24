@@ -1,0 +1,10 @@
+SRCSRV: ini ------------------------------------------------
+VERSION=2
+SRCSRV: variables ------------------------------------------
+RAWURL=https://raw.github.com/dw2kim/slidingpanel/8e8411ba0c3d5b93661acbfd1543daa2089b9924/%var2%
+SRCSRVVERCTRL=https
+SRCSRVTRG=%RAWURL%
+SRCSRV: source files ---------------------------------------
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel\DK.SlidingPanel.Droid\Resources\Resource.Designer.cs*src/DK.SlidingPanel/DK.SlidingPanel.Droid/Resources/Resource.Designer.cs
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel\DK.SlidingPanel.Droid\Properties\AssemblyInfo.cs*src/DK.SlidingPanel/DK.SlidingPanel.Droid/Properties/AssemblyInfo.cs
+SRCSRV: end ------------------------------------------------
