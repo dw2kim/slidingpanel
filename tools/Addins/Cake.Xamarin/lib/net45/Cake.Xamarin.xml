@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cake.Xamarin</name>
+    </assembly>
+    <members>
+        <member name="T:Cake.Xamarin.MDToolSettings">
+            <summary>
+            MDTool settings.
+            </summary>
+        </member>
+        <member name="M:Cake.Xamarin.MDToolSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cake.Xamarin.MDToolSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Cake.Xamarin.MDToolSettings.IncreaseVerbosity">
+            <summary>
+            Adds the -v flag to the mdtool command.
+            </summary>
+            <value><c>true</c> if increase verbosity; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Cake.Xamarin.MDToolSettings.Configuration">
+            <summary>
+            Gets or sets the configuration mode to build for.
+            </summary>
+            <value>The configuration.</value>
+        </member>
+        <member name="P:Cake.Xamarin.MDToolSettings.Target">
+            <summary>
+            Gets or sets the target to build.
+            </summary>
+            <value>The target.</value>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinComponentSettings">
+            <summary>
+            Xamarin component tool settings.
+            </summary>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinComponentCredentialSettings">
+            <summary>
+            Xamarin component tool settings.
+            </summary>
+        </member>
+        <member name="P:Cake.Xamarin.XamarinComponentCredentialSettings.Email">
+            <summary>
+            Gets or sets the Xamarin Account Email to log in with
+            </summary>
+            <value>The Xamarin Account Email.</value>
+        </member>
+        <member name="P:Cake.Xamarin.XamarinComponentCredentialSettings.Password">
+            <summary>
+            Gets or sets the Xamarin Account Password to log in with.
+            </summary>
+            <value>The Xamarin Account Password.</value>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinComponentRestoreSettings">
+            <summary>
+            Xamarin component restore command settings.
+            </summary>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinComponentUploadSettings">
+            <summary>
+            Xamarin component restore command settings.
+            </summary>
+        </member>
+        <member name="P:Cake.Xamarin.XamarinComponentUploadSettings.MaxAttempts">
+            <summary>
+            How many attempts should be made to upload the component before failing
+            </summary>
+            <value>The max attempts.</value>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinComponentSubmitSettings">
+            <summary>
+            Xamarin component restore command settings.
+            </summary>
+        </member>
+        <member name="P:Cake.Xamarin.XamarinComponentSubmitSettings.MaxAttempts">
+            <summary>
+            How many attempts should be made to upload the component before failing
+            </summary>
+            <value>The max attempts.</value>
+        </member>
+        <member name="T:Cake.Xamarin.TestCloudSettings">
+            <summary>
+            Test cloud settings.
+            </summary>
+        </member>
+        <member name="M:Cake.Xamarin.TestCloudSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cake.Xamarin.TestCloudSettings"/> class.
+            </summary>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Series">
+            <summary>
+            Gets or sets the series to test in the cloud.
+            </summary>
+            <value>The series.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Locale">
+            <summary>
+            Gets or sets the locale to test with.
+            </summary>
+            <value>The locale.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.NUnitXmlFile">
+            <summary>
+            Gets or sets the filename to output the NUnit report results.
+            </summary>
+            <value>The NUnit report results output file.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Dsym">
+            <summary>
+            Gets or sets the iOS DSYM File. Optional.
+            </summary>
+            <value>The iOS DSYM.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Categories">
+            <summary>
+            Gets or sets the NUnit categories to restrict running to.
+            </summary>
+            <value>The NUnit categories to run.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Fixture">
+            <summary>
+            Gets or sets the NUnit fixture to run.
+            </summary>
+            <value>The NUnit fixture to run.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.TestChunk">
+            <summary>
+            Gets or sets a value indicating whether Tests should be run in parallel by Test Method.
+            </summary>
+            <value><c>true</c> if Test methods should be run in parallel; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.TestFixture">
+            <summary>
+            Gets or sets a value indicating whether Tests should be run in parallel by Test Fixture.
+            </summary>
+            <value><c>true</c> if Test fixtures should be run in parallel; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.AppName">
+            <summary>
+            Gets or sets the Optional App name to display in Test Cloud.
+            </summary>
+            <value>The optional name of the app to display in Test Cloud.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.Keystore">
+            <summary>
+            Gets or sets the keystore file to explicitly use in test-cloud.
+            </summary>
+            <value>The keystore.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.KeystorePassword">
+            <summary>
+            Gets or sets the keystore password.
+            </summary>
+            <value>The keystore password.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.KeystoreAlias">
+            <summary>
+            Gets or sets the keystore alias.
+            </summary>
+            <value>The keystore alias.</value>
+        </member>
+        <member name="P:Cake.Xamarin.TestCloudSettings.KeystoreAliasPassword">
+            <summary>
+            Gets or sets the keystore alias password.
+            </summary>
+            <value>The keystore alias password.</value>
+        </member>
+        <member name="T:Cake.Xamarin.XamarinAliases">
+            <summary>
+            Xamarin related cake aliases.
+            </summary>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.AndroidPackage(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,System.Boolean,System.Action{Cake.Common.Tools.DotNetBuildSettings})">
+            <summary>
+            Creates an android .APK package file
+            </summary>
+            <returns>The file path of the .APK which was created (all subfolders of the project file specified are searched for .apk files and the newest one found is returned).</returns>
+            <param name="context">The context.</param>
+            <param name="projectFile">The .CSPROJ file to build from.</param>
+            <param name="sign">Will create a signed .APK file if set to <c>true</c> based on the signing settings in the .CSPROJ, otherwise the .APK will be unsigned.</param>
+            <param name="configurator">The settings configurator.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.MDToolArchive(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,System.String,System.Action{Cake.Xamarin.MDToolSettings})">
+            <summary>
+            Creates an archive of an app with MDTool
+            </summary>
+            <param name="context">The context.</param>
+            <param name="solutionFile">The solution file.</param>
+            <param name="projectName">The name of the project within the solution to archive.</param>
+            <param name="settings">The mdtool settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.MDToolBuild(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,System.Action{Cake.Xamarin.MDToolSettings})">
+            <summary>
+            Builds a project with MDTool
+            </summary>
+            <param name="context">The context.</param>
+            <param name="projectOrSolutionFile">The project or solution file.</param>
+            <param name="settings">The mdtool settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.RestoreComponents(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Xamarin.XamarinComponentRestoreSettings)">
+            <summary>
+            Restores Xamarin Components for a given project
+            </summary>
+            <param name="context">The context.</param>
+            <param name="solutionFile">The project file.</param>
+            <param name="settings">The xamarin-component.exe tool settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.PackageComponent(Cake.Core.ICakeContext,Cake.Core.IO.DirectoryPath,Cake.Xamarin.XamarinComponentSettings)">
+            <summary>
+            Packages the component for a given component YAML configuration file
+            </summary>
+            <param name="context">The context.</param>
+            <param name="componentYamlDirectory">The directory containing the component.yaml file.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.UploadComponents(Cake.Core.ICakeContext,Cake.Xamarin.XamarinComponentUploadSettings,System.String[])">
+            <summary>
+            Finds and Uploads .xam component packages which match the globbing patterns
+            </summary>
+            <param name="context">The context.</param>
+            <param name="xamFileGlobbingPatterns">The globbing patterns to find .xam component package files with.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.UploadComponent(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Xamarin.XamarinComponentUploadSettings)">
+            <summary>
+            Uploads a .xam component package which is a new version of an existing component in the store
+            </summary>
+            <param name="context">The context.</param>
+            <param name="xamComponentPackage">The .xam component package file.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.SubmitComponents(Cake.Core.ICakeContext,Cake.Xamarin.XamarinComponentSubmitSettings,System.String[])">
+            <summary>
+            Finds and Submits .xam component packages which match the globbing patterns
+            </summary>
+            <param name="context">The context.</param>
+            <param name="xamFileGlobbingPatterns">The globbing patterns to find .xam component package files with.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.SubmitComponent(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Xamarin.XamarinComponentSubmitSettings)">
+            <summary>
+            Submits a .xam component package which is a brand new component on the store and has no previous versions
+            </summary>
+            <param name="context">The context.</param>
+            <param name="xamComponentPackage">The .xam component package file.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.UITest(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Common.Tools.NUnit.NUnitSettings)">
+            <summary>
+            Runs UITests in a given assembly using NUnit
+            </summary>
+            <param name="context">The context.</param>
+            <param name="testsAssembly">The assembly containing NUnit UITests.</param>
+            <param name="nunitSettings">The NUnit settings.</param>
+        </member>
+        <member name="M:Cake.Xamarin.XamarinAliases.TestCloud(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,System.String,System.String,System.String,Cake.Core.IO.DirectoryPath,Cake.Xamarin.TestCloudSettings)">
+            <summary>
+            Uploads an android .APK package to TestCloud and runs UITests
+            </summary>
+            <param name="context">The context.</param>
+            <param name="apkFile">The .APK file.</param>
+            <param name="apiKey">The TestCloud API key.</param>
+            <param name="devicesHash">The hash of the set of devices to run on.</param>
+            <param name="userEmail">The user account email address.</param>
+            <param name="uitestsAssemblies">The directory containing the UITests assemblies.</param>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="T:Cake.Xamarin.NamespaceDoc">
+            <summary>
+            This namespace contain types 
+            representing data used for interaction with the Xamarin platform.
+            </summary>
+        </member>
+    </members>
+</doc>

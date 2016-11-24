@@ -1,0 +1,13 @@
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.dll
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.pdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Core.dll
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Platform.dll
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Xaml.dll
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Core.pdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Core.xml
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Platform.pdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Xaml.pdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.Forms.Xaml.xml
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.csprojResolveAssemblyReference.cache
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.dll
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.pdb
