@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>DK.SlidingPanel</id>
+        <version>1.0.2</version>
+        <title>DK Sliding Panel Plugin for Xamarin Forms</title>
+        <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
+        <description>...
+        </description>
+        <authors>Dae Won Kim</authors>
+        <owners>Dae Won Kim</owners>
+        <!--
+        <iconUrl>https://github.com/aritchie/userdialogs/raw/master/icon.png</iconUrl>
+        <licenseUrl>https://github.com/aritchie/userdialogs/LICENSE.md</licenseUrl>
+        -->
+        <projectUrl>https://github.com/dw2kim/slidingpanel</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <tags>xamarin.forms xam.pcl sliding panel plugin</tags>
+        <dependencies>
+        </dependencies>
+        <releaseNotes>
+1.0.0
+Initial Release
+1.0.2
+Fix Dependency Issue
+        </releaseNotes>
+    </metadata>
+    <files>
+        <!-- PCL -->
+        <!-- <file src="..\src\DK.SlidingPanel\bin\Release\DK.SlidingPanel.*" target="lib\portable-win+net45+wp8+win8+wpa81" /> -->
+
+        <!-- uwp -->
+        <file src="..\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.dll" 
+              target="lib\portable-win+net45+wp8+win8+wpa81" />
+        <file src="..\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.pdb" 
+              target="lib\portable-win+net45+wp8+win8+wpa81" />
+    </files>
+</package>

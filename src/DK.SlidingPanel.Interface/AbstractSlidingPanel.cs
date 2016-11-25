@@ -264,8 +264,6 @@ namespace DK.SlidingPanel.Interface
         #region ISlidingPanel Implementations
         public void HidePanel()
         {
-            var x = 0;
-
             Rectangle drawerCollapsedPosition = this.Bounds;
             drawerCollapsedPosition.Y = this.Height + 24; // Half Button Height
 
