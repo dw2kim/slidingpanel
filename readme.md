@@ -26,7 +26,7 @@ Then, apply the SlidingPanelConfig for your customizations.
     <DK:AbstractSlidingPanel x:Name="spTest">
     </DK:AbstractSlidingPanel>
 </ContentPage>
-```xml
+```
 
 #### C# - Codebehind 
         protected override void OnBindingContextChanged()
