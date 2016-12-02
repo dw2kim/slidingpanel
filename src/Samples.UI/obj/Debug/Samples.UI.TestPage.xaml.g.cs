@@ -17,15 +17,11 @@ namespace Samples.UI {
     public partial class TestPage : global::Xamarin.Forms.ContentPage {
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.AbsoluteLayout MainLayout;
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::DK.SlidingPanel.Interface.AbstractSlidingPanel spTest;
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             this.LoadFromXaml(typeof(TestPage));
-            MainLayout = this.FindByName<global::Xamarin.Forms.AbsoluteLayout>("MainLayout");
             spTest = this.FindByName<global::DK.SlidingPanel.Interface.AbstractSlidingPanel>("spTest");
         }
     }

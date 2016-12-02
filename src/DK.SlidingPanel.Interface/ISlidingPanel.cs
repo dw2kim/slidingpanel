@@ -13,5 +13,8 @@ namespace DK.SlidingPanel.Interface
         void ShowCollapsedPanel();
 
         void ShowExpandedPanel();
+
+
+        void ApplyConfig(SlidingPanelConfig config);
     }
 }

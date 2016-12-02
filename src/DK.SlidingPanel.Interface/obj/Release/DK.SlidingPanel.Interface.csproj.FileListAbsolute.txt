@@ -11,3 +11,7 @@ C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\Xamarin.
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.dll
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.pdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.dll.mdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.dll.mdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Release\DK.SlidingPanel.Interface.dll.mdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Release\DK.SlidingPanel.Interface.dll.mdb

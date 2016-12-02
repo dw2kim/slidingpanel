@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
         <title>DK Sliding Panel Plugin for Xamarin Forms</title>
         <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
         <description>...
@@ -17,12 +17,15 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <tags>xamarin.forms xam.pcl sliding panel plugin</tags>
         <dependencies>
+            <dependency id="Xamarin.Forms" version="[2.2.0.31, 2.3.3.168)" />
         </dependencies>
         <releaseNotes>
 1.0.0
 Initial Release
 1.0.2
 Fix Dependency Issue
+1.0.3
+Added Xamarin.Forms dependency
         </releaseNotes>
     </metadata>
     <files>

@@ -4,32 +4,6 @@
              xmlns:DK="clr-namespace:DK.SlidingPanel.Interface;assembly=DK.SlidingPanel.Interface"
              xmlns:local="clr-namespace:Samples.UI;assembly=Samples.UI"
              x:Class="Samples.UI.TestPage">
-    <AbsoluteLayout BackgroundColor="White" x:Name="MainLayout">
-        <StackLayout Orientation="Vertical" BackgroundColor="White" AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All">
-            <Button Text="Show Panel"
-                    Command="{Binding ShowCommand}"
-                    CommandParameter="{Binding Source={x:Reference spTest}}">
-            </Button>
-            <Button Text="Hide Panel"
-                    Command="{Binding HideCommand}"
-                    CommandParameter="{Binding Source={x:Reference spTest}}"></Button>
-        </StackLayout>
-
-        <DK:AbstractSlidingPanel 
-                         x:Name="spTest"
-                         AbsoluteLayout.LayoutBounds="1,1,1,0.5" 
-                         AbsoluteLayout.LayoutFlags="All">
-            <!--<DK:AbstractSlidingPanel.TitleStackLayout>
-                <StackLayout>
-                    <Label Text="Test Title message"></Label>
-                </StackLayout>
-            </DK:AbstractSlidingPanel.TitleStackLayout>
-            <DK:AbstractSlidingPanel.BodyStackLayout>
-                <StackLayout>
-                    <Label Text="Test Body message"></Label>
-                </StackLayout>
-            </DK:AbstractSlidingPanel.BodyStackLayout>-->
-        </DK:AbstractSlidingPanel>
-    </AbsoluteLayout>
-
+    <DK:AbstractSlidingPanel x:Name="spTest">
+    </DK:AbstractSlidingPanel>
 </ContentPage>
