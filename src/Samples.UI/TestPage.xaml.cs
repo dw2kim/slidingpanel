@@ -17,7 +17,6 @@ namespace Samples.UI
         public TestPage()
         {
             InitializeComponent();
-
         }
 
         protected override void OnBindingContextChanged()
