@@ -1,4 +1,5 @@
 ﻿using DK.SlidingPanel;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,10 @@ namespace DK.SlidingPanel.Interface
         private bool _isCollapsing = false;
         private bool _isPanRunning = false;
         private bool _isCurrentlyCollapsed = false;
+
+        private bool _isFirst = true;
+
+        private SlidingPanelConfig _config;
         #endregion
 
         #region Private Properties
@@ -40,6 +45,21 @@ namespace DK.SlidingPanel.Interface
         private Func<int?> _functionAfterTitleTapped { get; set; }
 
         private EventHandler _overlayButtonImageTapGesture_Tapped { get; set; }
+
+        private bool IsOverlayButtonImageNull
+        {
+            get
+            {
+                return (_overlayButtonImage == null || _overlayButtonImage.Source == null);
+            }
+        }
+        private bool IsPictureImageNull
+        {
+            get
+            {
+                return (_pictureImage == null || _pictureImage.Source == null);
+            }
+        }
         #endregion
 
         #region Constructors
@@ -48,6 +68,16 @@ namespace DK.SlidingPanel.Interface
             InitViews();
             InitGestures();
             InitFunctions();
+
+            _slidingPanelLayout.WhenAnyValue(x => x.Height)
+                .Subscribe(actualHeight =>
+                {
+                    if (_isFirst == true && actualHeight > -1)
+                    {
+                        HidePanel(0);
+                        _isFirst = false;
+                    }
+                });
         }
         public AbstractSlidingPanel(SlidingPanelConfig config) : this()
         {
@@ -131,8 +161,7 @@ namespace DK.SlidingPanel.Interface
                 return (null);
             });
         }
-
-
+        
         private double CalculateNewDrawerPositionY(double totalY)
         {
             double titleHeight = _titleRelativeLayout.Height;
@@ -177,11 +206,6 @@ namespace DK.SlidingPanel.Interface
             }
 
             return (newPicturePositionY);
-        }
-
-        private bool IsImageNull()
-        {
-            return (_pictureImage == null || _pictureImage.Source == null);
         }
         #endregion
 
@@ -276,7 +300,7 @@ namespace DK.SlidingPanel.Interface
                     double newDrawerPositionY = CalculateNewDrawerPositionY(totalY);
                     _slidingPanelLayout.TranslationY = newDrawerPositionY;
 
-                    if (IsImageNull() == false)
+                    if (IsPictureImageNull == false)
                     {
                         double newPicturePosition = CalculateNewPicturePositionY(totalY);
                         _pictureAbsoluteLayout.TranslationY = newPicturePosition;
@@ -304,7 +328,7 @@ namespace DK.SlidingPanel.Interface
                     double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
                     _slidingPanelLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
 
-                    if (IsImageNull() == false)
+                    if (IsPictureImageNull == false)
                     {
                         double newPicturePosition = CalculateNewPicturePositionY(totalY);
                         _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
@@ -333,58 +357,57 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region ISlidingPanel Implementations
-        public void HidePanel()
+        public void HidePanel(uint length = 700)
         {
+            double overlayButtonImageHeight = (_config.OverlayButtonImageHeight > 0) ? _config.OverlayButtonImageHeight : 0;
             Rectangle drawerCollapsedPosition = _slidingPanelLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelLayout.Height + 24; // Half Button Height
+            drawerCollapsedPosition.Y = _slidingPanelLayout.Height + (overlayButtonImageHeight / 2); 
 
-            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, 700, Easing.CubicOut);
-
-            // TODO DK: Picture Hide
-            if (IsImageNull() == false)
+            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            
+            if (IsPictureImageNull == false)
             {
-                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, 700, Easing.CubicOut);
+                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             }
         }
-        public void ShowCollapsedPanel()
+        public void ShowCollapsedPanel(uint length = 700)
         {
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelLayout.Height - actualHeight;
 
-            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, 700, Easing.CubicOut);
+            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _isCurrentlyCollapsed = true;
-
-            // TODO DK: Picture Collapsed
-
-            if (IsImageNull() == false)
+            
+            if (IsPictureImageNull == false)
             {
-                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, 700, Easing.CubicOut);
+                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             }
         }
-        public void ShowExpandedPanel()
+        public void ShowExpandedPanel(uint length = 700)
         {
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerExpandedPosition = _slidingPanelLayout.Bounds;
             drawerExpandedPosition.Y = 0;
 
-            _slidingPanelLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, 700, Easing.CubicOut);
+            _slidingPanelLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
             _isCurrentlyCollapsed = false;
-
-            // TODO DK: Picture Expand
-            if (IsImageNull() == false)
+            
+            if (IsPictureImageNull == false)
             {
                 double pictureHeight = _pictureImage.Height;
-                _pictureAbsoluteLayout.TranslateTo(0, pictureHeight * -1, 700, Easing.CubicOut);
+                _pictureAbsoluteLayout.TranslateTo(0, pictureHeight * -1, length, Easing.CubicOut);
             }
         }
 
         public void ApplyConfig(SlidingPanelConfig config)
         {
+            this._config = config;
+
             _titleRelativeLayout.BackgroundColor = config.TitleBackgroundColor;
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
             _pictureAbsoluteLayout.BackgroundColor = config.PictureBackgroundColor;
-
+            
             if (config.OverlayButtonImage != null)
             {
                 // Button section

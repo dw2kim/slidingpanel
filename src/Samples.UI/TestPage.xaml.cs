@@ -1,4 +1,5 @@
 ﻿using DK.SlidingPanel.Interface;
+using ReactiveUI;
 using Samples.UI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,50 +8,95 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace Samples.UI
 {
     public partial class TestPage : ContentPage
-    {        
-        private TestViewModel viewModel;
+    {
+        #region Private Fields     
+        private TestViewModel ViewModel;
+        private Map GoogleMapInstance;
+        #endregion
 
+        #region Constructor
         public TestPage()
         {
-            InitializeComponent();  
-        }
+            InitializeComponent();
 
+            SetupSlidingPanel();
+        }
+        #endregion
+
+        #region Page Events
         protected override void OnBindingContextChanged()
         {
             base.OnBindingContextChanged();
 
-            this.viewModel = BindingContext as TestViewModel;
+            this.ViewModel = BindingContext as TestViewModel;
 
-            SetupSlidingPanel();
+            GoogleMapInstance.WhenAnyValue(x => x.SelectedPin)
+                .Subscribe(selectedPin =>
+                {
+                    if (selectedPin == null)
+                    {
+                        spTest.HidePanel();
+                    }
+
+                    if (selectedPin != null)
+                    {
+                        spTest.ShowCollapsedPanel();
+                    }
+                });
         }
+        #endregion
 
+        #region Private Methods
+        private void InitGoogleMap()
+        {
+            GoogleMapInstance = new Map
+            {
+                HasScrollEnabled = true,
+                HasZoomEnabled = true
+            };
 
+            Position randomPosition = new Position(5, 5);
+            GoogleMapInstance.Pins.Add(new Pin
+            {
+                Label = "Test Pin",
+                Position = randomPosition
+            });
+            GoogleMapInstance.MoveToRegion(new MapSpan(randomPosition, 0.5, 0.5));
+        }
         private void SetupSlidingPanel()
         {
-            StackLayout mainStackLayout = new StackLayout
-            {
-                BackgroundColor = Color.Yellow
-            };
+            InitGoogleMap();
 
-            Button btnShow = new Button
-            {
-                Text = "Show"
-            };
-            btnShow.SetBinding(Button.CommandProperty, "ShowCommand");
-            btnShow.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
-            mainStackLayout.Children.Add(btnShow);
+            StackLayout mainStackLayout = new StackLayout();
+            mainStackLayout.VerticalOptions = LayoutOptions.FillAndExpand;
+            mainStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            mainStackLayout.Children.Add(GoogleMapInstance);
 
-            Button btnHide = new Button
-            {
-                Text = "Hide"
-            };
-            btnHide.SetBinding(Button.CommandProperty, "HideCommand");
-            btnHide.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
-            mainStackLayout.Children.Add(btnHide);
+            //StackLayout mainStackLayout = new StackLayout
+            //{
+            //    BackgroundColor = Color.Yellow
+            //};
+
+            //Button btnShow = new Button
+            //{
+            //    Text = "Show"
+            //};
+            //btnShow.SetBinding(Button.CommandProperty, "ShowCommand");
+            //btnShow.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
+            //mainStackLayout.Children.Add(btnShow);
+
+            //Button btnHide = new Button
+            //{
+            //    Text = "Hide"
+            //};
+            //btnHide.SetBinding(Button.CommandProperty, "HideCommand");
+            //btnHide.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
+            //mainStackLayout.Children.Add(btnHide);
 
 
             SlidingPanelConfig config = new SlidingPanelConfig();
@@ -91,10 +137,13 @@ namespace Samples.UI
             //NavigationPage.SetHasNavigationBar(this, false);
             return (0);
         }
+        #endregion
 
+        #region Gesture Implemenetations
         private void ButtonImageTapGesture_Tapped(object sender, EventArgs e)
         {
-            this.viewModel.IsPlaying = !(this.viewModel.IsPlaying);
+            this.ViewModel.IsPlaying = !(this.ViewModel.IsPlaying);
         }
+        #endregion
     }
 }

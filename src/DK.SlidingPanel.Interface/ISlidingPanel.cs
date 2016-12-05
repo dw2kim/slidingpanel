@@ -8,11 +8,11 @@ namespace DK.SlidingPanel.Interface
 {
     public interface ISlidingPanel
     {
-        void HidePanel();
+        void HidePanel(uint length);
 
-        void ShowCollapsedPanel();
+        void ShowCollapsedPanel(uint length);
 
-        void ShowExpandedPanel();
+        void ShowExpandedPanel(uint length);
 
 
         void ApplyConfig(SlidingPanelConfig config);
