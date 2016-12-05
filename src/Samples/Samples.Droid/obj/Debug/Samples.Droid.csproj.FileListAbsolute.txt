@@ -46,7 +46,6 @@ C:\Repository\DK.SlidingPanel\Samples\Samples.Droid\obj\Debug\R.cs.flag
 C:\Repository\DK.SlidingPanel\Samples\Samples.Droid\obj\Debug\uploadflags.txt
 C:\Repository\DK.SlidingPanel\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll.mdb
 C:\Repository\DK.SlidingPanel\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll.mdb
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.apk
@@ -89,6 +88,7 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fod
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Core.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Interfaces.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Linq.xml
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\bin\Samples.Droid.apk

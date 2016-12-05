@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <title>DK Sliding Panel Plugin for Xamarin Forms</title>
         <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
         <description>...
@@ -26,6 +26,8 @@ Initial Release
 Fix Dependency Issue
 1.0.3
 Added Xamarin.Forms dependency
+1.0.4
+Added Picture Slide Out
         </releaseNotes>
     </metadata>
     <files>
