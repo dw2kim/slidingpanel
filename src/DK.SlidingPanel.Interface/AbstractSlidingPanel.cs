@@ -435,8 +435,10 @@ namespace DK.SlidingPanel.Interface
             }
 
             _mainStackLayout.Children.Add(config.MainStackLayout);
-            _titleStackLayout.Children.Add(config.TitleStackLayout);
-            _bodyStackLayout.Children.Add(config.BodyStackLayout);
+            _titleStackLayout.Children.Add(config.TitleView);
+            _titleRelativeLayout.HeightRequest = config.TitleHeightRequest;
+
+            _bodyStackLayout.Children.Add(config.BodyView);
 
             if (config.PictureImage != null)
             {

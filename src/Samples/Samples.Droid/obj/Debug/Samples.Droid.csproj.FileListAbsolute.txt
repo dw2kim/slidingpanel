@@ -101,5 +101,6 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\res\layout\too
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\res\values\styles.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\R.cs.flag
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\uploadflags.txt
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.GoogleMaps.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll.mdb

@@ -104,14 +104,25 @@ namespace Samples.UI
 
 
             StackLayout titleStackLayout = new StackLayout();
-            titleStackLayout.Children.Add(new Label { Text = "Test Title x" });
-            config.TitleStackLayout = titleStackLayout;
+            titleStackLayout.Orientation = StackOrientation.Vertical;
+            Label title1 = new Label
+            {
+                Text = "Title 1"
+            };
+            Label title2 = new Label
+            {
+                Text = "Title 2"
+            };
+            titleStackLayout.Children.Add(title1);
+            titleStackLayout.Children.Add(title2);
+            config.TitleView = titleStackLayout;
+            config.TitleHeightRequest = 60;
             config.TitleBackgroundColor = Color.Green;
 
 
             StackLayout bodyStackLayout = new StackLayout();
             bodyStackLayout.Children.Add(new Label { Text = "Test Body y" });
-            config.BodyStackLayout = bodyStackLayout;
+            config.BodyView = bodyStackLayout;
             config.BodyBackgroundColor = Color.Blue;
 
 
@@ -121,6 +132,7 @@ namespace Samples.UI
             config.OverlayButtonImageHeight = 60;
             config.OverlayButtonImageWidth = 60;
             config.OverlayButtonImageTapGesture_Tapped = ButtonImageTapGesture_Tapped;
+
 
             Image pictureImage = new Image();
             pictureImage.Source = ImageSource.FromFile("honda.jpg");

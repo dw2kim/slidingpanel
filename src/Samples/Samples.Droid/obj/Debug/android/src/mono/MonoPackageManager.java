@@ -135,7 +135,6 @@ class MonoPackageManager_Resources {
 		"System.Runtime.InteropServices.dll",
 		"System.Resources.ResourceManager.dll",
 		"DK.SlidingPanel.Interface.dll",
-		"ReactiveUI.Fody.Helpers.dll",
 		"ReactiveUI.dll",
 		"System.Reactive.Linq.dll",
 		"System.Reactive.Core.dll",
@@ -144,6 +143,8 @@ class MonoPackageManager_Resources {
 		"System.Runtime.InteropServices.WindowsRuntime.dll",
 		"Splat.dll",
 		"System.Runtime.Serialization.Primitives.dll",
+		"ReactiveUI.Fody.Helpers.dll",
+		"Xamarin.Forms.GoogleMaps.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};

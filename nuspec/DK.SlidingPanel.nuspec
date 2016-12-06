@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.0.6</version>
-        <title>DK Sliding Panel Plugin for Xamarin Forms</title>
+        <version>1.0.7</version>
+        <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
         <description>...
         </description>
@@ -34,7 +34,8 @@ Added Picture Slide Out
 Fixed the NuGet issue 
 1.0.6
 Hide sliding panel initially
- 
+1.0.7
+Fixed the issue with no ButtonImage set
         </releaseNotes>
     </metadata>
 	

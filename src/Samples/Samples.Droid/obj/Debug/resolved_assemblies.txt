@@ -46,7 +46,6 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Runtime.InteropServices.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Resources.ResourceManager.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\DK.SlidingPanel.Interface.dll
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\ReactiveUI.Fody.Helpers.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\ReactiveUI.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Reactive.Linq.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Reactive.Core.dll
@@ -55,3 +54,5 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Runtime.InteropServices.WindowsRuntime.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\Splat.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Runtime.Serialization.Primitives.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\ReactiveUI.Fody.Helpers.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\Xamarin.Forms.GoogleMaps.dll

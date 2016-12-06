@@ -56,7 +56,6 @@ namespace Samples.UI.ViewModels
                 .Subscribe(isPlaying =>
                 {
                     string imageFileName = (isPlaying == true) ? StopButtonImageFileName : PlayButtonImageFileName;
-                    //PlayButtonImage = ImageSource.FromFile(imageFileName) as FileImageSource;
                     PlayButtonImage = ImageSource.FromFile(imageFileName);
                 });
         }
