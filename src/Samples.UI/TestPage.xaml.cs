@@ -77,27 +77,6 @@ namespace Samples.UI
             mainStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
             mainStackLayout.Children.Add(GoogleMapInstance);
 
-            //StackLayout mainStackLayout = new StackLayout
-            //{
-            //    BackgroundColor = Color.Yellow
-            //};
-
-            //Button btnShow = new Button
-            //{
-            //    Text = "Show"
-            //};
-            //btnShow.SetBinding(Button.CommandProperty, "ShowCommand");
-            //btnShow.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
-            //mainStackLayout.Children.Add(btnShow);
-
-            //Button btnHide = new Button
-            //{
-            //    Text = "Hide"
-            //};
-            //btnHide.SetBinding(Button.CommandProperty, "HideCommand");
-            //btnHide.SetBinding(Button.CommandParameterProperty, new Binding() { Source = spTest });
-            //mainStackLayout.Children.Add(btnHide);
-
 
             SlidingPanelConfig config = new SlidingPanelConfig();
             config.MainStackLayout = mainStackLayout;
@@ -140,6 +119,13 @@ namespace Samples.UI
             pictureImage.VerticalOptions = LayoutOptions.StartAndExpand;
             pictureImage.HorizontalOptions = LayoutOptions.StartAndExpand;
             config.PictureImage = pictureImage;
+
+            config.PictureBackgroundColor = Color.White;
+
+            Image favoriteButtonImage = new Image();
+            favoriteButtonImage.Source = ImageSource.FromFile("ic_star_border_black_48dp_1x.png");
+            favoriteButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
+            config.RightTopButtonImage = favoriteButtonImage;
 
             spTest.ApplyConfig(config);
         }

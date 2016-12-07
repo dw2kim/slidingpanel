@@ -3,6 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Samples.UI.MainPage">
     <StackLayout>
-        <Button x:Name="btnTestPage" Text="TestPage"></Button>
+        <Button x:Name="btnTestPage" Text="Full Function Page"></Button>
     </StackLayout>
 </ContentPage>

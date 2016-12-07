@@ -17,6 +17,8 @@ namespace DK.SlidingPanel.Interface
 
         private const double DefaultButtonImageHeight = 48;
         private const double DefaultButtonImageWidth = 48;
+
+        private const string DefaultBackButtonImageFileName = "ic_keyboard_arrow_left_48pt.png";
         #endregion
 
         #region Private Fields
@@ -31,7 +33,7 @@ namespace DK.SlidingPanel.Interface
 
         #region Private Properties
         private StackLayout _mainStackLayout { get; set; }
-        private AbsoluteLayout _slidingPanelLayout { get; set; }
+        private AbsoluteLayout _slidingPanelAbsoluteLayout { get; set; }
 
         private RelativeLayout _titleRelativeLayout { get; set; }
         private StackLayout _titleStackLayout { get; set; }
@@ -69,7 +71,7 @@ namespace DK.SlidingPanel.Interface
             InitGestures();
             InitFunctions();
 
-            _slidingPanelLayout.WhenAnyValue(x => x.Height)
+            _slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
                 .Subscribe(actualHeight =>
                 {
                     if (_isFirst == true && actualHeight > -1)
@@ -94,22 +96,24 @@ namespace DK.SlidingPanel.Interface
             AbsoluteLayout.SetLayoutFlags(_mainStackLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_mainStackLayout);
 
-            _slidingPanelLayout = new AbsoluteLayout();
-            AbsoluteLayout.SetLayoutBounds(_slidingPanelLayout, new Rectangle(1, 1, 1, 0.5));
-            AbsoluteLayout.SetLayoutFlags(_slidingPanelLayout, AbsoluteLayoutFlags.All);
-            this.Children.Add(_slidingPanelLayout);
-
             // Picture
             _pictureAbsoluteLayout = new AbsoluteLayout();
-            Rectangle pictureLayoutBound = new Rectangle(1, 1, 1, 1);
-            _slidingPanelLayout.Children.Add(_pictureAbsoluteLayout, pictureLayoutBound, AbsoluteLayoutFlags.All);
+            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, 0.5));
+            AbsoluteLayout.SetLayoutFlags(_pictureAbsoluteLayout, AbsoluteLayoutFlags.All);
+            this.Children.Add(_pictureAbsoluteLayout);
             
 
+            // Drawer
+            _slidingPanelAbsoluteLayout = new AbsoluteLayout();
+            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, 0.5));
+            AbsoluteLayout.SetLayoutFlags(_slidingPanelAbsoluteLayout, AbsoluteLayoutFlags.All);
+            this.Children.Add(_slidingPanelAbsoluteLayout);
+            
             // Drawer
             StackLayout slSlidingPanel = new StackLayout();
             slSlidingPanel.Spacing = 0;
             Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
-            _slidingPanelLayout.Children.Add(slSlidingPanel, layoutBound, AbsoluteLayoutFlags.All);
+            _slidingPanelAbsoluteLayout.Children.Add(slSlidingPanel, layoutBound, AbsoluteLayoutFlags.All);
             
             // Title Section
             _titleRelativeLayout = new RelativeLayout();
@@ -164,10 +168,9 @@ namespace DK.SlidingPanel.Interface
         
         private double CalculateNewDrawerPositionY(double totalY)
         {
-            double titleHeight = _titleRelativeLayout.Height;
-            double bodyHeight = _slidingPanelLayout.Height - titleHeight;
+            double bodyHeight = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
 
-            Rectangle drawerExpandedPosition = _slidingPanelLayout.Bounds;
+            Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             double minDrawerPostion = bodyHeight;
             double maxDrawerPosition = 0;
             double newDrawerPosition = (totalY >= 0) ? totalY : minDrawerPostion + totalY;
@@ -185,14 +188,14 @@ namespace DK.SlidingPanel.Interface
         }
         private double CalculateNewPicturePositionY(double totalY)
         {
-            double minPicturePostion = (_slidingPanelLayout.Height - _titleRelativeLayout.Height);
-            double maxPicturePosition = _pictureImage.Height * -1;
+            double minPicturePostion = _pictureAbsoluteLayout.Height + (_slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height);
+            double maxPicturePosition = 0;
             
             double titleHeight = _titleRelativeLayout.Height;
-            double bodyHeight = _slidingPanelLayout.Height - titleHeight;
+            double bodyHeight = _slidingPanelAbsoluteLayout.Height - titleHeight;
             double screenHeight = this.Height;
 
-            double totalPictureYFactor = (screenHeight / bodyHeight);
+            double totalPictureYFactor = 2;// (screenHeight / bodyHeight);
             double totalPictureY = totalY * totalPictureYFactor;
             double newPicturePositionY = (totalPictureY >= 0) ? maxPicturePosition + totalPictureY : minPicturePostion + totalPictureY;
 
@@ -206,6 +209,19 @@ namespace DK.SlidingPanel.Interface
             }
 
             return (newPicturePositionY);
+        }
+
+        private Image CreateBackButtonImage()
+        {
+            Image backButtonImage = new Image();
+            backButtonImage.Source = ImageSource.FromFile(DefaultBackButtonImageFileName);
+            //backButtonImage.HorizontalOptions = LayoutOptions.StartAndExpand;
+
+            TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
+            backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;
+            backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
+
+            return (backButtonImage);
         }
         #endregion
 
@@ -231,9 +247,9 @@ namespace DK.SlidingPanel.Interface
             {
                 _isPanRunning = false;
 
-                double minDrawerPosition = _slidingPanelLayout.Height - _titleRelativeLayout.Height;
+                double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
                 double midDrawerPosition = minDrawerPosition / 2;
-                double currentPosition = _slidingPanelLayout.TranslationY;
+                double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
 
                 if (currentPosition > midDrawerPosition)
                 {
@@ -298,7 +314,7 @@ namespace DK.SlidingPanel.Interface
                     _isPanRunning = true;
 
                     double newDrawerPositionY = CalculateNewDrawerPositionY(totalY);
-                    _slidingPanelLayout.TranslationY = newDrawerPositionY;
+                    _slidingPanelAbsoluteLayout.TranslationY = newDrawerPositionY;
 
                     if (IsPictureImageNull == false)
                     {
@@ -326,7 +342,7 @@ namespace DK.SlidingPanel.Interface
                     _isCollapsing = (totalY > 0);
 
                     double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
-                    _slidingPanelLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
+                    _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
 
                     if (IsPictureImageNull == false)
                     {
@@ -340,9 +356,95 @@ namespace DK.SlidingPanel.Interface
             {
                 _isPanRunning = false;
 
-                double minDrawerPosition = _slidingPanelLayout.Height - _titleRelativeLayout.Height;
+                double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
                 double midDrawerPosition = minDrawerPosition / 2;
-                double currentPosition = _slidingPanelLayout.TranslationY;
+                double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
+
+                if (currentPosition > midDrawerPosition)
+                {
+                    ShowCollapsedPanel();
+                }
+                else
+                {
+                    ShowExpandedPanel();
+                }
+            }
+        }
+        
+        private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
+        {
+            HidePanel();
+        }
+
+        private void PictureImagePanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            if (Device.OS == TargetPlatform.Android)
+            {
+                PictureImagePanGesture_PanUpdated_Android(sender, e);
+            }
+
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                PictureImagePanGesture_PanUpdated_iOS(sender, e);
+            }
+        }
+        private void PictureImagePanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
+        {
+            if (e.StatusType == GestureStatus.Running)
+            {
+                double totalY = e.TotalY;
+
+                if (totalY != 0 && totalY < 100 && totalY > -100)
+                {
+                    _isCollapsing = (totalY > 0);
+                    _isPanRunning = true;
+
+                    double newDrawerPositionY = CalculateNewDrawerPositionY(totalY);
+                    _slidingPanelAbsoluteLayout.TranslationY = newDrawerPositionY;
+
+                    if (IsPictureImageNull == false)
+                    {
+                        double newPicturePosition = CalculateNewPicturePositionY(totalY);
+                        _pictureAbsoluteLayout.TranslationY = newPicturePosition;
+                    }
+                }
+            }
+
+            if (e.StatusType == GestureStatus.Completed)
+            {
+                _isPanRunning = false;
+            }
+        }
+        private void PictureImagePanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
+        {
+            if (e.StatusType == GestureStatus.Running)
+            {
+                _isPanRunning = true;
+
+                double totalY = e.TotalY;
+
+                if (totalY != -1)
+                {
+                    _isCollapsing = (totalY > 0);
+
+                    double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
+                    _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
+
+                    if (IsPictureImageNull == false)
+                    {
+                        double newPicturePosition = CalculateNewPicturePositionY(totalY);
+                        _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
+                    }
+                }
+            }
+
+            if (e.StatusType == GestureStatus.Completed)
+            {
+                _isPanRunning = false;
+
+                double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
+                double midDrawerPosition = minDrawerPosition / 2;
+                double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
 
                 if (currentPosition > midDrawerPosition)
                 {
@@ -360,43 +462,50 @@ namespace DK.SlidingPanel.Interface
         public void HidePanel(uint length = 700)
         {
             double overlayButtonImageHeight = (_config.OverlayButtonImageHeight > 0) ? _config.OverlayButtonImageHeight : 0;
-            Rectangle drawerCollapsedPosition = _slidingPanelLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelLayout.Height + (overlayButtonImageHeight / 2); 
+            Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
+            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (overlayButtonImageHeight / 2); 
 
-            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             
-            if (IsPictureImageNull == false)
-            {
-                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
-            }
+            //if (IsPictureImageNull == false)
+            //{
+                Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
+                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+
+                _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
+            //}
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
             var actualHeight = _titleRelativeLayout.Height;
-            Rectangle drawerCollapsedPosition = _slidingPanelLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelLayout.Height - actualHeight;
+            Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
+            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
 
-            _slidingPanelLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _isCurrentlyCollapsed = true;
             
             if (IsPictureImageNull == false)
             {
-                _pictureAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+                Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
+                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+
+                _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             }
         }
         public void ShowExpandedPanel(uint length = 700)
         {
             var actualHeight = _titleRelativeLayout.Height;
-            Rectangle drawerExpandedPosition = _slidingPanelLayout.Bounds;
+            Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerExpandedPosition.Y = 0;
 
-            _slidingPanelLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
+            _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
             _isCurrentlyCollapsed = false;
             
             if (IsPictureImageNull == false)
             {
-                double pictureHeight = _pictureImage.Height;
-                _pictureAbsoluteLayout.TranslateTo(0, pictureHeight * -1, length, Easing.CubicOut);
+                Rectangle pictureExpandedPosition = _pictureAbsoluteLayout.Bounds;
+                pictureExpandedPosition.Y = 0;
+                _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
             }
         }
 
@@ -406,7 +515,6 @@ namespace DK.SlidingPanel.Interface
 
             _titleRelativeLayout.BackgroundColor = config.TitleBackgroundColor;
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
-            _pictureAbsoluteLayout.BackgroundColor = config.PictureBackgroundColor;
             
             if (config.OverlayButtonImage != null)
             {
@@ -442,8 +550,37 @@ namespace DK.SlidingPanel.Interface
 
             if (config.PictureImage != null)
             {
+                Image backButtonImage = CreateBackButtonImage();
+
+                StackLayout pictureControlStackLayout = new StackLayout();
+                pictureControlStackLayout.Orientation = StackOrientation.Horizontal;
+                pictureControlStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+                pictureControlStackLayout.Children.Add(backButtonImage);
+
+                Image extraButtonImage = config.RightTopButtonImage;
+                if (extraButtonImage != null)
+                {
+                    pictureControlStackLayout.Children.Add(extraButtonImage);
+                }
+                
                 _pictureImage = config.PictureImage;
-                _pictureAbsoluteLayout.Children.Add(_pictureImage);
+
+                StackLayout pictureMainStackLayout = new StackLayout();
+                pictureMainStackLayout.BackgroundColor = config.PictureBackgroundColor;
+                pictureMainStackLayout.Orientation = StackOrientation.Vertical;
+                pictureMainStackLayout.Children.Add(pictureControlStackLayout);
+                pictureMainStackLayout.Children.Add(_pictureImage);
+
+                Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
+                _pictureAbsoluteLayout.Children.Add(pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
+
+
+                if (IsPictureImageNull == false)
+                {
+                    PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
+                    pictureImagePanGesture.PanUpdated += PictureImagePanGesture_PanUpdated;
+                    _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+                }
             }
         }
         #endregion
