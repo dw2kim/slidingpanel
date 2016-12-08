@@ -16,7 +16,7 @@ Then, initialize AbstractSlidingPanel instacen either in Xaml or C#.
 Then, apply the SlidingPanelConfig for your customizations.
 
 ## Screenshots
-![alt HidePanel](https://github.com/dw2kim/slidingpanel/tree/master/screenshots/HidePanel.PNG)
+![alt HidePanel](https://cloud.githubusercontent.com/assets/8919703/21026652/a0fbc588-bd5b-11e6-85bf-eb1d15ea363c.PNG)
 
 #### XAML 
 ```xml
