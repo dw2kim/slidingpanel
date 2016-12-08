@@ -16,8 +16,14 @@ Then, initialize AbstractSlidingPanel instacen either in Xaml or C#.
 Then, apply the SlidingPanelConfig for your customizations.
 
 ## Screenshots
+1. Hide Panel:
 ![alt HidePanel](https://cloud.githubusercontent.com/assets/8919703/21026652/a0fbc588-bd5b-11e6-85bf-eb1d15ea363c.PNG)
 
+2. Show Collapsed Panel:
+![alt ShowCollapsedPanel](https://cloud.githubusercontent.com/assets/8919703/21026653/a100a7f6-bd5b-11e6-994a-de69988d4b20.PNG)
+
+2. Show Expaneded Panel:
+![alt ShowExpandedPanel](https://cloud.githubusercontent.com/assets/8919703/21026654/a10d7864-bd5b-11e6-9d97-0819485fde67.PNG)
 #### XAML 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
