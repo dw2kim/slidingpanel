@@ -24,7 +24,7 @@ namespace Samples.UI
         {
             InitializeComponent();
 
-            SetupSlidingPanel();
+            //SetupSlidingPanel();
         }
         #endregion
 
@@ -34,6 +34,8 @@ namespace Samples.UI
             base.OnBindingContextChanged();
 
             this.ViewModel = BindingContext as TestViewModel;
+
+            SetupSlidingPanel();
 
             GoogleMapInstance.WhenAnyValue(x => x.SelectedPin)
                 .Subscribe(selectedPin =>
@@ -121,11 +123,19 @@ namespace Samples.UI
             config.PictureImage = pictureImage;
 
             config.PictureBackgroundColor = Color.White;
+            
+            Image backButtonImage = new Image();
+            backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_48pt.png");
+
+            TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
+            backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;
+            backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
+            config.TopLeftButtonImage = backButtonImage;
 
             Image favoriteButtonImage = new Image();
             favoriteButtonImage.Source = ImageSource.FromFile("ic_star_border_black_48dp_1x.png");
             favoriteButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
-            config.RightTopButtonImage = favoriteButtonImage;
+            config.TopRightButtonImage = favoriteButtonImage;
 
             spTest.ApplyConfig(config);
         }
@@ -141,6 +151,11 @@ namespace Samples.UI
         private void ButtonImageTapGesture_Tapped(object sender, EventArgs e)
         {
             this.ViewModel.IsPlaying = !(this.ViewModel.IsPlaying);
+        }
+        
+        private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
+        {
+            spTest.HidePanel();
         }
         #endregion
     }

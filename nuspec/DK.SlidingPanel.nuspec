@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.0.8</version>
+        <version>1.0.10</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
         <description>...
@@ -38,6 +38,9 @@ Hide sliding panel initially
 Fixed the issue with no ButtonImage set
 1.0.8
 Added TitleHeightRequest property for Config class
+1.0.10
+Added Picture Control StackLayout
+Added Picture Pan Gesture
         </releaseNotes>
     </metadata>
 	

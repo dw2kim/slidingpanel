@@ -17,8 +17,6 @@ namespace DK.SlidingPanel.Interface
 
         private const double DefaultButtonImageHeight = 48;
         private const double DefaultButtonImageWidth = 48;
-
-        private const string DefaultBackButtonImageFileName = "ic_keyboard_arrow_left_48pt.png";
         #endregion
 
         #region Private Fields
@@ -210,19 +208,6 @@ namespace DK.SlidingPanel.Interface
 
             return (newPicturePositionY);
         }
-
-        private Image CreateBackButtonImage()
-        {
-            Image backButtonImage = new Image();
-            backButtonImage.Source = ImageSource.FromFile(DefaultBackButtonImageFileName);
-            //backButtonImage.HorizontalOptions = LayoutOptions.StartAndExpand;
-
-            TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
-            backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;
-            backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
-
-            return (backButtonImage);
-        }
         #endregion
 
         #region Gesture Implementations
@@ -369,11 +354,6 @@ namespace DK.SlidingPanel.Interface
                     ShowExpandedPanel();
                 }
             }
-        }
-        
-        private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
-        {
-            HidePanel();
         }
 
         private void PictureImagePanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
@@ -550,37 +530,37 @@ namespace DK.SlidingPanel.Interface
 
             if (config.PictureImage != null)
             {
-                Image backButtonImage = CreateBackButtonImage();
-
                 StackLayout pictureControlStackLayout = new StackLayout();
                 pictureControlStackLayout.Orientation = StackOrientation.Horizontal;
                 pictureControlStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-                pictureControlStackLayout.Children.Add(backButtonImage);
 
-                Image extraButtonImage = config.RightTopButtonImage;
-                if (extraButtonImage != null)
+                Image topLeftButtonImage = config.TopLeftButtonImage;
+                if (topLeftButtonImage != null)
                 {
-                    pictureControlStackLayout.Children.Add(extraButtonImage);
+                    pictureControlStackLayout.Children.Add(topLeftButtonImage);
                 }
-                
-                _pictureImage = config.PictureImage;
+
+                Image topRightButtonImage = config.TopRightButtonImage;
+                if (topRightButtonImage != null)
+                {
+                    topRightButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
+                    pictureControlStackLayout.Children.Add(topRightButtonImage);
+                }
 
                 StackLayout pictureMainStackLayout = new StackLayout();
                 pictureMainStackLayout.BackgroundColor = config.PictureBackgroundColor;
                 pictureMainStackLayout.Orientation = StackOrientation.Vertical;
                 pictureMainStackLayout.Children.Add(pictureControlStackLayout);
+                
+                _pictureImage = config.PictureImage;
+                PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
+                pictureImagePanGesture.PanUpdated += PictureImagePanGesture_PanUpdated;
+                _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+
                 pictureMainStackLayout.Children.Add(_pictureImage);
 
                 Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
                 _pictureAbsoluteLayout.Children.Add(pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
-
-
-                if (IsPictureImageNull == false)
-                {
-                    PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                    pictureImagePanGesture.PanUpdated += PictureImagePanGesture_PanUpdated;
-                    _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
-                }
             }
         }
         #endregion
