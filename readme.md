@@ -16,14 +16,17 @@ Xamarin.Forms Only
 * Lastly, apply the SlidingPanelConfig for your customizations.
 
 ## Screenshots
-* Hide Panel:
+* Hide Panel:<br />
 ![alt HidePanel](https://cloud.githubusercontent.com/assets/8919703/21026652/a0fbc588-bd5b-11e6-85bf-eb1d15ea363c.PNG)
+<br />
 
-* Show Collapsed Panel:
+* Show Collapsed Panel:<br />
 ![alt ShowCollapsedPanel](https://cloud.githubusercontent.com/assets/8919703/21026653/a100a7f6-bd5b-11e6-994a-de69988d4b20.PNG)
+<br />
 
-* Show Expaneded Panel:
+* Show Expaneded Panel:<br />
 ![alt ShowExpandedPanel](https://cloud.githubusercontent.com/assets/8919703/21026654/a10d7864-bd5b-11e6-9d97-0819485fde67.PNG)
+<br />
 #### XAML 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
