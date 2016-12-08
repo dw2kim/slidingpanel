@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.0.10</version>
+        <version>1.1.0</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
-        <summary>Allows for sliding panel to be called from your Xamarin Forms code</summary>
-        <description>...
+        <summary>Allows for a panel to be slided out from bottom of the screen for Xamarin.Forms pages</summary>
+        <description>Allows for a panel to be slided out from bottom of the screen for Xamarin.Forms pages
         </description>
         <authors>Dae Won Kim</authors>
         <owners>Dae Won Kim</owners>
@@ -22,25 +22,28 @@
         </dependencies>
 		
         <releaseNotes>
-1.0.0
-Initial Release
-1.0.2
-Fix Dependency Issue
-1.0.3
-Added Xamarin.Forms dependency
-1.0.4
-Added Picture Slide Out
-1.0.5
-Fixed the NuGet issue 
-1.0.6
-Hide sliding panel initially
-1.0.7
-Fixed the issue with no ButtonImage set
-1.0.8
-Added TitleHeightRequest property for Config class
+1.1.0
+Fix the picture pan gesture
+Make Back button to be general (TopLeftButtonImage)
 1.0.10
 Added Picture Control StackLayout
 Added Picture Pan Gesture
+1.0.8
+Added TitleHeightRequest property for Config class
+1.0.7
+Fixed the issue with no ButtonImage set
+1.0.6
+Hide sliding panel initially
+1.0.5
+Fixed the NuGet issue 
+1.0.4
+Added Picture Slide Out
+1.0.3
+Added Xamarin.Forms dependency
+1.0.2
+Fix Dependency Issue
+1.0.0
+Initial Release
         </releaseNotes>
     </metadata>
 	

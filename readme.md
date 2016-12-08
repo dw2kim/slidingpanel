@@ -15,6 +15,9 @@ To use, simply reference the nuget package in your Xamrin.Forms projects.
 Then, initialize AbstractSlidingPanel instacen either in Xaml or C#.
 Then, apply the SlidingPanelConfig for your customizations.
 
+## Screenshots
+![alt HidePanel](https://github.com/dw2kim/slidingpanel/tree/master/screenshots/HidePanel.PNG)
+
 #### XAML 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
