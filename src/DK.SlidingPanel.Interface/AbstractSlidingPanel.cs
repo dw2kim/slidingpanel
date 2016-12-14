@@ -66,7 +66,6 @@ namespace DK.SlidingPanel.Interface
         public AbstractSlidingPanel() : base()
         {
             InitViews();
-            InitGestures();
             InitFunctions();
 
             _slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
@@ -147,9 +146,13 @@ namespace DK.SlidingPanel.Interface
             _titleRelativeLayout.GestureRecognizers.Add(titlePanelTapGesture);
 
             PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
-            titlePanelPanGesture.PanUpdated += TitlePanelPanGesture_PanUpdated; 
+            titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated; 
             _titleRelativeLayout.GestureRecognizers.Add(titlePanelPanGesture);
 
+            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
+            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+            _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
+            
             if (_overlayButtonImageTapGesture_Tapped != null)
             {
                 TapGestureRecognizer overlayButtonImageTapGesture = new TapGestureRecognizer();
@@ -216,17 +219,17 @@ namespace DK.SlidingPanel.Interface
 
             if (Device.OS == TargetPlatform.Android)
             {
-                TapGesture_Tapped_Android(sender, e);
+                TitlePanelTapGesture_Tapped_Android(sender, e);
             }
 
             if (Device.OS == TargetPlatform.iOS)
             {
-                TapGesture_Tapped_iOS(sender, e);
+                TitlePanelTapGesture_Tapped_iOS(sender, e);
             }
             
             //FunctionAfterTitleTapped();
         }
-        private void TapGesture_Tapped_Android(object sender, EventArgs e)
+        private void TitlePanelTapGesture_Tapped_Android(object sender, EventArgs e)
         {
             if (_isPanRunning == true)
             {
@@ -257,7 +260,7 @@ namespace DK.SlidingPanel.Interface
                 }
             }
         }
-        private void TapGesture_Tapped_iOS(object sender, EventArgs e)
+        private void TitlePanelTapGesture_Tapped_iOS(object sender, EventArgs e)
         {
             if (_isPanRunning == true)
             {
@@ -275,19 +278,19 @@ namespace DK.SlidingPanel.Interface
             }
         }
 
-        private void TitlePanelPanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
+        private void PanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
             if (Device.OS == TargetPlatform.Android)
             {
-                TitlePanelPanGesture_PanUpdated_Android(sender, e);
+                PanGesture_PanUpdated_Android(sender, e);
             }
 
             if (Device.OS == TargetPlatform.iOS)
             {
-                TitlePanelPanGesture_PanUpdated_iOS(sender, e);
+                PanGesture_PanUpdated_iOS(sender, e);
             }
         }
-        private void TitlePanelPanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
+        private void PanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
         {
             if (e.StatusType == GestureStatus.Running)
             {
@@ -314,88 +317,7 @@ namespace DK.SlidingPanel.Interface
                 _isPanRunning = false;
             }
         }
-        private void TitlePanelPanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
-        {
-            if (e.StatusType == GestureStatus.Running)
-            {
-                _isPanRunning = true;
-
-                double totalY = e.TotalY;
-
-                if (totalY != -1)
-                {
-                    _isCollapsing = (totalY > 0);
-
-                    double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
-                    _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
-
-                    if (IsPictureImageNull == false)
-                    {
-                        double newPicturePosition = CalculateNewPicturePositionY(totalY);
-                        _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
-                    }
-                }
-            }
-
-            if (e.StatusType == GestureStatus.Completed)
-            {
-                _isPanRunning = false;
-
-                double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
-                double midDrawerPosition = minDrawerPosition / 2;
-                double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
-
-                if (currentPosition > midDrawerPosition)
-                {
-                    ShowCollapsedPanel();
-                }
-                else
-                {
-                    ShowExpandedPanel();
-                }
-            }
-        }
-
-        private void PictureImagePanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
-        {
-            if (Device.OS == TargetPlatform.Android)
-            {
-                PictureImagePanGesture_PanUpdated_Android(sender, e);
-            }
-
-            if (Device.OS == TargetPlatform.iOS)
-            {
-                PictureImagePanGesture_PanUpdated_iOS(sender, e);
-            }
-        }
-        private void PictureImagePanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
-        {
-            if (e.StatusType == GestureStatus.Running)
-            {
-                double totalY = e.TotalY;
-
-                if (totalY != 0 && totalY < 100 && totalY > -100)
-                {
-                    _isCollapsing = (totalY > 0);
-                    _isPanRunning = true;
-
-                    double newDrawerPositionY = CalculateNewDrawerPositionY(totalY);
-                    _slidingPanelAbsoluteLayout.TranslationY = newDrawerPositionY;
-
-                    if (IsPictureImageNull == false)
-                    {
-                        double newPicturePosition = CalculateNewPicturePositionY(totalY);
-                        _pictureAbsoluteLayout.TranslationY = newPicturePosition;
-                    }
-                }
-            }
-
-            if (e.StatusType == GestureStatus.Completed)
-            {
-                _isPanRunning = false;
-            }
-        }
-        private void PictureImagePanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
+        private void PanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
         {
             if (e.StatusType == GestureStatus.Running)
             {
@@ -493,6 +415,11 @@ namespace DK.SlidingPanel.Interface
         {
             this._config = config;
 
+            if (config.IsExpandable == true)
+            {
+                InitGestures();
+            }
+
             _titleRelativeLayout.BackgroundColor = config.TitleBackgroundColor;
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
             
@@ -554,7 +481,7 @@ namespace DK.SlidingPanel.Interface
                 
                 _pictureImage = config.PictureImage;
                 PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                pictureImagePanGesture.PanUpdated += PictureImagePanGesture_PanUpdated;
+                pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
                 _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
 
                 pictureMainStackLayout.Children.Add(_pictureImage);

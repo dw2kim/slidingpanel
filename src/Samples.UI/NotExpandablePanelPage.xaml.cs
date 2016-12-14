@@ -1,26 +1,28 @@
-﻿using DK.SlidingPanel.Interface;
-using ReactiveUI;
-using Samples.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Samples.ViewModels;
+
+using DK.SlidingPanel.Interface;
+
+using ReactiveUI;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
 namespace Samples.UI
 {
-    public partial class TestPage : ContentPage
+    public partial class NotExpandablePanelPage : ContentPage
     {
         #region Private Fields     
-        private TestViewModel ViewModel;
+        private NotExpandablePanelViewModel ViewModel;
         private Map GoogleMapInstance;
         #endregion
 
         #region Constructor
-        public TestPage()
+        public NotExpandablePanelPage()
         {
             InitializeComponent();
 
@@ -33,7 +35,7 @@ namespace Samples.UI
         {
             base.OnBindingContextChanged();
 
-            this.ViewModel = BindingContext as TestViewModel;
+            this.ViewModel = BindingContext as NotExpandablePanelViewModel;
 
             SetupSlidingPanel();
 
@@ -100,12 +102,7 @@ namespace Samples.UI
             config.TitleHeightRequest = 60;
             config.TitleBackgroundColor = Color.Green;
 
-
-            StackLayout bodyStackLayout = new StackLayout();
-            bodyStackLayout.Children.Add(new Label { Text = "Test Body y" });
-            config.BodyView = bodyStackLayout;
-            config.BodyBackgroundColor = Color.Blue;
-
+            
 
             Image overlayButtonImage = new Image();
             overlayButtonImage.SetBinding(Image.SourceProperty, "PlayButtonImage");
@@ -115,27 +112,7 @@ namespace Samples.UI
             config.OverlayButtonImageTapGesture_Tapped = ButtonImageTapGesture_Tapped;
 
 
-            Image pictureImage = new Image();
-            pictureImage.Source = ImageSource.FromFile("honda.jpg");
-            pictureImage.Aspect = Aspect.AspectFill;
-            pictureImage.VerticalOptions = LayoutOptions.StartAndExpand;
-            pictureImage.HorizontalOptions = LayoutOptions.StartAndExpand;
-            config.PictureImage = pictureImage;
-
-            config.PictureBackgroundColor = Color.White;
-            
-            Image backButtonImage = new Image();
-            backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_48pt.png");
-
-            TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
-            backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;
-            backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
-            config.TopLeftButtonImage = backButtonImage;
-
-            Image favoriteButtonImage = new Image();
-            favoriteButtonImage.Source = ImageSource.FromFile("ic_star_border_black_48dp_1x.png");
-            favoriteButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
-            config.TopRightButtonImage = favoriteButtonImage;
+            config.IsExpandable = false;
 
             spTest.ApplyConfig(config);
         }
@@ -152,7 +129,7 @@ namespace Samples.UI
         {
             this.ViewModel.IsPlaying = !(this.ViewModel.IsPlaying);
         }
-        
+
         private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
         {
             spTest.HidePanel();

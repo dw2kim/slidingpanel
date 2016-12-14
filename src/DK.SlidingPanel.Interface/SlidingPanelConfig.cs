@@ -12,6 +12,8 @@ namespace DK.SlidingPanel.Interface
         #region Constructor
         public SlidingPanelConfig()
         {
+            IsExpandable = true;
+
             OverlayButtonImageHeight = 0;
             OverlayButtonImageWidth = 0;
 
@@ -24,6 +26,8 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region Public Properties
+        public bool IsExpandable { get; set; }
+
         public Color TitleBackgroundColor { get; set; }
         public Color BodyBackgroundColor { get; set; }
         public Color PictureBackgroundColor { get; set; }

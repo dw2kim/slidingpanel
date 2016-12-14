@@ -4,5 +4,6 @@
              x:Class="Samples.UI.MainPage">
     <StackLayout>
         <Button x:Name="btnTestPage" Text="Full Function Page"></Button>
+        <Button x:Name="btnNotExpandablePanelPage" Text="Not Expandable Panel Page"></Button>
     </StackLayout>
 </ContentPage>

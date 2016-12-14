@@ -34,5 +34,6 @@ C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\System.Rea
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\System.Reactive.Interfaces.xml
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\System.Reactive.Linq.xml
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.SlidingPanel.Interface.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.SlidingPanel.Interface.dll.mdb
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\DK.SlidingPanel.Interface.dll.mdb

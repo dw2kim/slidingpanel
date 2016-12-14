@@ -1,18 +1,19 @@
-﻿using DK.SlidingPanel.Interface;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using Samples.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+using DK.SlidingPanel.Interface;
+
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Xamarin.Forms;
 
 namespace Samples.ViewModels
 {
-    public class TestViewModel : AbstractViewModel
+    public class NotExpandablePanelViewModel : AbstractViewModel
     {
         private const string PlayButtonImageFileName = "PlayButton48.png";
         private const string StopButtonImageFileName = "StopButton48.png";
@@ -29,7 +30,7 @@ namespace Samples.ViewModels
         public ICommand ShowCommand { get; set; }
         public ICommand HideCommand { get; set; }
 
-        public TestViewModel()
+        public NotExpandablePanelViewModel()
         {
             this.IsPlaying = false;
 
@@ -59,6 +60,5 @@ namespace Samples.ViewModels
                     PlayButtonImage = ImageSource.FromFile(imageFileName);
                 });
         }
-
     }
 }
