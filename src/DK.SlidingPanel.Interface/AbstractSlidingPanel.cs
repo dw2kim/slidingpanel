@@ -142,7 +142,7 @@ namespace DK.SlidingPanel.Interface
         private void InitGestures()
         {
             TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
-            titlePanelTapGesture.Tapped += TitlePanelTapGesture_Tapped;
+            titlePanelTapGesture.Tapped += TapGesture_Tapped;
             _titleRelativeLayout.GestureRecognizers.Add(titlePanelTapGesture);
 
             PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
@@ -214,22 +214,22 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region Gesture Implementations
-        private void TitlePanelTapGesture_Tapped(object sender, EventArgs e)
+        private void TapGesture_Tapped(object sender, EventArgs e)
         {
 
             if (Device.OS == TargetPlatform.Android)
             {
-                TitlePanelTapGesture_Tapped_Android(sender, e);
+                TapGesture_Tapped_Android(sender, e);
             }
 
             if (Device.OS == TargetPlatform.iOS)
             {
-                TitlePanelTapGesture_Tapped_iOS(sender, e);
+                TapGesture_Tapped_iOS(sender, e);
             }
             
             //FunctionAfterTitleTapped();
         }
-        private void TitlePanelTapGesture_Tapped_Android(object sender, EventArgs e)
+        private void TapGesture_Tapped_Android(object sender, EventArgs e)
         {
             if (_isPanRunning == true)
             {
@@ -260,7 +260,7 @@ namespace DK.SlidingPanel.Interface
                 }
             }
         }
-        private void TitlePanelTapGesture_Tapped_iOS(object sender, EventArgs e)
+        private void TapGesture_Tapped_iOS(object sender, EventArgs e)
         {
             if (_isPanRunning == true)
             {
@@ -344,17 +344,30 @@ namespace DK.SlidingPanel.Interface
             {
                 _isPanRunning = false;
 
-                double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
-                double midDrawerPosition = minDrawerPosition / 2;
+                double minDrawerPosition = 0;
+                double maxDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
+
+                double midDrawerPosition = maxDrawerPosition / 2;
+                double topMidDrawerPosition = maxDrawerPosition / 8;
+                double bottomMidDrawerPosition = maxDrawerPosition * 7 / 8;
+
                 double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
 
-                if (currentPosition > midDrawerPosition)
+                if (currentPosition >= minDrawerPosition && currentPosition < topMidDrawerPosition)
+                {
+                    ShowExpandedPanel();
+                }
+                if (currentPosition >= topMidDrawerPosition && currentPosition < midDrawerPosition)
                 {
                     ShowCollapsedPanel();
                 }
-                else
+                if (currentPosition >= midDrawerPosition && currentPosition < bottomMidDrawerPosition)
                 {
                     ShowExpandedPanel();
+                }
+                if (currentPosition >= bottomMidDrawerPosition && currentPosition < maxDrawerPosition)
+                {
+                    ShowCollapsedPanel();
                 }
             }
         }
@@ -460,6 +473,15 @@ namespace DK.SlidingPanel.Interface
                 StackLayout pictureControlStackLayout = new StackLayout();
                 pictureControlStackLayout.Orientation = StackOrientation.Horizontal;
                 pictureControlStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+
+                TapGestureRecognizer pictureControlTapGesture = new TapGestureRecognizer();
+                pictureControlTapGesture.Tapped += TapGesture_Tapped;
+                pictureControlStackLayout.GestureRecognizers.Add(pictureControlTapGesture);
+
+                PanGestureRecognizer pictureControlPanGesture = new PanGestureRecognizer();
+                pictureControlPanGesture.PanUpdated += PanGesture_PanUpdated;
+                pictureControlStackLayout.GestureRecognizers.Add(pictureControlPanGesture);
+
 
                 Image topLeftButtonImage = config.TopLeftButtonImage;
                 if (topLeftButtonImage != null)
