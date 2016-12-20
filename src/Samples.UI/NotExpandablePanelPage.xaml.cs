@@ -106,10 +106,10 @@ namespace Samples.UI
 
             Image overlayButtonImage = new Image();
             overlayButtonImage.SetBinding(Image.SourceProperty, "PlayButtonImage");
-            config.OverlayButtonImage = overlayButtonImage;
-            config.OverlayButtonImageHeight = 60;
-            config.OverlayButtonImageWidth = 60;
-            config.OverlayButtonImageTapGesture_Tapped = ButtonImageTapGesture_Tapped;
+            config.PrimaryFloatingActionButton = overlayButtonImage;
+            config.PrimaryFloatingActionButtonHeight = 60;
+            config.PrimaryFloatingActionButtonWidth = 60;
+            config.PrimaryFloatingActionButton_TapGesture_Tapped = ButtonImageTapGesture_Tapped;
 
 
             config.IsExpandable = false;

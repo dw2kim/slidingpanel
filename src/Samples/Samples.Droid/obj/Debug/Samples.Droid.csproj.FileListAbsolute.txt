@@ -65,12 +65,13 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.Platform.Android.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.Platform.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.Xaml.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.GoogleMaps.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\DK.SlidingPanel.Interface.dll
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fody.Helpers.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Core.dll
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Interfaces.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fody.Helpers.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Linq.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Interfaces.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.UI.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\FormsViewGroup.pdb
@@ -84,10 +85,10 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.Xaml.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.Xaml.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\DK.SlidingPanel.Interface.pdb
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fody.Helpers.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Core.xml
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Interfaces.xml
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fody.Helpers.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Linq.xml
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Reactive.Interfaces.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.pdb
@@ -101,6 +102,5 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\res\layout\too
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\res\values\styles.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\R.cs.flag
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\uploadflags.txt
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Xamarin.Forms.GoogleMaps.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll.mdb

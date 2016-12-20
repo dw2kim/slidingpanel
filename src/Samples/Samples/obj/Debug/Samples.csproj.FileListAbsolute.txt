@@ -56,3 +56,7 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb

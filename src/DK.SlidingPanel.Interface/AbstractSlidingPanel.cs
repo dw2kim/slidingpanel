@@ -15,8 +15,10 @@ namespace DK.SlidingPanel.Interface
         private const double TitleMinimumHeight = 50;
         private const double BodyMinimumHeight = 50;
 
-        private const double DefaultButtonImageHeight = 48;
-        private const double DefaultButtonImageWidth = 48;
+        private const double DefaultFloatingActionButtonHeight = 0;
+        private const double DefaultFloatingActionButtonWidth = 0;
+
+        private const double DefaultFloatingButtonSpaceFactor = 1.25;
         #endregion
 
         #region Private Fields
@@ -37,20 +39,20 @@ namespace DK.SlidingPanel.Interface
         private StackLayout _titleStackLayout { get; set; }
         private StackLayout _bodyStackLayout { get; set; }
 
-        private Image _overlayButtonImage { get; set; }
+        private Image _primaryFloatingActionButton { get; set; }
+        private Image _secondaryFloatingActionButton { get; set; }
 
         private AbsoluteLayout _pictureAbsoluteLayout { get; set; }
+        private StackLayout _pictureMainStackLayout { get; set; }
         private Image _pictureImage { get; set; }
 
         private Func<int?> _functionAfterTitleTapped { get; set; }
 
-        private EventHandler _overlayButtonImageTapGesture_Tapped { get; set; }
-
-        private bool IsOverlayButtonImageNull
+        private bool IsPrimaryFloatingActionButtonNull
         {
             get
             {
-                return (_overlayButtonImage == null || _overlayButtonImage.Source == null);
+                return (_primaryFloatingActionButton == null || _primaryFloatingActionButton.Source == null);
             }
         }
         private bool IsPictureImageNull
@@ -58,6 +60,14 @@ namespace DK.SlidingPanel.Interface
             get
             {
                 return (_pictureImage == null || _pictureImage.Source == null);
+            }
+        }
+        private double PrimaryFloatingActionButtonHeight
+        {
+            get
+            {
+                double primaryFloatingActionButtonHeight = (_config?.PrimaryFloatingActionButtonHeight > 0) ? _config.PrimaryFloatingActionButtonHeight : DefaultFloatingActionButtonHeight;
+                return (primaryFloatingActionButtonHeight);
             }
         }
         #endregion
@@ -99,7 +109,6 @@ namespace DK.SlidingPanel.Interface
             AbsoluteLayout.SetLayoutFlags(_pictureAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_pictureAbsoluteLayout);
             
-
             // Drawer
             _slidingPanelAbsoluteLayout = new AbsoluteLayout();
             AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, 0.5));
@@ -111,25 +120,14 @@ namespace DK.SlidingPanel.Interface
             slSlidingPanel.Spacing = 0;
             Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
             _slidingPanelAbsoluteLayout.Children.Add(slSlidingPanel, layoutBound, AbsoluteLayoutFlags.All);
-            
+
             // Title Section
             _titleRelativeLayout = new RelativeLayout();
+            _titleRelativeLayout.Padding = new Thickness(0, 0, 0, 0);
             _titleRelativeLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
             _titleRelativeLayout.VerticalOptions = LayoutOptions.Fill;
+            _titleRelativeLayout.BackgroundColor = Color.Transparent;
             slSlidingPanel.Children.Add(_titleRelativeLayout);
-
-            _titleStackLayout = new StackLayout();
-            _titleStackLayout.Spacing = 0;
-            _titleStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-            _titleStackLayout.VerticalOptions = LayoutOptions.Fill;
-            _titleRelativeLayout.Children.Add(_titleStackLayout,
-                xConstraint: Constraint.Constant(0),
-                yConstraint: Constraint.Constant(0),
-                widthConstraint: Constraint.RelativeToParent((parent) =>
-                {
-                    return (parent.Width);
-                }),
-                heightConstraint: Constraint.Constant(TitleMinimumHeight));
             
             // Body Section
             _bodyStackLayout = new StackLayout();
@@ -143,22 +141,15 @@ namespace DK.SlidingPanel.Interface
         {
             TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
             titlePanelTapGesture.Tapped += TapGesture_Tapped;
-            _titleRelativeLayout.GestureRecognizers.Add(titlePanelTapGesture);
+            _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
 
             PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
-            titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated; 
-            _titleRelativeLayout.GestureRecognizers.Add(titlePanelPanGesture);
+            titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+            _titleStackLayout.GestureRecognizers.Add(titlePanelPanGesture);
 
             PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
             bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
             _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
-            
-            if (_overlayButtonImageTapGesture_Tapped != null)
-            {
-                TapGestureRecognizer overlayButtonImageTapGesture = new TapGestureRecognizer();
-                overlayButtonImageTapGesture.Tapped += _overlayButtonImageTapGesture_Tapped;
-                _overlayButtonImage.GestureRecognizers.Add(overlayButtonImageTapGesture);
-            }
         }
         private void InitFunctions()
         {
@@ -210,6 +201,128 @@ namespace DK.SlidingPanel.Interface
             }
 
             return (newPicturePositionY);
+        }
+
+        private void ApplyConfigToTitleBodyPanel(SlidingPanelConfig config)
+        {
+            _titleStackLayout = new StackLayout();
+            _titleStackLayout.BackgroundColor = config.TitleBackgroundColor;
+            _titleStackLayout.Spacing = 0;
+            _titleStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            _titleStackLayout.VerticalOptions = LayoutOptions.Fill;
+            _titleRelativeLayout.Children.Add(_titleStackLayout,
+                xConstraint: Constraint.Constant(0),
+                yConstraint: Constraint.RelativeToParent((parent) =>
+                {
+                    return (this.PrimaryFloatingActionButtonHeight / 2);
+                }),
+                widthConstraint: Constraint.RelativeToParent((parent) =>
+                {
+                    return (parent.Width);
+                }),
+                heightConstraint: Constraint.Constant(config.TitleHeightRequest + (this.PrimaryFloatingActionButtonHeight / 2)));
+            _titleRelativeLayout.HeightRequest = config.TitleHeightRequest + (this.PrimaryFloatingActionButtonHeight / 2);
+
+
+            // PrimaryFloatingActionButton section
+            if (config.PrimaryFloatingActionButton != null)
+            {
+                _primaryFloatingActionButton = config.PrimaryFloatingActionButton;
+                _primaryFloatingActionButton.WidthRequest = (config.PrimaryFloatingActionButtonWidth > 0) ? config.PrimaryFloatingActionButtonWidth : DefaultFloatingActionButtonWidth;
+                _primaryFloatingActionButton.HeightRequest = (config.PrimaryFloatingActionButtonHeight > 0) ? config.PrimaryFloatingActionButtonHeight : DefaultFloatingActionButtonHeight;
+
+                if (config.PrimaryFloatingActionButton_TapGesture_Tapped != null)
+                {
+                    TapGestureRecognizer primaryFloatingActionButton_TapGesture = new TapGestureRecognizer();
+                    primaryFloatingActionButton_TapGesture.Tapped += config.PrimaryFloatingActionButton_TapGesture_Tapped;
+                    _primaryFloatingActionButton.GestureRecognizers.Add(primaryFloatingActionButton_TapGesture);
+                }
+
+                _titleRelativeLayout.Children.Add(_primaryFloatingActionButton,
+                    xConstraint: Constraint.RelativeToParent((parent) =>
+                    {
+                        return (parent.Width - (_primaryFloatingActionButton.WidthRequest * 1.5));
+                    }),
+                    yConstraint: Constraint.Constant(0)
+                );
+            }
+
+            // SecondaryFloatingActionButton section
+            if (config.SecondaryFloatingActionButton != null)
+            {
+                _secondaryFloatingActionButton = config.SecondaryFloatingActionButton;
+                _secondaryFloatingActionButton.WidthRequest = (config.SecondaryFloatingActionButtonWidth > 0) ? config.SecondaryFloatingActionButtonWidth : DefaultFloatingActionButtonWidth;
+                _secondaryFloatingActionButton.HeightRequest = (config.SecondaryFloatingActionButtonHeight > 0) ? config.SecondaryFloatingActionButtonHeight : DefaultFloatingActionButtonHeight;
+
+                if (config.SecondaryFloatingActionButton_TapGesture_Tapped != null)
+                {
+                    TapGestureRecognizer secondaryFloatingActionButton_TapGesture = new TapGestureRecognizer();
+                    secondaryFloatingActionButton_TapGesture.Tapped += config.SecondaryFloatingActionButton_TapGesture_Tapped;
+                    _secondaryFloatingActionButton.GestureRecognizers.Add(secondaryFloatingActionButton_TapGesture);
+                }
+                
+                //double yConstraint = (config.SecondaryFloatingActionButtonHeight > 0) ? (config.SecondaryFloatingActionButtonHeight * DefaultFloatingButtonSpaceFactor) : DefaultFloatingActionButtonHeight;
+                _titleRelativeLayout.Children.Add(_secondaryFloatingActionButton,
+                    xConstraint: Constraint.RelativeToParent((parent) =>
+                    {
+                        return (parent.Width - (_secondaryFloatingActionButton.WidthRequest * 1.5));
+                    }),
+                    yConstraint: Constraint.Constant(config.SecondaryFloatingActionButtonMarginTop)
+                );
+            }
+
+
+            _titleStackLayout.Children.Add(config.TitleView);
+
+
+            _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
+            _bodyStackLayout.Children.Add(config.BodyView);
+        }
+        private void ApplyConfigToPicturePanel(SlidingPanelConfig config)
+        {
+            if (config.PictureImage != null)
+            {
+                StackLayout pictureControlStackLayout = new StackLayout();
+                pictureControlStackLayout.Orientation = StackOrientation.Horizontal;
+                pictureControlStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+
+                TapGestureRecognizer pictureControlTapGesture = new TapGestureRecognizer();
+                pictureControlTapGesture.Tapped += TapGesture_Tapped;
+                pictureControlStackLayout.GestureRecognizers.Add(pictureControlTapGesture);
+
+                PanGestureRecognizer pictureControlPanGesture = new PanGestureRecognizer();
+                pictureControlPanGesture.PanUpdated += PanGesture_PanUpdated;
+                pictureControlStackLayout.GestureRecognizers.Add(pictureControlPanGesture);
+
+
+                Image topLeftButtonImage = config.TopLeftButtonImage;
+                if (topLeftButtonImage != null)
+                {
+                    pictureControlStackLayout.Children.Add(topLeftButtonImage);
+                }
+
+                Image topRightButtonImage = config.TopRightButtonImage;
+                if (topRightButtonImage != null)
+                {
+                    topRightButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
+                    pictureControlStackLayout.Children.Add(topRightButtonImage);
+                }
+
+                _pictureMainStackLayout = new StackLayout();
+                _pictureMainStackLayout.BackgroundColor = config.PictureBackgroundColor;
+                _pictureMainStackLayout.Orientation = StackOrientation.Vertical;
+                _pictureMainStackLayout.Children.Add(pictureControlStackLayout);
+
+                _pictureImage = config.PictureImage;
+                PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
+                pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
+                _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+
+                _pictureMainStackLayout.Children.Add(_pictureImage);
+
+                Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
+                _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
+            }
         }
         #endregion
 
@@ -348,8 +461,8 @@ namespace DK.SlidingPanel.Interface
                 double maxDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
 
                 double midDrawerPosition = maxDrawerPosition / 2;
-                double topMidDrawerPosition = maxDrawerPosition / 8;
-                double bottomMidDrawerPosition = maxDrawerPosition * 7 / 8;
+                double topMidDrawerPosition = maxDrawerPosition / 10;
+                double bottomMidDrawerPosition = maxDrawerPosition * 9 / 10;
 
                 double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
 
@@ -376,9 +489,8 @@ namespace DK.SlidingPanel.Interface
         #region ISlidingPanel Implementations
         public void HidePanel(uint length = 700)
         {
-            double overlayButtonImageHeight = (_config.OverlayButtonImageHeight > 0) ? _config.OverlayButtonImageHeight : 0;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (overlayButtonImageHeight / 2); 
+            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this.PrimaryFloatingActionButtonHeight / 2); 
 
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             
@@ -402,13 +514,20 @@ namespace DK.SlidingPanel.Interface
             if (IsPictureImageNull == false)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height + (this.PrimaryFloatingActionButtonHeight / 2); 
 
                 _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             }
+
+            _titleRelativeLayout.BackgroundColor = Color.Transparent;
         }
         public void ShowExpandedPanel(uint length = 700)
         {
+            if (IsPictureImageNull == false)
+            {
+                _titleRelativeLayout.BackgroundColor = _pictureMainStackLayout.BackgroundColor;
+            }
+
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerExpandedPosition.Y = 0;
@@ -428,88 +547,15 @@ namespace DK.SlidingPanel.Interface
         {
             this._config = config;
 
+            _mainStackLayout.Children.Add(config.MainStackLayout);
+
+            ApplyConfigToTitleBodyPanel(config);
+
+            ApplyConfigToPicturePanel(config);
+
             if (config.IsExpandable == true)
             {
                 InitGestures();
-            }
-
-            _titleRelativeLayout.BackgroundColor = config.TitleBackgroundColor;
-            _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
-            
-            if (config.OverlayButtonImage != null)
-            {
-                // Button section
-                _overlayButtonImage = config.OverlayButtonImage;
-                _overlayButtonImage.WidthRequest = (config.OverlayButtonImageWidth > 0) ? config.OverlayButtonImageWidth : DefaultButtonImageWidth;
-                _overlayButtonImage.HeightRequest = (config.OverlayButtonImageHeight > 0) ? config.OverlayButtonImageHeight : DefaultButtonImageHeight;
-
-                if (config.OverlayButtonImageTapGesture_Tapped != null)
-                {
-                    TapGestureRecognizer overlayButtonImageTapGesture = new TapGestureRecognizer();
-                    overlayButtonImageTapGesture.Tapped += config.OverlayButtonImageTapGesture_Tapped;
-                    _overlayButtonImage.GestureRecognizers.Add(overlayButtonImageTapGesture);
-                }
-
-                _titleRelativeLayout.Children.Add(_overlayButtonImage,
-                    xConstraint: Constraint.RelativeToParent((parent) =>
-                    {
-                        return (parent.Width - (_overlayButtonImage.WidthRequest * 1.5));
-                    }),
-                    yConstraint: Constraint.RelativeToParent((parent) =>
-                    {
-                        return (-1 * _overlayButtonImage.HeightRequest / 2);
-                    })
-                );
-            }
-
-            _mainStackLayout.Children.Add(config.MainStackLayout);
-            _titleStackLayout.Children.Add(config.TitleView);
-            _titleRelativeLayout.HeightRequest = config.TitleHeightRequest;
-
-            _bodyStackLayout.Children.Add(config.BodyView);
-
-            if (config.PictureImage != null)
-            {
-                StackLayout pictureControlStackLayout = new StackLayout();
-                pictureControlStackLayout.Orientation = StackOrientation.Horizontal;
-                pictureControlStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
-
-                TapGestureRecognizer pictureControlTapGesture = new TapGestureRecognizer();
-                pictureControlTapGesture.Tapped += TapGesture_Tapped;
-                pictureControlStackLayout.GestureRecognizers.Add(pictureControlTapGesture);
-
-                PanGestureRecognizer pictureControlPanGesture = new PanGestureRecognizer();
-                pictureControlPanGesture.PanUpdated += PanGesture_PanUpdated;
-                pictureControlStackLayout.GestureRecognizers.Add(pictureControlPanGesture);
-
-
-                Image topLeftButtonImage = config.TopLeftButtonImage;
-                if (topLeftButtonImage != null)
-                {
-                    pictureControlStackLayout.Children.Add(topLeftButtonImage);
-                }
-
-                Image topRightButtonImage = config.TopRightButtonImage;
-                if (topRightButtonImage != null)
-                {
-                    topRightButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
-                    pictureControlStackLayout.Children.Add(topRightButtonImage);
-                }
-
-                StackLayout pictureMainStackLayout = new StackLayout();
-                pictureMainStackLayout.BackgroundColor = config.PictureBackgroundColor;
-                pictureMainStackLayout.Orientation = StackOrientation.Vertical;
-                pictureMainStackLayout.Children.Add(pictureControlStackLayout);
-                
-                _pictureImage = config.PictureImage;
-                PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
-                _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
-
-                pictureMainStackLayout.Children.Add(_pictureImage);
-
-                Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
-                _pictureAbsoluteLayout.Children.Add(pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
             }
         }
         #endregion

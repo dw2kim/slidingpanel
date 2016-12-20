@@ -17,12 +17,20 @@ namespace Samples.ViewModels
         private const string PlayButtonImageFileName = "PlayButton48.png";
         private const string StopButtonImageFileName = "StopButton48.png";
 
+        private const string FavoriteImageFileName = "Icons/ic_star_48pt.png.png";
+        private const string NotFavoriteImageFileName = "Icons/ic_star_border_black_48dp_1x.png.png";
+
         [Reactive]
         public bool IsPlaying { get; set; }
+        [Reactive]
+        public bool IsFavorite { get; set; }
 
         [Reactive]
         //public FileImageSource PlayButtonImage { get; set; }
         public ImageSource PlayButtonImage { get; set; }
+
+        [Reactive]
+        public ImageSource FavoriteButtonImage { get; set; }
 
         public ICommand PlayCommand { get; set; }
 
@@ -32,6 +40,7 @@ namespace Samples.ViewModels
         public TestViewModel()
         {
             this.IsPlaying = false;
+            this.IsFavorite = false;
 
             this.ShowCommand = new Command((param) =>
             {
@@ -57,6 +66,13 @@ namespace Samples.ViewModels
                 {
                     string imageFileName = (isPlaying == true) ? StopButtonImageFileName : PlayButtonImageFileName;
                     PlayButtonImage = ImageSource.FromFile(imageFileName);
+                });
+
+            this.WhenAnyValue(x => x.IsFavorite)
+                .Subscribe(isFavorite =>
+                {
+                    string imageFileName = (isFavorite == true) ? FavoriteImageFileName : NotFavoriteImageFileName;
+                    FavoriteButtonImage = ImageSource.FromFile(imageFileName); 
                 });
         }
 

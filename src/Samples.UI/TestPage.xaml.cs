@@ -97,7 +97,7 @@ namespace Samples.UI
             titleStackLayout.Children.Add(title1);
             titleStackLayout.Children.Add(title2);
             config.TitleView = titleStackLayout;
-            config.TitleHeightRequest = 60;
+            config.TitleHeightRequest = 80;
             config.TitleBackgroundColor = Color.Green;
 
 
@@ -107,13 +107,20 @@ namespace Samples.UI
             config.BodyBackgroundColor = Color.Blue;
 
 
-            Image overlayButtonImage = new Image();
-            overlayButtonImage.SetBinding(Image.SourceProperty, "PlayButtonImage");
-            config.OverlayButtonImage = overlayButtonImage;
-            config.OverlayButtonImageHeight = 60;
-            config.OverlayButtonImageWidth = 60;
-            config.OverlayButtonImageTapGesture_Tapped = ButtonImageTapGesture_Tapped;
+            Image primaryFloatingActionButton = new Image();
+            primaryFloatingActionButton.SetBinding(Image.SourceProperty, "PlayButtonImage");
+            config.PrimaryFloatingActionButton = primaryFloatingActionButton;
+            config.PrimaryFloatingActionButtonHeight = 48;
+            config.PrimaryFloatingActionButtonWidth = 48;
+            config.PrimaryFloatingActionButton_TapGesture_Tapped = PlayButton_TapGesture_Tapped;
 
+            Image secondaryFloatingActionButton = new Image();
+            secondaryFloatingActionButton.SetBinding(Image.SourceProperty, "FavoriteButtonImage");
+            config.SecondaryFloatingActionButton = secondaryFloatingActionButton;
+            config.SecondaryFloatingActionButtonHeight = 48;
+            config.SecondaryFloatingActionButtonWidth = 48;
+            config.SecondaryFloatingActionButtonMarginTop = config.PrimaryFloatingActionButtonHeight + 6;
+            config.SecondaryFloatingActionButton_TapGesture_Tapped = FavoriteButton_TapGesture_Tapped;
 
             Image pictureImage = new Image();
             pictureImage.Source = ImageSource.FromFile("honda.jpg");
@@ -132,11 +139,6 @@ namespace Samples.UI
             backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
             config.TopLeftButtonImage = backButtonImage;
 
-            Image favoriteButtonImage = new Image();
-            favoriteButtonImage.Source = ImageSource.FromFile("ic_star_border_black_48dp_1x.png");
-            favoriteButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
-            config.TopRightButtonImage = favoriteButtonImage;
-
             spTest.ApplyConfig(config);
         }
 
@@ -148,11 +150,15 @@ namespace Samples.UI
         #endregion
 
         #region Gesture Implemenetations
-        private void ButtonImageTapGesture_Tapped(object sender, EventArgs e)
+        private void PlayButton_TapGesture_Tapped(object sender, EventArgs e)
         {
             this.ViewModel.IsPlaying = !(this.ViewModel.IsPlaying);
         }
-        
+        private void FavoriteButton_TapGesture_Tapped(object sender, EventArgs e)
+        {
+            this.ViewModel.IsFavorite = !(this.ViewModel.IsFavorite);
+        }
+
         private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
         {
             spTest.HidePanel();
