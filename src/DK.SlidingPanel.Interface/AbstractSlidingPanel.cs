@@ -12,6 +12,8 @@ namespace DK.SlidingPanel.Interface
     public class AbstractSlidingPanel : AbsoluteLayout, ISlidingPanel
     {
         #region Constants
+        private const double DefaultPanelRatio = 0.5;
+
         private const double TitleMinimumHeight = 50;
         private const double BodyMinimumHeight = 50;
 
@@ -105,13 +107,13 @@ namespace DK.SlidingPanel.Interface
 
             // Picture
             _pictureAbsoluteLayout = new AbsoluteLayout();
-            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, 0.5));
+            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, DefaultPanelRatio));
             AbsoluteLayout.SetLayoutFlags(_pictureAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_pictureAbsoluteLayout);
             
             // Drawer
             _slidingPanelAbsoluteLayout = new AbsoluteLayout();
-            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, 0.5));
+            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, DefaultPanelRatio));
             AbsoluteLayout.SetLayoutFlags(_slidingPanelAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_slidingPanelAbsoluteLayout);
             
@@ -546,6 +548,9 @@ namespace DK.SlidingPanel.Interface
         public void ApplyConfig(SlidingPanelConfig config)
         {
             this._config = config;
+
+            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (1- config.PanelRatio)));
+            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, config.PanelRatio));
 
             _mainStackLayout.Children.Add(config.MainStackLayout);
 

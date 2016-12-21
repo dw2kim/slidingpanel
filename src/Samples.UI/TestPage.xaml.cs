@@ -83,6 +83,7 @@ namespace Samples.UI
             SlidingPanelConfig config = new SlidingPanelConfig();
             config.MainStackLayout = mainStackLayout;
 
+            config.PanelRatio = 0.6;
 
             StackLayout titleStackLayout = new StackLayout();
             titleStackLayout.Orientation = StackOrientation.Vertical;
@@ -161,7 +162,7 @@ namespace Samples.UI
 
         private void BackButtonTapGesture_Tapped(object sender, EventArgs e)
         {
-            spTest.HidePanel();
+            spTest.ShowCollapsedPanel();
         }
         #endregion
     }

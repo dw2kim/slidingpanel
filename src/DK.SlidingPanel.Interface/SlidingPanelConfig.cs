@@ -18,6 +18,8 @@ namespace DK.SlidingPanel.Interface
         {
             IsExpandable = true;
 
+            PanelRatio = 0.5;
+
             PrimaryFloatingActionButtonHeight = 0;
             PrimaryFloatingActionButtonWidth = 0;
 
@@ -30,6 +32,7 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region Public Properties
+        public double PanelRatio { get; set; }
         public bool IsExpandable { get; set; }
 
         public Color TitleBackgroundColor { get; set; }
