@@ -23,8 +23,6 @@ namespace Samples.UI
         public TestPage()
         {
             InitializeComponent();
-
-            //SetupSlidingPanel();
         }
         #endregion
 
@@ -81,7 +79,7 @@ namespace Samples.UI
 
 
             SlidingPanelConfig config = new SlidingPanelConfig();
-            config.MainStackLayout = mainStackLayout;
+            config.MainView = mainStackLayout;
 
             config.PanelRatio = 0.6;
 
@@ -133,7 +131,17 @@ namespace Samples.UI
             config.PictureBackgroundColor = Color.White;
             
             Image backButtonImage = new Image();
-            backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_48pt.png");
+            Device.OnPlatform(
+                iOS: () =>
+                {
+                    backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_48pt.png");
+                },
+                Android: () =>
+                {
+                    backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_black_48dp.png");
+                }
+            );
+            
 
             TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
             backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;

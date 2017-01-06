@@ -24,13 +24,13 @@ namespace Samples.UI
                 });
             });
 
-            btnNotExpandablePanelPage.Clicked += ((s, e) =>
-            {
-                Navigation.PushAsync(new NotExpandablePanelPage
-                {
-                    BindingContext = new NotExpandablePanelViewModel()
-                });
-            });
+            //btnNotExpandablePanelPage.Clicked += ((s, e) =>
+            //{
+            //    Navigation.PushAsync(new NotExpandablePanelPage
+            //    {
+            //        BindingContext = new NotExpandablePanelViewModel()
+            //    });
+            //});
         }
     }
 }

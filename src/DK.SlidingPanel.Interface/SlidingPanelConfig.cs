@@ -17,6 +17,7 @@ namespace DK.SlidingPanel.Interface
         public SlidingPanelConfig()
         {
             IsExpandable = true;
+            IsPanSupport = true;
 
             PanelRatio = 0.5;
 
@@ -34,6 +35,7 @@ namespace DK.SlidingPanel.Interface
         #region Public Properties
         public double PanelRatio { get; set; }
         public bool IsExpandable { get; set; }
+        public bool IsPanSupport { get; set; }
 
         public Color TitleBackgroundColor { get; set; }
         public Color BodyBackgroundColor { get; set; }
@@ -52,7 +54,7 @@ namespace DK.SlidingPanel.Interface
         public EventHandler SecondaryFloatingActionButton_TapGesture_Tapped { get; set; }
         public double SecondaryFloatingActionButtonMarginTop { get; set; }
 
-        public View MainStackLayout { get; set; }
+        public View MainView { get; set; }
         public View TitleView { get; set; }
         public View BodyView { get; set; }
 

@@ -20,13 +20,9 @@ namespace Samples.UI {
         private global::Xamarin.Forms.Button btnTestPage;
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::Xamarin.Forms.Button btnNotExpandablePanelPage;
-        
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             this.LoadFromXaml(typeof(MainPage));
             btnTestPage = this.FindByName<global::Xamarin.Forms.Button>("btnTestPage");
-            btnNotExpandablePanelPage = this.FindByName<global::Xamarin.Forms.Button>("btnNotExpandablePanelPage");
         }
     }
 }

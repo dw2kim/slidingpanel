@@ -17,8 +17,11 @@ namespace Samples.ViewModels
         private const string PlayButtonImageFileName = "PlayButton48.png";
         private const string StopButtonImageFileName = "StopButton48.png";
 
-        private const string FavoriteImageFileName = "Icons/ic_star_48pt.png.png";
-        private const string NotFavoriteImageFileName = "Icons/ic_star_border_black_48dp_1x.png.png";
+        private const string FavoriteImageFileName_iOS = "Icons/ic_star_48pt.png";
+        private const string FavoriteImageFileName_Android = "Icons/ic_star_black_48dp.png";
+
+        private const string NotFavoriteImageFileName_iOS = "Icons/ic_star_border_black_48dp_1x.png";
+        private const string NotFavoriteImageFileName_Android = "Icons/ic_star_48pt.png";
 
         [Reactive]
         public bool IsPlaying { get; set; }
@@ -71,7 +74,19 @@ namespace Samples.ViewModels
             this.WhenAnyValue(x => x.IsFavorite)
                 .Subscribe(isFavorite =>
                 {
-                    string imageFileName = (isFavorite == true) ? FavoriteImageFileName : NotFavoriteImageFileName;
+                    string favoriteImageFileName = string.Empty;
+                    Device.OnPlatform(
+                        iOS: () => { favoriteImageFileName = FavoriteImageFileName_iOS; },
+                        Android: () => { favoriteImageFileName = FavoriteImageFileName_Android; }
+                        );
+
+                    string notFavoriteImageFileName = string.Empty;
+                    Device.OnPlatform(
+                        iOS: () => { notFavoriteImageFileName = NotFavoriteImageFileName_iOS; },
+                        Android: () => { notFavoriteImageFileName = NotFavoriteImageFileName_Android; }
+                        );
+
+                    string imageFileName = (isFavorite == true) ? favoriteImageFileName : notFavoriteImageFileName;
                     FavoriteButtonImage = ImageSource.FromFile(imageFileName); 
                 });
         }

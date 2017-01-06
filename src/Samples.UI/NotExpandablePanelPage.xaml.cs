@@ -83,7 +83,7 @@ namespace Samples.UI
 
 
             SlidingPanelConfig config = new SlidingPanelConfig();
-            config.MainStackLayout = mainStackLayout;
+            config.MainView = mainStackLayout;
 
 
             StackLayout titleStackLayout = new StackLayout();
