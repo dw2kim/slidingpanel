@@ -122,26 +122,18 @@ namespace Samples.UI
             config.SecondaryFloatingActionButton_TapGesture_Tapped = FavoriteButton_TapGesture_Tapped;
 
             Image pictureImage = new Image();
-            pictureImage.Source = ImageSource.FromFile("honda.jpg");
             pictureImage.Aspect = Aspect.AspectFill;
             pictureImage.VerticalOptions = LayoutOptions.StartAndExpand;
             pictureImage.HorizontalOptions = LayoutOptions.StartAndExpand;
+            pictureImage.SetBinding(Image.SourceProperty, "HondaImage");
+            
+
             config.PictureImage = pictureImage;
 
             config.PictureBackgroundColor = Color.White;
             
             Image backButtonImage = new Image();
-            Device.OnPlatform(
-                iOS: () =>
-                {
-                    backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_48pt.png");
-                },
-                Android: () =>
-                {
-                    backButtonImage.Source = ImageSource.FromFile("ic_keyboard_arrow_left_black_48dp.png");
-                }
-            );
-            
+            backButtonImage.SetBinding(Image.SourceProperty, "BackButtonImage");            
 
             TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
             backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;

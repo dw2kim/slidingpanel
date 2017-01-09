@@ -386,20 +386,9 @@ namespace DK.SlidingPanel.Interface
         {
             if (_isPanRunning == true)
             {
-                //_isPanRunning = false;
+                _isPanRunning = false;
 
-                //double minDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
-                //double midDrawerPosition = minDrawerPosition / 2;
-                //double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
-
-                //if (currentPosition > midDrawerPosition)
-                //{
-                //    ShowCollapsedPanel();
-                //}
-                //else
-                //{
-                //    ShowExpandedPanel();
-                //}
+                CollapseOrExpandSmartly();
             }
             else
             {
@@ -469,9 +458,11 @@ namespace DK.SlidingPanel.Interface
 
             if (e.StatusType == GestureStatus.Completed)
             {
-                _isPanRunning = false;
-
-                CollapseOrExpandSmartly();
+                if (_isCollapsing == true)
+                {
+                    _isPanRunning = false;
+                    CollapseOrExpandSmartly();
+                }
             }
         }
         private void PanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
