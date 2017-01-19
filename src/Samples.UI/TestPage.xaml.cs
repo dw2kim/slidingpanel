@@ -71,18 +71,43 @@ namespace Samples.UI
         private void SetupSlidingPanel()
         {
             InitGoogleMap();
+            
 
+            SlidingPanelConfig config = new SlidingPanelConfig();
+            config.MainView = GetMainStackLayout();
+
+            config.PanelRatio = 0.6;
+
+            config.TitleView = GetTitleStackLayout();
+            config.TitleHeightRequest = 80;
+            config.TitleBackgroundColor = Color.Green;
+            
+            config.BodyView = GetBodyStackLayout();
+            config.BodyBackgroundColor = Color.Blue;
+
+            config.PrimaryFloatingActionButton = GetPrimaryFloatingActionButton();
+            config.SecondaryFloatingActionButton = GetSecondaryFloatingActionButton();
+
+            config.PictureBackgroundColor = Color.White;
+            config.HeaderBackgroundColor = Color.White;
+
+            config.PictureImage = GetHondaPictureImage();
+            config.HeaderLeftButton = GetBackButtonImage();
+
+            spTest.ApplyConfig(config);
+        }
+
+        private StackLayout GetMainStackLayout()
+        {
             StackLayout mainStackLayout = new StackLayout();
             mainStackLayout.VerticalOptions = LayoutOptions.FillAndExpand;
             mainStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
             mainStackLayout.Children.Add(GoogleMapInstance);
 
-
-            SlidingPanelConfig config = new SlidingPanelConfig();
-            config.MainView = mainStackLayout;
-
-            config.PanelRatio = 0.6;
-
+            return (mainStackLayout);
+        }
+        private StackLayout GetTitleStackLayout()
+        {
             StackLayout titleStackLayout = new StackLayout();
             titleStackLayout.Orientation = StackOrientation.Vertical;
             Label title1 = new Label
@@ -95,52 +120,65 @@ namespace Samples.UI
             };
             titleStackLayout.Children.Add(title1);
             titleStackLayout.Children.Add(title2);
-            config.TitleView = titleStackLayout;
-            config.TitleHeightRequest = 80;
-            config.TitleBackgroundColor = Color.Green;
 
-
+            return (titleStackLayout);
+        }
+        private StackLayout GetBodyStackLayout()
+        {
             StackLayout bodyStackLayout = new StackLayout();
             bodyStackLayout.Children.Add(new Label { Text = "Test Body y" });
-            config.BodyView = bodyStackLayout;
-            config.BodyBackgroundColor = Color.Blue;
 
-
+            return (bodyStackLayout);
+        }
+        private Image GetPrimaryFloatingActionButton()
+        {
             Image primaryFloatingActionButton = new Image();
+            primaryFloatingActionButton.HeightRequest = 48;
+            primaryFloatingActionButton.WidthRequest = 48;
             primaryFloatingActionButton.SetBinding(Image.SourceProperty, "PlayButtonImage");
-            config.PrimaryFloatingActionButton = primaryFloatingActionButton;
-            config.PrimaryFloatingActionButtonHeight = 48;
-            config.PrimaryFloatingActionButtonWidth = 48;
-            config.PrimaryFloatingActionButton_TapGesture_Tapped = PlayButton_TapGesture_Tapped;
 
+            TapGestureRecognizer primaryFloatingActionButton_TapGesture = new TapGestureRecognizer();
+            primaryFloatingActionButton_TapGesture.Tapped += PlayButton_TapGesture_Tapped;
+            primaryFloatingActionButton.GestureRecognizers.Add(primaryFloatingActionButton_TapGesture);
+
+            return (primaryFloatingActionButton);
+        }
+        private Image GetSecondaryFloatingActionButton()
+        {
             Image secondaryFloatingActionButton = new Image();
+            secondaryFloatingActionButton.HeightRequest = 48;
+            secondaryFloatingActionButton.WidthRequest = 48;
+            secondaryFloatingActionButton.Margin = new Thickness(0, 6, 0, 0);
             secondaryFloatingActionButton.SetBinding(Image.SourceProperty, "FavoriteButtonImage");
-            config.SecondaryFloatingActionButton = secondaryFloatingActionButton;
-            config.SecondaryFloatingActionButtonHeight = 48;
-            config.SecondaryFloatingActionButtonWidth = 48;
-            config.SecondaryFloatingActionButtonMarginTop = config.PrimaryFloatingActionButtonHeight + 6;
-            config.SecondaryFloatingActionButton_TapGesture_Tapped = FavoriteButton_TapGesture_Tapped;
 
+            TapGestureRecognizer secondaryFloatingActionButton_TapGesture = new TapGestureRecognizer();
+            secondaryFloatingActionButton_TapGesture.Tapped += FavoriteButton_TapGesture_Tapped;
+            secondaryFloatingActionButton.GestureRecognizers.Add(secondaryFloatingActionButton_TapGesture);
+
+            return (secondaryFloatingActionButton);
+        }
+        private Image GetHondaPictureImage()
+        {
             Image pictureImage = new Image();
             pictureImage.Aspect = Aspect.AspectFill;
             pictureImage.VerticalOptions = LayoutOptions.StartAndExpand;
             pictureImage.HorizontalOptions = LayoutOptions.StartAndExpand;
             pictureImage.SetBinding(Image.SourceProperty, "HondaImage");
-            
 
-            config.PictureImage = pictureImage;
-
-            config.PictureBackgroundColor = Color.White;
-            
+            return (pictureImage);
+        }
+        private Image GetBackButtonImage()
+        {
             Image backButtonImage = new Image();
-            backButtonImage.SetBinding(Image.SourceProperty, "BackButtonImage");            
+            backButtonImage.HeightRequest = 48;
+            backButtonImage.WidthRequest = 48;
+            backButtonImage.SetBinding(Image.SourceProperty, "BackButtonImage");
 
             TapGestureRecognizer backButtonTapGesture = new TapGestureRecognizer();
             backButtonTapGesture.Tapped += BackButtonTapGesture_Tapped;
             backButtonImage.GestureRecognizers.Add(backButtonTapGesture);
-            config.TopLeftButtonImage = backButtonImage;
 
-            spTest.ApplyConfig(config);
+            return (backButtonImage);
         }
 
         private int HideNavigationBar()

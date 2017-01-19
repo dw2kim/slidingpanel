@@ -106,10 +106,16 @@ namespace Samples.UI
 
             Image overlayButtonImage = new Image();
             overlayButtonImage.SetBinding(Image.SourceProperty, "PlayButtonImage");
+            overlayButtonImage.HeightRequest = 60;
+            overlayButtonImage.WidthRequest= 60;
+            TapGestureRecognizer primaryFloatingActionButton_TapGesture = new TapGestureRecognizer();
+            primaryFloatingActionButton_TapGesture.Tapped += ButtonImageTapGesture_Tapped;
+            overlayButtonImage.GestureRecognizers.Add(primaryFloatingActionButton_TapGesture);
+
             config.PrimaryFloatingActionButton = overlayButtonImage;
-            config.PrimaryFloatingActionButtonHeight = 60;
-            config.PrimaryFloatingActionButtonWidth = 60;
-            config.PrimaryFloatingActionButton_TapGesture_Tapped = ButtonImageTapGesture_Tapped;
+            //config.PrimaryFloatingActionButtonHeight = 60;
+            //config.PrimaryFloatingActionButtonWidth = 60;
+            //config.PrimaryFloatingActionButton_TapGesture_Tapped = ButtonImageTapGesture_Tapped;
 
 
             config.IsExpandable = false;

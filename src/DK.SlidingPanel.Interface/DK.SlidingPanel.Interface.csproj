@@ -38,6 +38,7 @@
     <Compile Include="AbstractSlidingPanel.cs" />
     <Compile Include="ISlidingPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlidingPanelState.cs" />
     <Compile Include="SlidingPanelConfig.cs" />
   </ItemGroup>
   <ItemGroup>
