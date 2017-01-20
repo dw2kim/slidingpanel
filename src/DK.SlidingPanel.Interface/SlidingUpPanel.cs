@@ -265,17 +265,17 @@ namespace DK.SlidingPanel.Interface
                 }
 
 
-                View topLeftButtonImage = config.HeaderLeftButton;
-                if (topLeftButtonImage != null)
+                View topLeftButton = config.HeaderLeftButton;
+                if (topLeftButton != null)
                 {
-                    _headerStackLayout.Children.Add(topLeftButtonImage);
+                    _headerStackLayout.Children.Add(topLeftButton);
                 }
 
-                Image topRightButtonImage = config.TopRightButtonImage;
-                if (topRightButtonImage != null)
+                View topRightButton = config.HeaderRightButton;
+                if (topRightButton != null)
                 {
-                    topRightButtonImage.HorizontalOptions = LayoutOptions.EndAndExpand;
-                    _headerStackLayout.Children.Add(topRightButtonImage);
+                    topRightButton.HorizontalOptions = LayoutOptions.EndAndExpand;
+                    _headerStackLayout.Children.Add(topRightButton);
                 }
 
                 _pictureMainStackLayout = new StackLayout();
@@ -468,13 +468,10 @@ namespace DK.SlidingPanel.Interface
 
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _currentSlidePanelState = SlidingPanelState.Hidden;
-
-            if (IsPictureImageNull == false)
-            {
-                Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
-                _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
-            }
+            
+            Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
+            pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+            _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
         }
         public void ShowCollapsedPanel(uint length = 700)
         {

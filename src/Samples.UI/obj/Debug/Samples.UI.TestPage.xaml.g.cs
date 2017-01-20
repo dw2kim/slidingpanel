@@ -17,12 +17,12 @@ namespace Samples.UI {
     public partial class TestPage : global::Xamarin.Forms.ContentPage {
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
-        private global::DK.SlidingPanel.Interface.AbstractSlidingPanel spTest;
+        private global::DK.SlidingPanel.Interface.SlidingUpPanel spTest;
         
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
             this.LoadFromXaml(typeof(TestPage));
-            spTest = this.FindByName<global::DK.SlidingPanel.Interface.AbstractSlidingPanel>("spTest");
+            spTest = this.FindByName<global::DK.SlidingPanel.Interface.SlidingUpPanel>("spTest");
         }
     }
 }

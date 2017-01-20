@@ -48,7 +48,7 @@ namespace DK.SlidingPanel.Interface
         public Image PictureImage { get; set; }
 
         public View HeaderLeftButton { get; set; }
-        public Image TopRightButtonImage { get; set; }
+        public View HeaderRightButton { get; set; }
 
         public Func<int> FunctionAfterTitleTapped { get; set; }
         #endregion
