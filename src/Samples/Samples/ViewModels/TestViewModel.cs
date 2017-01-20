@@ -110,14 +110,14 @@ namespace Samples.ViewModels
 
             this.ShowCommand = new Command((param) =>
             {
-                AbstractSlidingPanel spTest = param as AbstractSlidingPanel;
+                SlidingUpPanel spTest = param as SlidingUpPanel;
 
                 spTest.ShowCollapsedPanel();
             });
 
             this.HideCommand = new Command((param) =>
             {
-                AbstractSlidingPanel spTest = param as AbstractSlidingPanel;
+                SlidingUpPanel spTest = param as SlidingUpPanel;
 
                 spTest.HidePanel();
             });

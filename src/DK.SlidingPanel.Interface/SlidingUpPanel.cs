@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace DK.SlidingPanel.Interface
 {
-    public class AbstractSlidingPanel : AbsoluteLayout, ISlidingPanel
+    public class SlidingUpPanel : AbsoluteLayout, ISlidingPanel
     {
         #region Constants
         private const double DefaultPanelRatio = 0.6;
@@ -52,7 +52,7 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region Constructors
-        public AbstractSlidingPanel() : base()
+        public SlidingUpPanel() : base()
         {
             InitViews();
             InitFunctions();
@@ -67,7 +67,7 @@ namespace DK.SlidingPanel.Interface
                     }
                 });
         }
-        public AbstractSlidingPanel(SlidingPanelConfig config) : this()
+        public SlidingUpPanel(SlidingPanelConfig config) : this()
         {
             ApplyConfig(config);
         }

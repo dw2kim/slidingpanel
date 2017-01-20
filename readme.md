@@ -8,11 +8,11 @@ Supports only Xamarin.Forms.
 ### Features
 
 ## Support Platforms
-Xamarin.Forms Only
+Xamarin.Forms Only**
 
 ## Setup
 * First, simply reference the nuget package in your Xamrin.Forms projects.
-* Second, initialize AbstractSlidingPanel instacen either in Xaml or C#.
+* Second, initialize SlidingUpPanel instance either in Xaml or C#.
 * Lastly, apply the SlidingPanelConfig for your customizations.
 
 ## Screenshots
@@ -35,8 +35,8 @@ Xamarin.Forms Only
              xmlns:DK="clr-namespace:DK.SlidingPanel.Interface;assembly=DK.SlidingPanel.Interface"
              xmlns:local="clr-namespace:Samples.UI;assembly=Samples.UI"
              x:Class="Samples.UI.TestPage">
-    <DK:AbstractSlidingPanel x:Name="spTest">
-    </DK:AbstractSlidingPanel>
+    <DK:SlidingUpPanel x:Name="spTest">
+    </DK:SlidingUpPanel>
 </ContentPage>
 ```
 

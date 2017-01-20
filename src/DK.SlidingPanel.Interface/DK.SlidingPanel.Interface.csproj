@@ -8,8 +8,8 @@
     <ProjectGuid>{67F9D3A8-F71E-4428-913F-C37AE82CDB24}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DK.SlidingPanel.Interface</RootNamespace>
-    <AssemblyName>DK.SlidingPanel.Interface</AssemblyName>
+    <RootNamespace>DK.SlidingUpPanel.Interface</RootNamespace>
+    <AssemblyName>DK.SlidingUpPanel.Interface</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AbstractSlidingPanel.cs" />
+    <Compile Include="SlidingUpPanel.cs" />
     <Compile Include="ISlidingPanel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SlidingPanelState.cs" />

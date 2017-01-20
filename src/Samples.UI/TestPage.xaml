@@ -4,6 +4,6 @@
              xmlns:DK="clr-namespace:DK.SlidingPanel.Interface;assembly=DK.SlidingPanel.Interface"
              xmlns:local="clr-namespace:Samples.UI;assembly=Samples.UI"
              x:Class="Samples.UI.TestPage">
-    <DK:AbstractSlidingPanel x:Name="spTest">
-    </DK:AbstractSlidingPanel>
+    <DK:SlidingUpPanel x:Name="spTest">
+    </DK:SlidingUpPanel>
 </ContentPage>

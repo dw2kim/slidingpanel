@@ -2,17 +2,17 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.2.1</version>
+        <version>1.3.0</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Allows for a panel to be slided out from bottom of the screen for Xamarin.Forms pages</summary>
         <description>Allows for a panel to be slided out from bottom of the screen for Xamarin.Forms pages.
 			Here are all the layers of the sliding panel:
-				-> (Optional) Panel Control Layer (Back Button / Favorite Button)
+				-> (Optional) Header Control Layer (Back Button to collapse)
 				-> (Optional) Picture Layer 
 				-> Title Layer 
 				-> Body Layer
 				
-			
+		Please send an email for feedbacks.
         </description>
         <authors>Dae Won Kim</authors>
         <owners>Dae Won Kim</owners>
@@ -30,9 +30,12 @@
 		
         <releaseNotes>
 * New Version
+1.3.0
+- [feature] massive changes: rename/remove class name/properties
+- [fix] panning issue with iOS
+
 1.2.1
 - Enhanced the Tap and Pan gestures on both Android and iOS
-
 1.2.0
 - (Android) Fixed 'Laggy' Panning Gesture
 - (Android) Fixed Test page on Sample.Droid
