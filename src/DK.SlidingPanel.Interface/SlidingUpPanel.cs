@@ -13,12 +13,15 @@ namespace DK.SlidingPanel.Interface
 
         private const double DefaultFloatingActionButtonHeight = 0;
         private const double DefaultFloatingActionButtonWidth = 0;
+
+        private const double NavigationBarHeight = 39;
         #endregion
 
         #region Private Fields
         private bool _isCollapsing = false;
         private bool _isPanRunning = false;
         private SlidingPanelState _currentSlidePanelState = SlidingPanelState.Hidden;
+        private double _lastYMovement = 0;
 
         private bool _isFirst = true;
 
@@ -297,32 +300,16 @@ namespace DK.SlidingPanel.Interface
             }
         }
 
-        private void CollapseOrExpandSmartly()
+        private void CollapseOrExpand()
         {
-            double minDrawerPosition = 0;
-            double maxDrawerPosition = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
-
-            double midDrawerPosition = maxDrawerPosition / 2;
-            double topMidDrawerPosition = 0;
-            double bottomMidDrawerPosition = maxDrawerPosition;
-
-            double currentPosition = _slidingPanelAbsoluteLayout.TranslationY;
-
-            if (currentPosition >= minDrawerPosition && currentPosition < topMidDrawerPosition)
-            {
-                ShowExpandedPanel();
-            }
-            if (currentPosition >= topMidDrawerPosition && currentPosition < midDrawerPosition)
+            if (_lastYMovement > 0)
             {
                 ShowCollapsedPanel();
             }
-            if (currentPosition >= midDrawerPosition && currentPosition < bottomMidDrawerPosition)
+
+            if (_lastYMovement < 0)
             {
                 ShowExpandedPanel();
-            }
-            if (currentPosition >= bottomMidDrawerPosition && currentPosition < maxDrawerPosition)
-            {
-                ShowCollapsedPanel();
             }
         }
         #endregion
@@ -345,7 +332,7 @@ namespace DK.SlidingPanel.Interface
             if (_isPanRunning == true)
             {
                 _isPanRunning = false;
-                CollapseOrExpandSmartly();
+                CollapseOrExpand();
             }
             else
             {
@@ -424,7 +411,7 @@ namespace DK.SlidingPanel.Interface
                 if (_isCollapsing == true)
                 {
                     _isPanRunning = false;
-                    CollapseOrExpandSmartly();
+                    CollapseOrExpand();
                 }
             }
         }
@@ -435,6 +422,7 @@ namespace DK.SlidingPanel.Interface
                 _isPanRunning = true;
 
                 double totalY = e.TotalY;
+                _lastYMovement = totalY;
 
                 if ((_currentSlidePanelState == SlidingPanelState.Expanded && totalY > 0) || (_currentSlidePanelState == SlidingPanelState.Collapsed && totalY < 0))
                 {
@@ -455,16 +443,32 @@ namespace DK.SlidingPanel.Interface
             {
                 _isPanRunning = false;
 
-                CollapseOrExpandSmartly();
+                CollapseOrExpand();
             }
         }
         #endregion
 
         #region ISlidingPanel Implementations
-        public void HidePanel(uint length = 700)
+        public void HidePanel(uint length = 700, bool showNavBar = true)
         {
+            bool showingNavBar = false;
+            if (showNavBar == true && this.Parent != null 
+                && NavigationPage.GetHasNavigationBar(this.Parent) == false)
+            {
+                Device.OnPlatform(iOS: () => {
+                    this.Padding = new Thickness(0, 0, 0, 0);
+                });
+
+                NavigationPage.SetHasNavigationBar(this.Parent, showNavBar);
+                showingNavBar = true;
+            }
+
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2); 
+            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+            if (showingNavBar == true)
+            {
+                drawerCollapsedPosition.Y -= NavigationBarHeight;
+            }
 
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _currentSlidePanelState = SlidingPanelState.Hidden;
@@ -473,11 +477,28 @@ namespace DK.SlidingPanel.Interface
             pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
             _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
         }
-        public void ShowCollapsedPanel(uint length = 700)
+        public void ShowCollapsedPanel(uint length = 700, bool showNavBar = true)
         {
+            bool showingNavBar = false;
+            if (showNavBar == true && this.Parent != null
+                && NavigationPage.GetHasNavigationBar(this.Parent) == false)
+            {
+                Device.OnPlatform(iOS: () =>
+                {
+                    this.Padding = new Thickness(0, 0, 0, 0);
+                });
+
+                NavigationPage.SetHasNavigationBar(this.Parent, showNavBar);
+                showingNavBar = true;
+            }
+
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
+            if (showingNavBar == true)
+            {
+                drawerCollapsedPosition.Y -= NavigationBarHeight;
+            }
 
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _currentSlidePanelState = SlidingPanelState.Collapsed;
@@ -485,12 +506,22 @@ namespace DK.SlidingPanel.Interface
             if (IsPictureImageNull == false)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2); 
+                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
                 _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             }
         }
-        public void ShowExpandedPanel(uint length = 700)
+
+        public void ShowExpandedPanel(uint length = 700, bool showNavBar = false)
         {
+            if (showNavBar == false && this.Parent != null
+                 && NavigationPage.GetHasNavigationBar(this.Parent) == true)
+            {
+                Device.OnPlatform(iOS: () => {
+                    this.Padding = new Thickness(0, 20, 0, 0);
+                });
+                NavigationPage.SetHasNavigationBar(this.Parent, showNavBar);
+            }
+
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerExpandedPosition.Y = 0;

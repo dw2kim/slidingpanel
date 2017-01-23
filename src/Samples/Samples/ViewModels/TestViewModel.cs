@@ -1,14 +1,12 @@
-﻿using DK.SlidingPanel.Interface;
+﻿using System;
+using System.Windows.Input;
+
+using Xamarin.Forms;
+
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using Samples.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
+
+using DK.SlidingPanel.Interface;
 
 namespace Samples.ViewModels
 {
