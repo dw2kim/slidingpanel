@@ -75,6 +75,7 @@ namespace Samples.UI
 
             SlidingPanelConfig config = new SlidingPanelConfig();
             config.MainView = GetMainStackLayout();
+            config.HideNavBar = true;
 
             config.PanelRatio = 0.6;
 

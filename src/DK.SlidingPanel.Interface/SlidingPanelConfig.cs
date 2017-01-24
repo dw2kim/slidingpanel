@@ -18,6 +18,8 @@ namespace DK.SlidingPanel.Interface
         #region Constructor
         public SlidingPanelConfig()
         {
+            HideNavBar = false;
+
             PanelRatio = DefaultPanelRatio;
             IsExpandable = true;
             IsPanSupport = true;
@@ -27,6 +29,8 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region Public Properties
+        public bool HideNavBar { get; set; }
+
         public double PanelRatio { get; set; }
         public bool IsExpandable { get; set; }
         public bool IsPanSupport { get; set; }
