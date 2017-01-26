@@ -302,11 +302,10 @@ namespace DK.SlidingPanel.Interface
             }
         }
 
-        private void CollapseOrExpand()
+        private void CollapseOrExpand(bool isAfterTapped)
         {
             if (_lastYMovement > 0)
             {
-                _showingNavBar = true;
                 ShowNavigationBar(true);
                 ShowCollapsedPanel();
             }
@@ -378,7 +377,7 @@ namespace DK.SlidingPanel.Interface
             if (_isPanRunning == true)
             {
                 _isPanRunning = false;
-                CollapseOrExpand();
+                CollapseOrExpand(true);
             }
         }
         private void TapGesture_Tapped_iOS(object sender, EventArgs e)
@@ -431,7 +430,7 @@ namespace DK.SlidingPanel.Interface
                 if (_isCollapsing == true)
                 {
                     _isPanRunning = false;
-                    CollapseOrExpand();
+                    CollapseOrExpand(false);
                 }
             }
         }
@@ -440,7 +439,7 @@ namespace DK.SlidingPanel.Interface
             if (e.StatusType == GestureStatus.Completed)
             {
                 _isPanRunning = false;
-                CollapseOrExpand();
+                CollapseOrExpand(false);
             }
         }
         #endregion
