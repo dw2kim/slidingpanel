@@ -22,7 +22,7 @@ namespace DK.SlidingPanel.Interface
         private bool _isPanRunning = false;
         private SlidingPanelState _currentSlidePanelState = SlidingPanelState.Hidden;
         private double _lastYMovement = 0;
-        private bool _showingNavBar = false;
+        //private bool _showingNavBar = false;
 
         private bool _isFirst = true;
 
@@ -352,7 +352,7 @@ namespace DK.SlidingPanel.Interface
                         ShowExpandedPanel();
                         break;
                     case SlidingPanelState.Expanded:
-                        _showingNavBar = true;
+                        //_showingNavBar = true;
                         ShowNavigationBar(true);
                         ShowCollapsedPanel();
                         break;
@@ -449,11 +449,11 @@ namespace DK.SlidingPanel.Interface
         {
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
-            if (_showingNavBar == true)
-            {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
-                _showingNavBar = false;
-            }
+            //if (_showingNavBar == true)
+            //{
+            //    drawerCollapsedPosition.Y -= NavigationBarHeight;
+            //    _showingNavBar = false;
+            //}
 
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _currentSlidePanelState = SlidingPanelState.Hidden;
@@ -467,11 +467,11 @@ namespace DK.SlidingPanel.Interface
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
-            if (_showingNavBar == true)
-            {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
-                _showingNavBar = false;
-            }
+            //if (_showingNavBar == true)
+            //{
+            //    drawerCollapsedPosition.Y -= NavigationBarHeight;
+            //    _showingNavBar = false;
+            //}
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             _currentSlidePanelState = SlidingPanelState.Collapsed;
 

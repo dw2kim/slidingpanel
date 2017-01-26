@@ -37,3 +37,5 @@ C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.Sliding
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.SlidingPanel.Interface.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.SlidingPanel.Interface.dll.mdb
 C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\DK.SlidingPanel.Interface.dll.mdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\obj\Debug\DK.SlidingPanel.Interface.dll.mdb
+C:\Repository\DK.SlidingPanel\src\DK.SlidingPanel.Interface\bin\Debug\DK.SlidingPanel.Interface.dll.mdb
