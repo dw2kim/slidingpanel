@@ -4,6 +4,7 @@
              x:Class="Samples.UI.MainPage">
     <StackLayout>
         <Button x:Name="btnTestPage" Text="Full Function Page"></Button>
+        <Button x:Name="btnTestPageAllXaml" Text="Full Function Page without SlidingConfig (All Xaml)"></Button>
         <!--<Button x:Name="btnNotExpandablePanelPage" Text="Not Expandable Panel Page"></Button>-->
     </StackLayout>
 </ContentPage>

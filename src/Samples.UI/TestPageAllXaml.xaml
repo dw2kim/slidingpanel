@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:DK="clr-namespace:DK.SlidingPanel.Interface;assembly=DK.SlidingPanel.Interface"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             x:Class="Samples.UI.TestPageAllXaml">
+
+    <DK:SlidingUpPanel x:Name="spTest">
+        <DK:SlidingUpPanel.MainView>
+            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <maps:Map x:Name="GoogleMapInstance"></maps:Map>
+            </StackLayout>
+        </DK:SlidingUpPanel.MainView>
+
+        <DK:SlidingUpPanel.PanelRatio>0.6</DK:SlidingUpPanel.PanelRatio>
+        <DK:SlidingUpPanel.HideNavBar>True</DK:SlidingUpPanel.HideNavBar>
+
+        <DK:SlidingUpPanel.HeaderLeftButton>
+            <Image HeightRequest="48" WidthRequest="48" Source="{Binding BackButtonImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="BackButtonTapGesture_Tapped"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+        </DK:SlidingUpPanel.HeaderLeftButton>
+        <DK:SlidingUpPanel.PictureView>
+            <Image BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Aspect="AspectFill" Source="{Binding HondaImage}"></Image>
+        </DK:SlidingUpPanel.PictureView>
+
+        <DK:SlidingUpPanel.TitleView>
+            <StackLayout Orientation="Vertical" HeightRequest="80" BackgroundColor="Green">
+                <Label Text="Title1"></Label>
+                <Label Text="Title2"></Label>
+            </StackLayout>
+        </DK:SlidingUpPanel.TitleView>
+        <DK:SlidingUpPanel.BodyView>
+            <StackLayout BackgroundColor="Blue">
+                <Label Text="Test Body y"></Label>
+            </StackLayout>
+        </DK:SlidingUpPanel.BodyView>
+    </DK:SlidingUpPanel>
+    
+</ContentPage>

@@ -71,7 +71,7 @@ namespace Samples.UI
         private void SetupSlidingPanel()
         {
             InitGoogleMap();
-            
+
 
             SlidingPanelConfig config = new SlidingPanelConfig();
             config.MainView = GetMainStackLayout();
@@ -82,7 +82,7 @@ namespace Samples.UI
             config.TitleView = GetTitleStackLayout();
             config.TitleHeightRequest = 80;
             config.TitleBackgroundColor = Color.Green;
-            
+
             config.BodyView = GetBodyStackLayout();
             config.BodyBackgroundColor = Color.Blue;
 

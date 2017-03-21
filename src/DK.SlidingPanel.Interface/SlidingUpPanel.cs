@@ -1,20 +1,21 @@
 ﻿using System;
 using ReactiveUI;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace DK.SlidingPanel.Interface
 {
     public class SlidingUpPanel : AbsoluteLayout, ISlidingPanel
     {
         #region Constants
-        private const double DefaultPanelRatio = 0.6;
+        private const double DEFAULT_PANEL_RATIO = 0.6;
         
-        private const double MinimumBodyHeight = 50;
+        private const double DEFAULT_MIN_BODY_HEIGHT = 50;
 
-        private const double DefaultFloatingActionButtonHeight = 0;
-        private const double DefaultFloatingActionButtonWidth = 0;
+        private const double DEFAULT_FAB_HEIGHT = 0;
+        private const double DEFAULT_FAB_WIDTH = 0;
 
-        private const double NavigationBarHeight = 39;
+        private const double DEFAULT_NAV_BAR_HEIGHT = 39;
         #endregion
 
         #region Private Fields
@@ -26,7 +27,7 @@ namespace DK.SlidingPanel.Interface
 
         private bool _isFirst = true;
 
-        private double _primaryFloatingActionButtonHeight = DefaultFloatingActionButtonHeight;
+        private double _primaryFloatingActionButtonHeight = DEFAULT_FAB_HEIGHT;
         #endregion
 
         #region Private Properties
@@ -43,17 +44,96 @@ namespace DK.SlidingPanel.Interface
         private AbsoluteLayout _pictureAbsoluteLayout { get; set; }
         private StackLayout _pictureMainStackLayout { get; set; }
         private StackLayout _headerStackLayout { get; set; }
-        private Image _pictureImage { get; set; }
+        private View _pictureImage { get; set; }
 
         private bool IsPictureImageNull
         {
             get
             {
-                return (_pictureImage == null || _pictureImage.Source == null);
+                return (_pictureImage == null);
             }
         }
         private Func<int?> _functionAfterTitleTapped { get; set; }
         private bool _hideNavBarFeature { get; set; }
+        #endregion
+
+        #region Public Properties
+        public static readonly BindableProperty HideNavBarProperty = BindableProperty.Create(
+          propertyName: "HideNavBar",
+          returnType: typeof(bool),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: false);
+        public bool HideNavBar
+        {
+            get { return (bool)GetValue(HideNavBarProperty); }
+            set { SetValue(HideNavBarProperty, value); }
+        }
+
+        public static readonly BindableProperty PanelRatioProperty = BindableProperty.Create(
+          propertyName: "PanelRatio",
+          returnType: typeof(double),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: DEFAULT_PANEL_RATIO);
+        public double PanelRatio
+        {
+            get { return (double)GetValue(PanelRatioProperty); }
+            set { SetValue(PanelRatioProperty, value); }
+        }
+
+        public static readonly BindableProperty MainViewProperty = BindableProperty.Create(
+          propertyName: "MainView",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new StackLayout());
+        public View MainView
+        {
+            get { return (View)GetValue(MainViewProperty); }
+            set { SetValue(MainViewProperty, value); }
+        }
+
+        public static readonly BindableProperty TitleViewProperty = BindableProperty.Create(
+          propertyName: "TitleView",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new StackLayout());
+        public View TitleView
+        {
+            get { return (View)GetValue(TitleViewProperty); }
+            set { SetValue(TitleViewProperty, value); }
+        }
+
+        public static readonly BindableProperty BodyViewProperty = BindableProperty.Create(
+          propertyName: "BodyView",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new StackLayout());
+        public View BodyView
+        {
+            get { return (View)GetValue(BodyViewProperty); }
+            set { SetValue(BodyViewProperty, value); }
+        }
+
+        public static readonly BindableProperty HeaderLeftButtonProperty = BindableProperty.Create(
+          propertyName: "HeaderLeftButton",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new Button());
+        public View HeaderLeftButton
+        {
+            get { return (View)GetValue(HeaderLeftButtonProperty); }
+            set { SetValue(HeaderLeftButtonProperty, value); }
+        }
+
+        public static readonly BindableProperty PictureViewProperty = BindableProperty.Create(
+          propertyName: "PictureView",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new StackLayout());
+        public View PictureView
+        {
+            get { return (View)GetValue(PictureViewProperty); }
+            set { SetValue(PictureViewProperty, value); }
+        }
         #endregion
 
         #region Constructors
@@ -70,6 +150,124 @@ namespace DK.SlidingPanel.Interface
                         HidePanel(0);
                         _isFirst = false;
                     }
+                });
+
+            this.WhenAnyValue(x => x.HideNavBar)
+                .Skip(1)
+                .Subscribe(hideNavBar =>
+                {
+                    this._hideNavBarFeature = hideNavBar;
+                });
+
+            this.WhenAnyValue(x => x.MainView)
+                .Skip(1)
+                .Subscribe(mainView =>
+                {
+                    if (mainView != null)
+                    {
+                        _mainViewStackLayout.Children.Add(mainView);
+                    }
+                });
+
+            this.WhenAnyValue(x => x.TitleView)
+                .Skip(1)
+                .Subscribe(titleView =>
+                {
+                    if (titleView != null)
+                    {
+                        _titleStackLayout = new StackLayout();
+                        _titleStackLayout.BackgroundColor = titleView.BackgroundColor;
+                        _titleStackLayout.Spacing = 0;
+                        _titleStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+                        _titleStackLayout.VerticalOptions = LayoutOptions.Fill;
+                        _titleRelativeLayout.Children.Add(_titleStackLayout,
+                            xConstraint: Constraint.Constant(0),
+                            yConstraint: Constraint.RelativeToParent((parent) =>
+                            {
+                                return (this._primaryFloatingActionButtonHeight / 2);
+                            }),
+                            widthConstraint: Constraint.RelativeToParent((parent) =>
+                            {
+                                return (parent.Width);
+                            }),
+                            heightConstraint: Constraint.Constant(titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
+                        _titleRelativeLayout.HeightRequest = titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2);
+
+                        TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
+                        titlePanelTapGesture.Tapped += TapGesture_Tapped;
+                        _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
+
+                        _titleStackLayout.Children.Add(titleView);
+                    }
+                });
+
+
+            this.WhenAnyValue(x => x.BodyView)
+                .Skip(1)
+                .Subscribe(bodyView =>
+                {
+                    if (bodyView != null)
+                    {
+                        _bodyStackLayout.BackgroundColor = bodyView.BackgroundColor;
+
+                        _bodyStackLayout.Children.Add(bodyView);
+                    }
+                });
+
+
+            this.WhenAnyValue(x => x.HeaderLeftButton)
+                .Skip(1)
+                .Subscribe(headerView =>
+                {
+                    if (headerView != null)
+                    {
+                        _headerStackLayout = new StackLayout();
+                        _headerStackLayout.Orientation = StackOrientation.Horizontal;
+                        _headerStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+                        _headerStackLayout.BackgroundColor = headerView.BackgroundColor;
+
+                        TapGestureRecognizer headerTapGesture = new TapGestureRecognizer();
+                        headerTapGesture.Tapped += TapGesture_Tapped;
+                        _headerStackLayout.GestureRecognizers.Add(headerTapGesture);
+
+                        _headerStackLayout.Children.Add(headerView);
+                    }
+                });
+            
+
+            this.WhenAnyValue(x => x.PictureView)
+                .Skip(1)
+                .Subscribe(pictureView =>
+                {
+                    if (pictureView != null)
+                    {
+                        _pictureMainStackLayout = new StackLayout();
+                        _pictureMainStackLayout.Orientation = StackOrientation.Vertical;
+                        _pictureMainStackLayout.BackgroundColor = pictureView.BackgroundColor;
+
+                        if (_headerStackLayout != null)
+                        {
+                            _pictureMainStackLayout.Children.Add(_headerStackLayout);
+                        }
+
+                        _pictureImage = pictureView;
+                        if (_pictureImage != null)
+                        {
+                            _pictureMainStackLayout.Children.Add(_pictureImage);
+                        }
+
+                        Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
+                        _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
+                    }
+                });
+
+
+            this.WhenAnyValue(x => x.PanelRatio)
+                .Skip(1)
+                .Subscribe(panelRatio =>
+                {
+                    AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (1.1 - panelRatio)));
+                    AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
                 });
         }
         public SlidingUpPanel(SlidingPanelConfig config) : this()
@@ -89,13 +287,13 @@ namespace DK.SlidingPanel.Interface
 
             // Picture
             _pictureAbsoluteLayout = new AbsoluteLayout();
-            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, 1 - DefaultPanelRatio));
+            AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, 1 - DEFAULT_PANEL_RATIO));
             AbsoluteLayout.SetLayoutFlags(_pictureAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_pictureAbsoluteLayout);
             
             // Drawer
             _slidingPanelAbsoluteLayout = new AbsoluteLayout();
-            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, DefaultPanelRatio));
+            AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, DEFAULT_PANEL_RATIO));
             AbsoluteLayout.SetLayoutFlags(_slidingPanelAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_slidingPanelAbsoluteLayout);
             
@@ -116,7 +314,7 @@ namespace DK.SlidingPanel.Interface
             _bodyStackLayout.Spacing = 0;
             _bodyStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
             _bodyStackLayout.VerticalOptions = LayoutOptions.FillAndExpand;
-            _bodyStackLayout.MinimumHeightRequest = MinimumBodyHeight;
+            _bodyStackLayout.MinimumHeightRequest = DEFAULT_MIN_BODY_HEIGHT;
             slidingPanelStackLayout.Children.Add(_bodyStackLayout);
         }
         private void InitGestures()
@@ -180,7 +378,7 @@ namespace DK.SlidingPanel.Interface
         private void ApplyConfigToTitleBodyPanel(SlidingPanelConfig config)
         {
             _primaryFloatingActionButtonHeight = (config != null && config.PrimaryFloatingActionButton != null && config.PrimaryFloatingActionButton.HeightRequest > 0) ?
-                config.PrimaryFloatingActionButton.HeightRequest : DefaultFloatingActionButtonHeight;
+                config.PrimaryFloatingActionButton.HeightRequest : DEFAULT_FAB_HEIGHT;
 
             _titleStackLayout = new StackLayout();
             _titleStackLayout.BackgroundColor = config.TitleBackgroundColor;
@@ -237,8 +435,10 @@ namespace DK.SlidingPanel.Interface
                 );
             }
 
-
-            _titleStackLayout.Children.Add(config.TitleView);
+            if (config.TitleView != null)
+            {
+                _titleStackLayout.Children.Add(config.TitleView);
+            }
             
             if (config.IsPanSupport == true)
             {
@@ -247,7 +447,11 @@ namespace DK.SlidingPanel.Interface
                 _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
             }
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
-            _bodyStackLayout.Children.Add(config.BodyView);
+
+            if (config.BodyView != null)
+            {
+                _bodyStackLayout.Children.Add(config.BodyView);
+            }
         }
         private void ApplyConfigToPicturePanel(SlidingPanelConfig config)
         {
@@ -449,9 +653,9 @@ namespace DK.SlidingPanel.Interface
         {
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
-            if (_showingNavBar == true)
+            if (_hideNavBarFeature == true && _showingNavBar == true)
             {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
+                drawerCollapsedPosition.Y -= DEFAULT_NAV_BAR_HEIGHT;
                 _showingNavBar = false;
             }
 
@@ -467,9 +671,9 @@ namespace DK.SlidingPanel.Interface
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
-            if (_showingNavBar == true)
+            if (_hideNavBarFeature == true && _showingNavBar == true)
             {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
+                drawerCollapsedPosition.Y -= DEFAULT_NAV_BAR_HEIGHT;
                 _showingNavBar = false;
             }
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);

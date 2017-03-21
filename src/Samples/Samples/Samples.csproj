@@ -37,7 +37,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AbstractViewModel.cs" />
-    <Compile Include="ViewModels\NotExpandablePanelViewModel.cs" />
+    <Compile Include="ViewModels\TestPageAllXamlViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
