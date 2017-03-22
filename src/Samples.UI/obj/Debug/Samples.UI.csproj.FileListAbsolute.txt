@@ -68,3 +68,7 @@ C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.pdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
