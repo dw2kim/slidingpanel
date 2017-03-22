@@ -114,13 +114,13 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\res\drawable\i
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\R.cs.flag
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\uploadflags.txt
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll.mdb
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.UI.dll.mdb
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\DK.SlidingPanel.Interface.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Java.Interop.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Mono.Android.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\mscorlib.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\ReactiveUI.Fody.Helpers.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.UI.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.ComponentModel.Composition.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.Core.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\System.dll.mdb

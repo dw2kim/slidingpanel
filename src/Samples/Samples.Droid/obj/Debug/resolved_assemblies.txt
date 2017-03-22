@@ -58,5 +58,5 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Text.RegularExpressions.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Collections.Concurrent.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\System.Runtime.InteropServices.dll
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\DK.SlidingPanel.Interface.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\ReactiveUI.Fody.Helpers.dll
+C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\DK.SlidingPanel.Interface.dll

@@ -147,8 +147,8 @@ class MonoPackageManager_Resources {
 		"System.Text.RegularExpressions.dll",
 		"System.Collections.Concurrent.dll",
 		"System.Runtime.InteropServices.dll",
-		"DK.SlidingPanel.Interface.dll",
 		"ReactiveUI.Fody.Helpers.dll",
+		"DK.SlidingPanel.Interface.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};

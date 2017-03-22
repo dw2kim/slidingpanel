@@ -9,13 +9,14 @@ namespace DK.SlidingPanel.Interface
     {
         #region Constants
         private const double DEFAULT_PANEL_RATIO = 0.6;
-        
+
         private const double DEFAULT_MIN_BODY_HEIGHT = 50;
 
         private const double DEFAULT_FAB_HEIGHT = 0;
         private const double DEFAULT_FAB_WIDTH = 0;
 
-        private const double DEFAULT_NAV_BAR_HEIGHT = 39;
+        private const double DEFAULT_NAV_BAR_HEIGHT_IOS = 39;
+        private const double DEFAULT_NAV_BAR_HEIGHT_ANDROID = 34;
         #endregion
 
         #region Private Fields
@@ -55,6 +56,23 @@ namespace DK.SlidingPanel.Interface
         }
         private Func<int?> _functionAfterTitleTapped { get; set; }
         private bool _hideNavBarFeature { get; set; }
+
+        private double NavigationBarHeight
+        {
+            get
+            {
+                double height = 0;
+                Device.OnPlatform(iOS: () =>
+                {
+                    height = DEFAULT_NAV_BAR_HEIGHT_IOS;
+                }, Android: () =>
+                {
+                    height = DEFAULT_NAV_BAR_HEIGHT_ANDROID;
+                });
+
+                return (height);
+            }
+        }
         #endregion
 
         #region Public Properties
@@ -193,11 +211,11 @@ namespace DK.SlidingPanel.Interface
                             heightConstraint: Constraint.Constant(titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
                         _titleRelativeLayout.HeightRequest = titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2);
 
+                        _titleStackLayout.Children.Add(titleView);
+                        
                         TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
                         titlePanelTapGesture.Tapped += TapGesture_Tapped;
-                        _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
-
-                        _titleStackLayout.Children.Add(titleView);
+                        titleView.GestureRecognizers.Add(titlePanelTapGesture);
                     }
                 });
 
@@ -510,12 +528,10 @@ namespace DK.SlidingPanel.Interface
         {
             if (_lastYMovement > 0)
             {
-                ShowNavigationBar(true);
                 ShowCollapsedPanel();
             }
             else
             {
-                ShowNavigationBar(false);
                 ShowExpandedPanel();
             }
         }
@@ -552,12 +568,10 @@ namespace DK.SlidingPanel.Interface
                 switch (_currentSlidePanelState)
                 {
                     case SlidingPanelState.Collapsed:
-                        ShowNavigationBar(false);
                         ShowExpandedPanel();
                         break;
                     case SlidingPanelState.Expanded:
-                        _showingNavBar = true;
-                        ShowNavigationBar(true);
+                        //_showingNavBar = true;
                         ShowCollapsedPanel();
                         break;
                     case SlidingPanelState.Hidden:
@@ -655,7 +669,7 @@ namespace DK.SlidingPanel.Interface
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
             if (_hideNavBarFeature == true && _showingNavBar == true)
             {
-                drawerCollapsedPosition.Y -= DEFAULT_NAV_BAR_HEIGHT;
+                drawerCollapsedPosition.Y -= NavigationBarHeight;
                 _showingNavBar = false;
             }
 
@@ -668,12 +682,14 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
+            ShowNavigationBar(true);
+
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
-            if (_hideNavBarFeature == true && _showingNavBar == true)
+            if (_hideNavBarFeature == true && _showingNavBar == true && _isCollapsing == false)
             {
-                drawerCollapsedPosition.Y -= DEFAULT_NAV_BAR_HEIGHT;
+                drawerCollapsedPosition.Y -= NavigationBarHeight;
                 _showingNavBar = false;
             }
             _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
@@ -688,6 +704,8 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowExpandedPanel(uint length = 700)
         {
+            ShowNavigationBar(false);
+            _showingNavBar = true;
 
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;

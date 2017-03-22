@@ -78,6 +78,7 @@ namespace Samples.UI
             config.HideNavBar = true;
 
             config.PanelRatio = 0.6;
+            config.IsPanSupport = true;
 
             config.TitleView = GetTitleStackLayout();
             config.TitleHeightRequest = 80;

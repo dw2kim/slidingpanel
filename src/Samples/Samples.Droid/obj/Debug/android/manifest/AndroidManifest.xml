@@ -19,22 +19,7 @@
   <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <application android:label="Samples.Droid" android:icon="@drawable/icon" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true">
-    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDZv4VUpwHSsnenr_o7kIOfVRsFhL-0neo" />
-    <meta-data android:name="com.google.android.gms.version" android:value="9.6.83" />
-    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-    <activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="Samples" android:theme="@style/MainTheme" android:name="md553a018b87e00e8cb2572213a7d67da04.MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="Samples.Droid.mono.MonoRuntimeProvider.__mono_init__" />
-    <!--suppress ExportedReceiver-->
-    <receiver android:name="mono.android.Seppuku">
-      <intent-filter>
-        <action android:name="mono.android.intent.action.SEPPUKU" />
-        <category android:name="mono.android.intent.category.SEPPUKU.Samples.Droid" />
-      </intent-filter>
-    </receiver>
-  </application>
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCJ6YVh87XJTM7Vv4S5_xV8sk71eVescxs" />
+    <meta-data android:name="com.google.android.gms.version" android:value="9.6.83" />&gt;
+	<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" /><activity android:configChanges="orientation|screenSize" android:icon="@drawable/icon" android:label="Samples" android:theme="@style/MainTheme" android:name="md553a018b87e00e8cb2572213a7d67da04.MainActivity"><intent-filter><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent-filter></activity><provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="Samples.Droid.mono.MonoRuntimeProvider.__mono_init__" /><!--suppress ExportedReceiver--><receiver android:name="mono.android.Seppuku"><intent-filter><action android:name="mono.android.intent.action.SEPPUKU" /><category android:name="mono.android.intent.category.SEPPUKU.Samples.Droid" /></intent-filter></receiver></application>
 </manifest>
