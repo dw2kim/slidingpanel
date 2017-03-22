@@ -20,6 +20,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE907897-3FE3-441D-AFFB-CCB613AC7E04}"
 	ProjectSection(SolutionItems) = preProject
 		..\build.cake = ..\build.cake
+		..\nuspec\DK.SlidingPanel.nuspec = ..\nuspec\DK.SlidingPanel.nuspec
+		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
 Global
