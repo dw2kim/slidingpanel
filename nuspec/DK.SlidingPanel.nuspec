@@ -33,6 +33,9 @@
 		
         <releaseNotes>
 * New Version
+1.4.2
+- [fix] Android - Added Device.BeginInvokeOnMainThread for all the animation (Google Map becomes black)
+
 1.4.1
 - [feature] added bindable properties; slidingpanel can be generated only using XAML
 - [fix] Android - Title Height and Navigation Bar issues

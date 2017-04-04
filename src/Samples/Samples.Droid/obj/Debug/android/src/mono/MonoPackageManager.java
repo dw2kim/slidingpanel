@@ -125,32 +125,10 @@ class MonoPackageManager_Resources {
 		"Xamarin.GooglePlayServices.Maps.dll",
 		"Samples.dll",
 		"Samples.UI.dll",
-		"System.Runtime.dll",
-		"System.ComponentModel.dll",
-		"System.Threading.Tasks.dll",
-		"System.Threading.dll",
-		"System.Collections.dll",
-		"System.Dynamic.Runtime.dll",
-		"System.Runtime.Extensions.dll",
-		"System.Resources.ResourceManager.dll",
-		"System.Globalization.dll",
-		"System.Linq.dll",
-		"System.Reflection.dll",
-		"System.Diagnostics.Debug.dll",
-		"System.Diagnostics.Tools.dll",
-		"System.Linq.Expressions.dll",
-		"System.Runtime.InteropServices.WindowsRuntime.dll",
-		"System.ObjectModel.dll",
-		"System.Xml.ReaderWriter.dll",
-		"System.IO.dll",
-		"System.Reflection.Extensions.dll",
-		"System.Text.RegularExpressions.dll",
-		"System.Collections.Concurrent.dll",
-		"System.Runtime.InteropServices.dll",
 		"ReactiveUI.Fody.Helpers.dll",
 		"DK.SlidingPanel.Interface.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
-	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_24";
+	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_25";
 }

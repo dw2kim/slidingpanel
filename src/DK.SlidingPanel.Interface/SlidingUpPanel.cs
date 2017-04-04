@@ -618,12 +618,19 @@ namespace DK.SlidingPanel.Interface
                     _isPanRunning = true;
 
                     double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
-                    _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
+                    });
 
                     if (IsPictureImageNull == false)
                     {
                         double newPicturePosition = CalculateNewPicturePositionY(totalY);
-                        _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
+                        });
                     }
 
                     bool showNavBarNow = (_isCollapsing == true);
@@ -673,12 +680,18 @@ namespace DK.SlidingPanel.Interface
                 _showingNavBar = false;
             }
 
-            _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            });
             _currentSlidePanelState = SlidingPanelState.Hidden;
             
             Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
             pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
-            _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
+            });
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
@@ -692,14 +705,20 @@ namespace DK.SlidingPanel.Interface
                 drawerCollapsedPosition.Y -= NavigationBarHeight;
                 _showingNavBar = false;
             }
-            _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+            });
             _currentSlidePanelState = SlidingPanelState.Collapsed;
 
             if (IsPictureImageNull == false)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
                 pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
-                _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
+                });
             }
         }
         public void ShowExpandedPanel(uint length = 700)
@@ -711,14 +730,20 @@ namespace DK.SlidingPanel.Interface
             Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerExpandedPosition.Y = 0;
 
-            _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
+            });
             _currentSlidePanelState = SlidingPanelState.Expanded;
 
             if (IsPictureImageNull == false)
             {
                 Rectangle pictureExpandedPosition = _pictureAbsoluteLayout.Bounds;
                 pictureExpandedPosition.Y = 0;
-                _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
+                });
             }
         }
 
