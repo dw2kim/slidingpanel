@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.4.1</version>
+        <version>1.4.2</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages</summary>
         <description>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages
