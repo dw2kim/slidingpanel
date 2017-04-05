@@ -100,6 +100,13 @@ namespace Samples.ViewModels
         public ICommand ShowCommand { get; set; }
         public ICommand HideCommand { get; set; }
 
+
+        [Reactive]
+        public double PanelRatio { get; set; }
+
+        [Reactive]
+        public bool HideTitleView { get; set; }
+
         public TestPageAllXamlViewModel()
         {
         }

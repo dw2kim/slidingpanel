@@ -17,6 +17,9 @@ namespace DK.SlidingPanel.Interface
 
         private const double DEFAULT_NAV_BAR_HEIGHT_IOS = 39;
         private const double DEFAULT_NAV_BAR_HEIGHT_ANDROID = 34;
+
+        private const double MIN_PANEL_RATIO = 0;
+        private const double MAX_PANEL_RATIO = 1;
         #endregion
 
         #region Private Fields
@@ -54,7 +57,6 @@ namespace DK.SlidingPanel.Interface
                 return (_pictureImage == null);
             }
         }
-        private Func<int?> _functionAfterTitleTapped { get; set; }
         private bool _hideNavBarFeature { get; set; }
 
         private double NavigationBarHeight
@@ -73,6 +75,11 @@ namespace DK.SlidingPanel.Interface
                 return (height);
             }
         }
+
+        private double _currentTitleHeight { get; set; }
+        private bool _hideTitleView { get; set; }
+        private Color _currentTitleBackground { get; set; } = Color.Transparent;
+        private Color _currentBodyBackground { get; set; } = Color.Transparent;
         #endregion
 
         #region Public Properties
@@ -85,6 +92,17 @@ namespace DK.SlidingPanel.Interface
         {
             get { return (bool)GetValue(HideNavBarProperty); }
             set { SetValue(HideNavBarProperty, value); }
+        }
+
+        public static readonly BindableProperty HideTitleViewProperty = BindableProperty.Create(
+          propertyName: "HideTitleView",
+          returnType: typeof(bool),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: false);
+        public bool HideTitleView
+        {
+            get { return (bool)GetValue(HideTitleViewProperty); }
+            set { SetValue(HideTitleViewProperty, value); }
         }
 
         public static readonly BindableProperty PanelRatioProperty = BindableProperty.Create(
@@ -152,13 +170,17 @@ namespace DK.SlidingPanel.Interface
             get { return (View)GetValue(PictureViewProperty); }
             set { SetValue(PictureViewProperty, value); }
         }
+
+        //public Func<int?> FunctionAfterTitleTapped { get; set; }
+        public event EventHandler<StateChangedEventArgs> WhenSlidingPanelStateChanged;
+        public event EventHandler WhenPanelRatioChanged;
         #endregion
 
         #region Constructors
         public SlidingUpPanel() : base()
         {
             InitViews();
-            InitFunctions();
+            //InitFunctions();
 
             _slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
                 .Subscribe(actualHeight =>
@@ -194,7 +216,8 @@ namespace DK.SlidingPanel.Interface
                     if (titleView != null)
                     {
                         _titleStackLayout = new StackLayout();
-                        _titleStackLayout.BackgroundColor = titleView.BackgroundColor;
+                        _currentTitleBackground = titleView.BackgroundColor;
+                        _titleStackLayout.BackgroundColor = _currentTitleBackground;
                         _titleStackLayout.Spacing = 0;
                         _titleStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
                         _titleStackLayout.VerticalOptions = LayoutOptions.Fill;
@@ -209,7 +232,8 @@ namespace DK.SlidingPanel.Interface
                                 return (parent.Width);
                             }),
                             heightConstraint: Constraint.Constant(titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
-                        _titleRelativeLayout.HeightRequest = titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2);
+                        _currentTitleHeight = titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2);
+                        _titleRelativeLayout.HeightRequest = _currentTitleHeight;
 
                         _titleStackLayout.Children.Add(titleView);
                         
@@ -226,7 +250,8 @@ namespace DK.SlidingPanel.Interface
                 {
                     if (bodyView != null)
                     {
-                        _bodyStackLayout.BackgroundColor = bodyView.BackgroundColor;
+                        _currentBodyBackground = bodyView.BackgroundColor;
+                        _bodyStackLayout.BackgroundColor = _currentBodyBackground;
 
                         _bodyStackLayout.Children.Add(bodyView);
                     }
@@ -278,14 +303,50 @@ namespace DK.SlidingPanel.Interface
                         _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
                     }
                 });
-
+            
 
             this.WhenAnyValue(x => x.PanelRatio)
                 .Skip(1)
                 .Subscribe(panelRatio =>
                 {
-                    AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (1.1 - panelRatio)));
-                    AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
+                    if (panelRatio >= MAX_PANEL_RATIO)
+                    {
+                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, MIN_PANEL_RATIO));
+                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, MAX_PANEL_RATIO));
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            _slidingPanelAbsoluteLayout.TranslationY = _slidingPanelAbsoluteLayout.Height;
+
+                            _titleStackLayout.BackgroundColor = _currentTitleBackground;
+                            _bodyStackLayout.BackgroundColor = _currentBodyBackground;
+
+                            WhenPanelRatioChanged?.Invoke(null, null);
+                        });
+                    }
+                    
+                    if(panelRatio > MIN_PANEL_RATIO && panelRatio < MAX_PANEL_RATIO)
+                    {
+                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (MAX_PANEL_RATIO - panelRatio)));
+                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            _slidingPanelAbsoluteLayout.TranslationY = _slidingPanelAbsoluteLayout.Height;
+
+                            _titleStackLayout.BackgroundColor = _currentTitleBackground;
+                            _bodyStackLayout.BackgroundColor = _currentBodyBackground;
+
+                            WhenPanelRatioChanged?.Invoke(null, null);
+                        });
+                    }
+                });
+
+            this.WhenAnyValue(x => x.HideTitleView)
+                .Skip(1)
+                .Subscribe(hideTitleView =>
+                {
+                    _hideTitleView = hideTitleView;
                 });
         }
         public SlidingUpPanel(SlidingPanelConfig config) : this()
@@ -341,12 +402,12 @@ namespace DK.SlidingPanel.Interface
             titlePanelTapGesture.Tapped += TapGesture_Tapped;
             _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
         }
-        private void InitFunctions()
-        {
-            _functionAfterTitleTapped = new Func<int?>(()=> {
-                return (null);
-            });
-        }
+        //private void InitFunctions()
+        //{
+        //    FunctionAfterTitleTapped = new Func<int?>(()=> {
+        //        return (null);
+        //    });
+        //}
         
         private double CalculateNewDrawerPositionY(double totalY)
         {
@@ -589,6 +650,9 @@ namespace DK.SlidingPanel.Interface
             {
                 TapGesture_Tapped_iOS(sender, e);
             }
+
+            WhenSlidingPanelStateChanged?.Invoke(sender, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
+            //FunctionAfterTitleTapped();
         }
         private void TapGesture_Tapped_Android(object sender, EventArgs e)
         {
@@ -697,6 +761,9 @@ namespace DK.SlidingPanel.Interface
         {
             ShowNavigationBar(true);
 
+            if (_hideTitleView)
+                _titleRelativeLayout.HeightRequest = _currentTitleHeight;
+
             var actualHeight = _titleRelativeLayout.Height;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
@@ -726,7 +793,9 @@ namespace DK.SlidingPanel.Interface
             ShowNavigationBar(false);
             _showingNavBar = true;
 
-            var actualHeight = _titleRelativeLayout.Height;
+            if(_hideTitleView)
+                _titleRelativeLayout.HeightRequest = 0;
+
             Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerExpandedPosition.Y = 0;
 

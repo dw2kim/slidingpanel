@@ -119,7 +119,6 @@ namespace Samples.ViewModels
 
                 spTest.HidePanel();
             });
-
             //this.PlayCommand = ReactiveCommand.Create(() =>
             //{
             //    IsPlaying = !(IsPlaying);
