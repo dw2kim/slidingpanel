@@ -23,6 +23,7 @@ namespace Samples.UI
         public TestPageAllXaml()
         {
             InitializeComponent();
+            
         }
         #endregion
 
@@ -86,7 +87,17 @@ namespace Samples.UI
 
         private void SpTest_WhenSlidingPanelStateChanged(object sender, DK.SlidingPanel.Interface.StateChangedEventArgs e)
         {
-            
+            switch (e.State)
+            {
+                case SlidingPanelState.Expanded:
+                    //NavigationPage.SetHasNavigationBar(this, false);
+                    break;
+                case SlidingPanelState.Collapsed:
+                case SlidingPanelState.Hidden:
+                default:
+                    //NavigationPage.SetHasNavigationBar(this, true);
+                    break;
+            }
         }
 
         #region Gesture Implemenetations

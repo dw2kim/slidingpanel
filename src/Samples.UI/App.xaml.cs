@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Samples.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,12 @@ namespace Samples.UI
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new MasterDetailPage
+            {
+                Master = new MenuPage { BindingContext = new MenuViewModel() },
+                Detail = new NavigationPage(new MainPage())
+            };
         }
 
         protected override void OnStart()

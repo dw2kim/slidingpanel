@@ -16,9 +16,12 @@ namespace Samples.UI
         {
             InitializeComponent();
 
+
             btnTestPage.Clicked += ((s, e) =>
             {
-                Navigation.PushAsync(new TestPage
+                var mdPage = Application.Current.MainPage as MasterDetailPage;
+                mdPage.Master = new MenuPage { BindingContext = new MenuViewModel() };
+                mdPage.Detail = new NavigationPage(new TestPage
                 {
                     BindingContext = new TestViewModel()
                 });
@@ -26,7 +29,9 @@ namespace Samples.UI
 
             btnTestPageAllXaml.Clicked += ((s, e) =>
             {
-                Navigation.PushAsync(new TestPageAllXaml
+                var mdPage = Application.Current.MainPage as MasterDetailPage;
+                mdPage.Master = new MenuPage { BindingContext = new MenuViewModel() };
+                mdPage.Detail = new NavigationPage(new TestPageAllXaml
                 {
                     BindingContext = new TestPageAllXamlViewModel()
                 });

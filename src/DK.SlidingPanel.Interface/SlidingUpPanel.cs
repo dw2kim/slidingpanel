@@ -18,6 +18,8 @@ namespace DK.SlidingPanel.Interface
         private const double DEFAULT_NAV_BAR_HEIGHT_IOS = 39;
         private const double DEFAULT_NAV_BAR_HEIGHT_ANDROID = 34;
 
+        private const double DEFAULT_IOS_STATUS_BAR_HEIGHT = 20;
+
         private const double MIN_PANEL_RATIO = 0;
         private const double MAX_PANEL_RATIO = 1;
         #endregion
@@ -311,8 +313,15 @@ namespace DK.SlidingPanel.Interface
                 {
                     if (panelRatio >= MAX_PANEL_RATIO)
                     {
-                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, MIN_PANEL_RATIO));
-                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, MAX_PANEL_RATIO));
+                        double picturePatio = 0;
+                        if (_headerStackLayout != null)
+                        {
+                            var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
+                            picturePatio = _headerStackLayout.Height / totalHeight;
+                        }
+
+                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, picturePatio));
+                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, MAX_PANEL_RATIO - picturePatio));
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
@@ -605,7 +614,7 @@ namespace DK.SlidingPanel.Interface
                 {
                     Device.OnPlatform(iOS: () =>
                     {
-                        this.Padding = new Thickness(0, 20, 0, 0);
+                        this.Padding = new Thickness(0, DEFAULT_IOS_STATUS_BAR_HEIGHT, 0, 0);
                     });
                     NavigationPage.SetHasNavigationBar(this.Parent, false);
                 }
@@ -650,8 +659,6 @@ namespace DK.SlidingPanel.Interface
             {
                 TapGesture_Tapped_iOS(sender, e);
             }
-
-            WhenSlidingPanelStateChanged?.Invoke(sender, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
             //FunctionAfterTitleTapped();
         }
         private void TapGesture_Tapped_Android(object sender, EventArgs e)
@@ -756,6 +763,8 @@ namespace DK.SlidingPanel.Interface
             {
                 _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             });
+
+            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
@@ -764,12 +773,18 @@ namespace DK.SlidingPanel.Interface
             if (_hideTitleView)
                 _titleRelativeLayout.HeightRequest = _currentTitleHeight;
 
-            var actualHeight = _titleRelativeLayout.Height;
+            var actualHeight = _currentTitleHeight;
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
             if (_hideNavBarFeature == true && _showingNavBar == true && _isCollapsing == false)
             {
                 drawerCollapsedPosition.Y -= NavigationBarHeight;
+
+                if (PanelRatio >= MAX_PANEL_RATIO)
+                {
+                    drawerCollapsedPosition.Y -= DEFAULT_IOS_STATUS_BAR_HEIGHT;
+                }
+
                 _showingNavBar = false;
             }
             Device.BeginInvokeOnMainThread(() =>
@@ -787,6 +802,8 @@ namespace DK.SlidingPanel.Interface
                     _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
                 });
             }
+
+            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
         }
         public void ShowExpandedPanel(uint length = 700)
         {
@@ -814,6 +831,8 @@ namespace DK.SlidingPanel.Interface
                     _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
                 });
             }
+
+            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
         }
 
         public void ApplyConfig(SlidingPanelConfig config)

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.4.3</version>
+        <version>1.4.4</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages</summary>
         <description>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages
@@ -32,36 +32,40 @@
         </dependencies>
 		
         <releaseNotes>
-* New Version
-1.4.3
-- [feature] added WhenSlidingPanelStateChanged and WhenPanelRatioChanged
-- [feature] added HideTitleView binding property
+          * New Version
+          1.4.4
+          - [feature] support full body page without title on expanded mode (ex. TestPageAllXaml)
+          - [feature] added WhenSlidingPanelStateChanged event
 
-1.4.2
-- [fix] Android - Added Device.BeginInvokeOnMainThread for all the animation (Google Map becomes black)
+          1.4.3
+          - [feature] added WhenSlidingPanelStateChanged and WhenPanelRatioChanged
+          - [feature] added HideTitleView binding property
 
-1.4.1
-- [feature] added bindable properties; slidingpanel can be generated only using XAML
-- [fix] Android - Title Height and Navigation Bar issues
+          1.4.2
+          - [fix] Android - Added Device.BeginInvokeOnMainThread for all the animation (Google Map becomes black)
 
-1.3.5
-- [fix] smooth transition on hide/show navigation bar when collapse/expand
-1.3.2
-- [feature] Added showNavBar param for Collapse/Expand/HidePanel methods
-- [feature] Enhanced the Panning Gesture using last Y movement
-1.3.1
-- [feature] massive changes: rename/remove class name/properties
-- [fix] panning issue with iOS
-- [fix] Picture Pannel is not hidden
+          1.4.1
+          - [feature] added bindable properties; slidingpanel can be generated only using XAML
+          - [fix] Android - Title Height and Navigation Bar issues
 
-1.2.1
-- Enhanced the Tap and Pan gestures on both Android and iOS
-1.2.0
-- (Android) Fixed 'Laggy' Panning Gesture
-- (Android) Fixed Test page on Sample.Droid
-- Added Config.IsPanSupport property
+          1.3.5
+          - [fix] smooth transition on hide/show navigation bar when collapse/expand
+          1.3.2
+          - [feature] Added showNavBar param for Collapse/Expand/HidePanel methods
+          - [feature] Enhanced the Panning Gesture using last Y movement
+          1.3.1
+          - [feature] massive changes: rename/remove class name/properties
+          - [fix] panning issue with iOS
+          - [fix] Picture Pannel is not hidden
 
-<!-- 1.1.5 -->
+          1.2.1
+          - Enhanced the Tap and Pan gestures on both Android and iOS
+          1.2.0
+          - (Android) Fixed 'Laggy' Panning Gesture
+          - (Android) Fixed Test page on Sample.Droid
+          - Added Config.IsPanSupport property
+
+          <!-- 1.1.5 -->
 <!-- - Degraded ReactiveUI Dependency version 7.0.0 to 6.5.2 -->
 <!-- 1.1.4 -->
 <!-- - Added Ratio for Panel and Picture -->

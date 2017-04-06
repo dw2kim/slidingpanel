@@ -12,7 +12,7 @@
             </StackLayout>
         </DK:SlidingUpPanel.MainView>
 
-        <DK:SlidingUpPanel.HideNavBar>False</DK:SlidingUpPanel.HideNavBar>
+        <DK:SlidingUpPanel.HideNavBar>True</DK:SlidingUpPanel.HideNavBar>
 
         <DK:SlidingUpPanel.HeaderLeftButton>
             <Image HeightRequest="48" WidthRequest="48" Source="{Binding BackButtonImage}">

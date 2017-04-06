@@ -66,7 +66,6 @@ C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.MainPage.xaml.
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.TestPageAllXaml.xaml.g.cs
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.pdb
-C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
-C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.MenuPage.xaml.g.cs
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
