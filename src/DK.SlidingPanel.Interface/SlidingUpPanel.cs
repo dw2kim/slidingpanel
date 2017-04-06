@@ -151,15 +151,15 @@ namespace DK.SlidingPanel.Interface
             set { SetValue(BodyViewProperty, value); }
         }
 
-        public static readonly BindableProperty HeaderLeftButtonProperty = BindableProperty.Create(
-          propertyName: "HeaderLeftButton",
+        public static readonly BindableProperty HeaderViewProperty = BindableProperty.Create(
+          propertyName: "HeaderView",
           returnType: typeof(View),
           declaringType: typeof(SlidingUpPanel),
-          defaultValue: new Button());
-        public View HeaderLeftButton
+          defaultValue: new StackLayout());
+        public View HeaderView
         {
-            get { return (View)GetValue(HeaderLeftButtonProperty); }
-            set { SetValue(HeaderLeftButtonProperty, value); }
+            get { return (View)GetValue(HeaderViewProperty); }
+            set { SetValue(HeaderViewProperty, value); }
         }
 
         public static readonly BindableProperty PictureViewProperty = BindableProperty.Create(
@@ -260,7 +260,7 @@ namespace DK.SlidingPanel.Interface
                 });
 
 
-            this.WhenAnyValue(x => x.HeaderLeftButton)
+            this.WhenAnyValue(x => x.HeaderView)
                 .Skip(1)
                 .Subscribe(headerView =>
                 {
@@ -270,6 +270,7 @@ namespace DK.SlidingPanel.Interface
                         _headerStackLayout.Orientation = StackOrientation.Horizontal;
                         _headerStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
                         _headerStackLayout.BackgroundColor = headerView.BackgroundColor;
+                        _headerStackLayout.HeightRequest = headerView.HeightRequest;
 
                         TapGestureRecognizer headerTapGesture = new TapGestureRecognizer();
                         headerTapGesture.Tapped += TapGesture_Tapped;

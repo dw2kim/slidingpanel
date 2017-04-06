@@ -12,6 +12,8 @@ namespace Samples.UI
 {
     public partial class MainPage : ContentPage
     {
+        public const string BarBackgroundHexColor = "#303030";
+
         public MainPage()
         {
             InitializeComponent();
@@ -24,7 +26,12 @@ namespace Samples.UI
                 mdPage.Detail = new NavigationPage(new TestPage
                 {
                     BindingContext = new TestViewModel()
-                });
+                })
+                {
+                    BarBackgroundColor = Color.FromHex(BarBackgroundHexColor),
+                    BarTextColor = Color.White
+                }
+                ;
             });
 
             btnTestPageAllXaml.Clicked += ((s, e) =>
@@ -34,7 +41,11 @@ namespace Samples.UI
                 mdPage.Detail = new NavigationPage(new TestPageAllXaml
                 {
                     BindingContext = new TestPageAllXamlViewModel()
-                });
+                })
+                {
+                    BarBackgroundColor = Color.FromHex(BarBackgroundHexColor),
+                    BarTextColor = Color.White
+                };
             });
         }
     }

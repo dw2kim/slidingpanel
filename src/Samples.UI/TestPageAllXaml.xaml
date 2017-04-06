@@ -5,7 +5,7 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
              x:Class="Samples.UI.TestPageAllXaml">
 
-    <DK:SlidingUpPanel x:Name="spTest">
+    <DK:SlidingUpPanel x:Name="spTest" BackgroundColor="#303030">
         <DK:SlidingUpPanel.MainView>
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <maps:Map x:Name="GoogleMapInstance"></maps:Map>
@@ -14,13 +14,17 @@
 
         <DK:SlidingUpPanel.HideNavBar>True</DK:SlidingUpPanel.HideNavBar>
 
-        <DK:SlidingUpPanel.HeaderLeftButton>
-            <Image HeightRequest="48" WidthRequest="48" Source="{Binding BackButtonImage}">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="BackButtonTapGesture_Tapped"></TapGestureRecognizer>
-                </Image.GestureRecognizers>
-            </Image>
-        </DK:SlidingUpPanel.HeaderLeftButton>
+        <DK:SlidingUpPanel.HeaderView>
+            <StackLayout Orientation="Horizontal" HeightRequest="48" Padding="0, 12, 0, 12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#303030">
+                <Image HeightRequest="24" WidthRequest="24" Source="{Binding BackButtonImage}" HorizontalOptions="Start" VerticalOptions="FillAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="BackButtonTapGesture_Tapped"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+
+                <Label Text="Title" HorizontalOptions="CenterAndExpand" TextColor="White"></Label>
+            </StackLayout>
+        </DK:SlidingUpPanel.HeaderView>
         <DK:SlidingUpPanel.PictureView>
             <Image BackgroundColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Aspect="AspectFill" Source="{Binding HondaImage}"></Image>
         </DK:SlidingUpPanel.PictureView>

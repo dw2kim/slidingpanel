@@ -10,6 +10,8 @@ namespace Samples.UI
 {
     public partial class App : Application
     {
+        public const string BarBackgroundHexColor = "#303030";
+
         public App()
         {
             InitializeComponent();
@@ -19,6 +21,10 @@ namespace Samples.UI
             {
                 Master = new MenuPage { BindingContext = new MenuViewModel() },
                 Detail = new NavigationPage(new MainPage())
+                {
+                    BarBackgroundColor = Color.FromHex(BarBackgroundHexColor),
+                    BarTextColor = Color.White
+                }
             };
         }
 
