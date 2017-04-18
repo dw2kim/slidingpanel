@@ -33,9 +33,12 @@
 		
         <releaseNotes>
           * New Version
+          1.4.6
+          [fix] UI fixes/changes for picture and main panel
+
           1.4.5
           - [feature] change HeaderLeftButton to HeaderView to have more controls
-          
+
           1.4.4
           - [feature] support full body page without title on expanded mode (ex. TestPageAllXaml)
           - [feature] added WhenSlidingPanelStateChanged event
