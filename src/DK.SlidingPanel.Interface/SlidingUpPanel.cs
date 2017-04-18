@@ -16,9 +16,10 @@ namespace DK.SlidingPanel.Interface
         private const double DEFAULT_FAB_WIDTH = 0;
 
         private const double DEFAULT_NAV_BAR_HEIGHT_IOS = 39;
-        private const double DEFAULT_NAV_BAR_HEIGHT_ANDROID = 34;
+        private const double DEFAULT_NAV_BAR_HEIGHT_ANDROID = 33;
 
         private const double DEFAULT_IOS_STATUS_BAR_HEIGHT = 20;
+        private const double DEFAULT_ANDROID_STATUS_BAR_HEIGHT = 18;
 
         private const double MIN_PANEL_RATIO = 0;
         private const double MAX_PANEL_RATIO = 1;
@@ -77,6 +78,23 @@ namespace DK.SlidingPanel.Interface
                 return (height);
             }
         }
+        private double StatusBarHeight
+        {
+            get
+            {
+                double height = 0;
+                Device.OnPlatform(iOS: () =>
+                {
+                    height = DEFAULT_IOS_STATUS_BAR_HEIGHT;
+                }, Android: () =>
+                {
+                    height = DEFAULT_ANDROID_STATUS_BAR_HEIGHT;
+                });
+
+                return (height);
+            }
+        }
+
 
         private double _currentTitleHeight { get; set; }
         private bool _hideTitleView { get; set; }
@@ -317,7 +335,8 @@ namespace DK.SlidingPanel.Interface
                         double picturePatio = 0;
                         if (_headerStackLayout != null)
                         {
-                            var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
+                            //var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
+                            var totalHeight = Application.Current.MainPage.Height;
                             picturePatio = _headerStackLayout.Height / totalHeight;
                         }
 
@@ -773,17 +792,17 @@ namespace DK.SlidingPanel.Interface
 
             if (_hideTitleView)
                 _titleRelativeLayout.HeightRequest = _currentTitleHeight;
-
-            var actualHeight = _currentTitleHeight;
+            
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height - actualHeight;
+            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+            drawerCollapsedPosition.Y -= _currentTitleHeight;
             if (_hideNavBarFeature == true && _showingNavBar == true && _isCollapsing == false)
             {
                 drawerCollapsedPosition.Y -= NavigationBarHeight;
 
                 if (PanelRatio >= MAX_PANEL_RATIO)
                 {
-                    drawerCollapsedPosition.Y -= DEFAULT_IOS_STATUS_BAR_HEIGHT;
+                    drawerCollapsedPosition.Y -= StatusBarHeight;
                 }
 
                 _showingNavBar = false;
@@ -797,7 +816,8 @@ namespace DK.SlidingPanel.Interface
             if (IsPictureImageNull == false)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+                pictureBounds.Y += _currentTitleHeight;
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);

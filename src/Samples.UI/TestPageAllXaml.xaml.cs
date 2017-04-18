@@ -48,8 +48,18 @@ namespace Samples.UI
                 Position randomPosition = new Position(5, 5);
                 GoogleMapInstance.Pins.Add(new Pin
                 {
-                    Label = "Test Pin",
+                    Label = "Test Pin Full Ratio",
                     Position = randomPosition
+                });
+                GoogleMapInstance.Pins.Add(new Pin
+                {
+                    Label = "Test Pin Half Ratio",
+                    Position = new Position(randomPosition.Latitude + 0.1, randomPosition.Longitude + 0.1)
+                });
+                GoogleMapInstance.Pins.Add(new Pin
+                {
+                    Label = "Test Pin Half Ratio",
+                    Position = new Position(randomPosition.Latitude - 0.1, randomPosition.Longitude - 0.1)
                 });
                 GoogleMapInstance.MoveToRegion(new MapSpan(randomPosition, 0.5, 0.5));
 
@@ -64,9 +74,17 @@ namespace Samples.UI
 
                         if (selectedPin != null)
                         {
-                            int randomInt = new Random().Next();
-                            this.ViewModel.PanelRatio = (randomInt % 2 == 0) ? 1 : 0.6;
-                            this.ViewModel.HideTitleView = (this.ViewModel.PanelRatio == 1);
+                            if (selectedPin.Label == "Test Pin Full Ratio")
+                            {
+                                this.ViewModel.PanelRatio = 1;
+                                this.ViewModel.HideTitleView = false;
+                            }
+
+                            if (selectedPin.Label == "Test Pin Half Ratio")
+                            {
+                                this.ViewModel.PanelRatio = 0.6;
+                                this.ViewModel.HideTitleView = false;
+                            }
 
                             spTest.ShowCollapsedPanel();
                         }
