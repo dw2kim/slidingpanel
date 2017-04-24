@@ -192,6 +192,7 @@ namespace DK.SlidingPanel.Interface
         }
 
         //public Func<int?> FunctionAfterTitleTapped { get; set; }
+        public event EventHandler WhenTitleTapped;
         public event EventHandler<StateChangedEventArgs> WhenSlidingPanelStateChanged;
         public event EventHandler WhenPanelRatioChanged;
         #endregion
@@ -653,6 +654,8 @@ namespace DK.SlidingPanel.Interface
         #region Gesture Implementations
         private void TapGesture_Tapped(object sender, EventArgs e)
         {
+            WhenTitleTapped?.Invoke(null, null);
+
             if (_isPanRunning == false)
             {
                 switch (_currentSlidePanelState)
