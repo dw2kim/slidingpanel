@@ -41,6 +41,7 @@
     <Compile Include="SlidingPanelState.cs" />
     <Compile Include="SlidingPanelConfig.cs" />
     <Compile Include="StateChangedEventArgs.cs" />
+    <Compile Include="StateChangingEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ReactiveUI, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">

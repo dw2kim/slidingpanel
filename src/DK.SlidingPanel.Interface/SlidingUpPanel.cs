@@ -191,9 +191,8 @@ namespace DK.SlidingPanel.Interface
             set { SetValue(PictureViewProperty, value); }
         }
 
-        //public Func<int?> FunctionAfterTitleTapped { get; set; }
-        public event EventHandler WhenTitleTapped;
         public event EventHandler<StateChangedEventArgs> WhenSlidingPanelStateChanged;
+        public event EventHandler<StateChangingEventArgs> WhenSlidingPanelStateChanging;
         public event EventHandler WhenPanelRatioChanged;
         #endregion
 
@@ -654,8 +653,6 @@ namespace DK.SlidingPanel.Interface
         #region Gesture Implementations
         private void TapGesture_Tapped(object sender, EventArgs e)
         {
-            WhenTitleTapped?.Invoke(null, null);
-
             if (_isPanRunning == false)
             {
                 switch (_currentSlidePanelState)
@@ -766,6 +763,8 @@ namespace DK.SlidingPanel.Interface
         #region ISlidingPanel Implementations
         public void HidePanel(uint length = 700)
         {
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
             if (_hideNavBarFeature == true && _showingNavBar == true)
@@ -791,6 +790,8 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+
             ShowNavigationBar(true);
 
             if (_hideTitleView)
@@ -827,10 +828,12 @@ namespace DK.SlidingPanel.Interface
                 });
             }
 
-            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
+            WhenSlidingPanelStateChanged?.Invoke(null, new StateChangedEventArgs() { State = _currentSlidePanelState });
         }
         public void ShowExpandedPanel(uint length = 700)
         {
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+
             ShowNavigationBar(false);
             _showingNavBar = true;
 
