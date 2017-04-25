@@ -8,6 +8,7 @@ namespace DK.SlidingPanel.Interface
 {
     public class StateChangingEventArgs
     {
-        public SlidingPanelState State { get; set; }
+        public SlidingPanelState OldState { get; set; }
+        public SlidingPanelState NewState { get; set; }
     }
 }

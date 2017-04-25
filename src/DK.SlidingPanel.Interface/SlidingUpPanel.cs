@@ -763,7 +763,7 @@ namespace DK.SlidingPanel.Interface
         #region ISlidingPanel Implementations
         public void HidePanel(uint length = 700)
         {
-            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Hidden });
 
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
@@ -790,7 +790,7 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowCollapsedPanel(uint length = 700)
         {
-            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Collapsed });
 
             ShowNavigationBar(true);
 
@@ -832,7 +832,7 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowExpandedPanel(uint length = 700)
         {
-            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { State = _currentSlidePanelState });
+            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Expanded });
 
             ShowNavigationBar(false);
             _showingNavBar = true;
