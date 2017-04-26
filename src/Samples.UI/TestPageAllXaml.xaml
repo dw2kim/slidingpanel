@@ -5,7 +5,7 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
              x:Class="Samples.UI.TestPageAllXaml">
 
-    <DK:SlidingUpPanel x:Name="spTest" BackgroundColor="#303030">
+    <DK:SlidingUpPanel x:Name="spTest" BackgroundColor="#303030" SlideAnimationSpeed="250" >
         <DK:SlidingUpPanel.MainView>
             <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <maps:Map x:Name="GoogleMapInstance"></maps:Map>

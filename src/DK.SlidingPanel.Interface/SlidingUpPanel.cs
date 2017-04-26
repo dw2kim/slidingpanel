@@ -23,6 +23,8 @@ namespace DK.SlidingPanel.Interface
 
         private const double MIN_PANEL_RATIO = 0;
         private const double MAX_PANEL_RATIO = 1;
+
+        private const int DEFAULT_SLIDE_ANIMATION_SPEED = 700;
         #endregion
 
         #region Private Fields
@@ -100,6 +102,8 @@ namespace DK.SlidingPanel.Interface
         private bool _hideTitleView { get; set; }
         private Color _currentTitleBackground { get; set; } = Color.Transparent;
         private Color _currentBodyBackground { get; set; } = Color.Transparent;
+
+        private int _slideAnimationSpeed = DEFAULT_SLIDE_ANIMATION_SPEED;
         #endregion
 
         #region Public Properties
@@ -134,6 +138,17 @@ namespace DK.SlidingPanel.Interface
         {
             get { return (double)GetValue(PanelRatioProperty); }
             set { SetValue(PanelRatioProperty, value); }
+        }
+        
+        public static readonly BindableProperty SlideAnimationSpeedProperty = BindableProperty.Create(
+          propertyName: "SlideAnimationSpeed",
+          returnType: typeof(int),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: DEFAULT_SLIDE_ANIMATION_SPEED);
+        public int SlideAnimationSpeed
+        {
+            get { return (int)GetValue(SlideAnimationSpeedProperty); }
+            set { SetValue(SlideAnimationSpeedProperty, value); }
         }
 
         public static readonly BindableProperty MainViewProperty = BindableProperty.Create(
@@ -210,6 +225,13 @@ namespace DK.SlidingPanel.Interface
                         HidePanel(0);
                         _isFirst = false;
                     }
+                });
+
+            this.WhenAnyValue(x => x.SlideAnimationSpeed)
+                .Skip(1)
+                .Subscribe(slideAnimationSpeed =>
+                {
+                    this._slideAnimationSpeed = slideAnimationSpeed;
                 });
 
             this.WhenAnyValue(x => x.HideNavBar)
@@ -761,7 +783,7 @@ namespace DK.SlidingPanel.Interface
         #endregion
 
         #region ISlidingPanel Implementations
-        public void HidePanel(uint length = 700)
+        public void HidePanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Hidden });
 
@@ -775,6 +797,7 @@ namespace DK.SlidingPanel.Interface
 
             Device.BeginInvokeOnMainThread(() =>
             {
+                length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                 _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Hidden;
@@ -783,12 +806,13 @@ namespace DK.SlidingPanel.Interface
             pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
             Device.BeginInvokeOnMainThread(() =>
             {
+                length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                 _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             });
 
             WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
         }
-        public void ShowCollapsedPanel(uint length = 700)
+        public void ShowCollapsedPanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Collapsed });
 
@@ -813,6 +837,7 @@ namespace DK.SlidingPanel.Interface
             }
             Device.BeginInvokeOnMainThread(() =>
             {
+                length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                 _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Collapsed;
@@ -824,13 +849,14 @@ namespace DK.SlidingPanel.Interface
                 pictureBounds.Y += _currentTitleHeight;
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                     _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
                 });
             }
 
             WhenSlidingPanelStateChanged?.Invoke(null, new StateChangedEventArgs() { State = _currentSlidePanelState });
         }
-        public void ShowExpandedPanel(uint length = 700)
+        public void ShowExpandedPanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Expanded });
 
@@ -845,6 +871,7 @@ namespace DK.SlidingPanel.Interface
 
             Device.BeginInvokeOnMainThread(() =>
             {
+                length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                 _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Expanded;
@@ -855,6 +882,7 @@ namespace DK.SlidingPanel.Interface
                 pictureExpandedPosition.Y = 0;
                 Device.BeginInvokeOnMainThread(() =>
                 {
+                    length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
                     _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
                 });
             }
