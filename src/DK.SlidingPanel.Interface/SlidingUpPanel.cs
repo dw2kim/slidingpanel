@@ -209,6 +209,14 @@ namespace DK.SlidingPanel.Interface
         public event EventHandler<StateChangedEventArgs> WhenSlidingPanelStateChanged;
         public event EventHandler<StateChangingEventArgs> WhenSlidingPanelStateChanging;
         public event EventHandler WhenPanelRatioChanged;
+
+        public SlidingPanelState CurrentState
+        {
+            get
+            {
+                return (_currentSlidePanelState);
+            }
+        }
         #endregion
 
         #region Constructors
@@ -801,7 +809,7 @@ namespace DK.SlidingPanel.Interface
                 _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Hidden;
-            
+
             Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
             pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
             Device.BeginInvokeOnMainThread(() =>
@@ -810,7 +818,7 @@ namespace DK.SlidingPanel.Interface
                 _pictureAbsoluteLayout.TranslateTo(pictureBounds.X, pictureBounds.Y, length, Easing.CubicOut);
             });
 
-            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
+            WhenSlidingPanelStateChanged?.Invoke(null, new StateChangedEventArgs() { State = _currentSlidePanelState });
         }
         public void ShowCollapsedPanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {

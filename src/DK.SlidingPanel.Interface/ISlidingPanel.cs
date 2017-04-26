@@ -14,7 +14,8 @@ namespace DK.SlidingPanel.Interface
 
         void ShowExpandedPanel(uint length);
 
-
         void ApplyConfig(SlidingPanelConfig config);
+
+        SlidingPanelState CurrentState { get;  }
     }
 }

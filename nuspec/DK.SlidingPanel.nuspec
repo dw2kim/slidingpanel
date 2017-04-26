@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>1.5.1</version>
+        <version>1.6.1</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages</summary>
         <description>Generate a Panel sliding up from bottom of the screen for Xamarin.Forms pages
@@ -33,16 +33,20 @@
 		
         <releaseNotes>
           * New Version
+          1.6.0
+          [feature] added CurrentState property
+          [fix] TestPageAllXaml page - ui crash when user taps map while panel is expanding
+          
           1.5.1
           [feature] added OldState and NewState for the WhenSlidingPanelStateChanging EventArgs
-          
+
           1.5.0
           [feature] added WhenSlidingPanelStateChanging
           [remove] removed WhenTitleTapped
-          
+
           1.4.8
           [feature] added WhenTitleTapped event
-          
+
           1.4.6
           [fix] UI fixes/changes for picture and main panel
 

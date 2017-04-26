@@ -69,7 +69,14 @@ namespace Samples.UI
 
                         if (selectedPin == null)
                         {
-                            spTest.HidePanel();
+                            if (spTest.CurrentState != SlidingPanelState.Expanded)
+                            {
+                                spTest.HidePanel();
+                            }
+                            else
+                            {
+
+                            }
                         }
 
                         if (selectedPin != null)
