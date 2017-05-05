@@ -100,6 +100,8 @@ namespace DK.SlidingPanel.Interface
 
         private double _currentTitleHeight { get; set; }
         private bool _hideTitleView { get; set; }
+        private bool _isExpandable { get; set; } = true;
+        private bool _isPanSupport { get; set; } = false;
         private Color _currentTitleBackground { get; set; } = Color.Transparent;
         private Color _currentBodyBackground { get; set; } = Color.Transparent;
 
@@ -127,6 +129,29 @@ namespace DK.SlidingPanel.Interface
         {
             get { return (bool)GetValue(HideTitleViewProperty); }
             set { SetValue(HideTitleViewProperty, value); }
+        }
+        
+        public static readonly BindableProperty IsExpandableProperty = BindableProperty.Create(
+          propertyName: "IsExpandable",
+          returnType: typeof(bool),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: true);
+        public bool IsExpandable
+        {
+            get { return (bool)GetValue(IsExpandableProperty); }
+            set { SetValue(IsExpandableProperty, value); }
+        }
+
+
+        public static readonly BindableProperty IsPanSupportProperty = BindableProperty.Create(
+          propertyName: "IsPanSupport",
+          returnType: typeof(bool),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: false);
+        public bool IsPanSupport
+        {
+            get { return (bool)GetValue(IsPanSupportProperty); }
+            set { SetValue(IsPanSupportProperty, value); }
         }
 
         public static readonly BindableProperty PanelRatioProperty = BindableProperty.Create(
@@ -242,11 +267,34 @@ namespace DK.SlidingPanel.Interface
                     this._slideAnimationSpeed = slideAnimationSpeed;
                 });
 
+
+            this.WhenAnyValue(x => x.HideTitleView)
+                .Skip(1)
+                .Subscribe(hideTitleView =>
+                {
+                    _hideTitleView = hideTitleView;
+                });
+
             this.WhenAnyValue(x => x.HideNavBar)
                 .Skip(1)
                 .Subscribe(hideNavBar =>
                 {
                     this._hideNavBarFeature = hideNavBar;
+                });
+            
+            this.WhenAnyValue(x => x.IsExpandable)
+                .Skip(1)
+                .Subscribe(isExpandable =>
+                {
+                    _isExpandable = isExpandable;
+                });
+
+
+            this.WhenAnyValue(x => x.IsPanSupport)
+                .Skip(1)
+                .Subscribe(isPanSupport =>
+                {
+                    _isPanSupport = isPanSupport;
                 });
 
             this.WhenAnyValue(x => x.MainView)
@@ -290,6 +338,13 @@ namespace DK.SlidingPanel.Interface
                         TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
                         titlePanelTapGesture.Tapped += TapGesture_Tapped;
                         titleView.GestureRecognizers.Add(titlePanelTapGesture);
+
+                        if (_isPanSupport == true)
+                        {
+                            PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
+                            titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                            titleView.GestureRecognizers.Add(titlePanelPanGesture);
+                        }
                     }
                 });
 
@@ -302,6 +357,13 @@ namespace DK.SlidingPanel.Interface
                     {
                         _currentBodyBackground = bodyView.BackgroundColor;
                         _bodyStackLayout.BackgroundColor = _currentBodyBackground;
+
+                        if (_isPanSupport == true)
+                        {
+                            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
+                            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                            _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
+                        }
 
                         _bodyStackLayout.Children.Add(bodyView);
                     }
@@ -325,6 +387,13 @@ namespace DK.SlidingPanel.Interface
                         _headerStackLayout.GestureRecognizers.Add(headerTapGesture);
 
                         _headerStackLayout.Children.Add(headerView);
+
+                        if (_isPanSupport == true)
+                        {
+                            PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
+                            headerPanGesture.PanUpdated += PanGesture_PanUpdated;
+                            _headerStackLayout.GestureRecognizers.Add(headerPanGesture);
+                        }
                     }
                 });
             
@@ -352,6 +421,13 @@ namespace DK.SlidingPanel.Interface
 
                         Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
                         _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
+
+                        if (_isPanSupport == true)
+                        {
+                            PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
+                            pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
+                            _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+                        }
                     }
                 });
             
@@ -399,13 +475,6 @@ namespace DK.SlidingPanel.Interface
                             WhenPanelRatioChanged?.Invoke(null, null);
                         });
                     }
-                });
-
-            this.WhenAnyValue(x => x.HideTitleView)
-                .Skip(1)
-                .Subscribe(hideTitleView =>
-                {
-                    _hideTitleView = hideTitleView;
                 });
         }
         public SlidingUpPanel(SlidingPanelConfig config) : this()
@@ -866,36 +935,39 @@ namespace DK.SlidingPanel.Interface
         }
         public void ShowExpandedPanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
-            WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Expanded });
-
-            ShowNavigationBar(false);
-            _showingNavBar = true;
-
-            if(_hideTitleView)
-                _titleRelativeLayout.HeightRequest = 0;
-
-            Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerExpandedPosition.Y = 0;
-
-            Device.BeginInvokeOnMainThread(() =>
+            if (_isExpandable == true)
             {
-                length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
-                _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
-            });
-            _currentSlidePanelState = SlidingPanelState.Expanded;
+                WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Expanded });
 
-            if (IsPictureImageNull == false)
-            {
-                Rectangle pictureExpandedPosition = _pictureAbsoluteLayout.Bounds;
-                pictureExpandedPosition.Y = 0;
+                ShowNavigationBar(false);
+                _showingNavBar = true;
+
+                if (_hideTitleView)
+                    _titleRelativeLayout.HeightRequest = 0;
+
+                Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
+                drawerExpandedPosition.Y = 0;
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
-                    _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
+                    _slidingPanelAbsoluteLayout.TranslateTo(drawerExpandedPosition.X, drawerExpandedPosition.Y, length, Easing.CubicOut);
                 });
-            }
+                _currentSlidePanelState = SlidingPanelState.Expanded;
 
-            WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
+                if (IsPictureImageNull == false)
+                {
+                    Rectangle pictureExpandedPosition = _pictureAbsoluteLayout.Bounds;
+                    pictureExpandedPosition.Y = 0;
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
+                        _pictureAbsoluteLayout.TranslateTo(pictureExpandedPosition.X, pictureExpandedPosition.Y, length, Easing.CubicOut);
+                    });
+                }
+
+                WhenSlidingPanelStateChanged?.Invoke(null, new Interface.StateChangedEventArgs() { State = _currentSlidePanelState });
+            }
         }
 
         public void ApplyConfig(SlidingPanelConfig config)
