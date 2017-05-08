@@ -846,6 +846,7 @@ namespace DK.SlidingPanel.Interface
                 {
                     _isPanRunning = false;
                     CollapseOrExpand(false);
+                    _isCollapsing = false;
                 }
             }
         }
@@ -855,6 +856,7 @@ namespace DK.SlidingPanel.Interface
             {
                 _isPanRunning = false;
                 CollapseOrExpand(false);
+                _isCollapsing = false;
             }
         }
         #endregion
