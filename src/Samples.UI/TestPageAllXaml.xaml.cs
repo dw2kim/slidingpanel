@@ -81,6 +81,8 @@ namespace Samples.UI
 
                         if (selectedPin != null)
                         {
+                            spTest.HidePanel();
+
                             if (selectedPin.Label == "Test Pin Full Ratio")
                             {
                                 this.ViewModel.PanelRatio = 1;

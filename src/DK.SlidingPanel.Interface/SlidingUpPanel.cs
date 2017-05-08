@@ -25,6 +25,9 @@ namespace DK.SlidingPanel.Interface
         private const double MAX_PANEL_RATIO = 1;
 
         private const int DEFAULT_SLIDE_ANIMATION_SPEED = 700;
+
+        private const double PICTURE_PANEL_Y_FACTOR_WITH_PICTURE = 2;
+        private const double PICTURE_PANEL_Y_FACTOR_WITHOUT_PICTURE = 1.1;
         #endregion
 
         #region Private Fields
@@ -566,7 +569,7 @@ namespace DK.SlidingPanel.Interface
             double bodyHeight = _slidingPanelAbsoluteLayout.Height - titleHeight;
             double screenHeight = this.Height;
 
-            double totalPictureYFactor = 2;// (screenHeight / bodyHeight);
+            double totalPictureYFactor = (this.PanelRatio >= MAX_PANEL_RATIO) ? PICTURE_PANEL_Y_FACTOR_WITHOUT_PICTURE : PICTURE_PANEL_Y_FACTOR_WITH_PICTURE;
             double totalPictureY = totalY * totalPictureYFactor;
             double newPicturePositionY = (totalPictureY >= 0) ? maxPicturePosition + totalPictureY : minPicturePostion + totalPictureY;
 
@@ -823,8 +826,8 @@ namespace DK.SlidingPanel.Interface
                         });
                     }
 
-                    bool showNavBarNow = (_isCollapsing == true);
-                    ShowNavigationBar(showNavBarNow);
+                    //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
+                    //ShowNavigationBar(showNavBarNow);
                 }
             }
 
@@ -903,16 +906,15 @@ namespace DK.SlidingPanel.Interface
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
             drawerCollapsedPosition.Y -= _currentTitleHeight;
-            if (_hideNavBarFeature == true && _showingNavBar == true && _isCollapsing == false)
+            if (_hideNavBarFeature == true && _showingNavBar == true)
             {
                 drawerCollapsedPosition.Y -= NavigationBarHeight;
+                _showingNavBar = false;
 
                 if (PanelRatio >= MAX_PANEL_RATIO)
                 {
                     drawerCollapsedPosition.Y -= StatusBarHeight;
                 }
-
-                _showingNavBar = false;
             }
             Device.BeginInvokeOnMainThread(() =>
             {
