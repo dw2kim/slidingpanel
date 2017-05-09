@@ -8,6 +8,8 @@ namespace DK.SlidingPanel.Interface
 {
     public interface ISlidingPanel
     {
+        SlidingPanelState CurrentState { get; }
+
         void HidePanel(uint length);
 
         void ShowCollapsedPanel(uint length);
@@ -15,7 +17,5 @@ namespace DK.SlidingPanel.Interface
         void ShowExpandedPanel(uint length);
 
         void ApplyConfig(SlidingPanelConfig config);
-
-        SlidingPanelState CurrentState { get;  }
     }
 }

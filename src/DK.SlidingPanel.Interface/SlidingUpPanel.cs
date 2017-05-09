@@ -57,14 +57,7 @@ namespace DK.SlidingPanel.Interface
         private StackLayout _pictureMainStackLayout { get; set; }
         private StackLayout _headerStackLayout { get; set; }
         private View _pictureImage { get; set; }
-
-        private bool IsPictureImageNull
-        {
-            get
-            {
-                return (_pictureImage == null);
-            }
-        }
+        
         private bool _hideNavBarFeature { get; set; }
 
         private double NavigationBarHeight
@@ -237,23 +230,14 @@ namespace DK.SlidingPanel.Interface
         public event EventHandler<StateChangedEventArgs> WhenSlidingPanelStateChanged;
         public event EventHandler<StateChangingEventArgs> WhenSlidingPanelStateChanging;
         public event EventHandler WhenPanelRatioChanged;
-
-        public SlidingPanelState CurrentState
-        {
-            get
-            {
-                return (_currentSlidePanelState);
-            }
-        }
         #endregion
 
         #region Constructors
         public SlidingUpPanel() : base()
         {
             InitViews();
-            //InitFunctions();
 
-            _slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
+            this._slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
                 .Subscribe(actualHeight =>
                 {
                     if (_isFirst == true && actualHeight > -1)
@@ -489,6 +473,7 @@ namespace DK.SlidingPanel.Interface
         #region Private Methods
         private void InitViews()
         {
+            // Main
             _mainViewStackLayout = new StackLayout();
             _mainViewStackLayout.Spacing = 0;
             AbsoluteLayout.SetLayoutBounds(_mainViewStackLayout, new Rectangle(1, 1, 1, 1));
@@ -533,13 +518,7 @@ namespace DK.SlidingPanel.Interface
             titlePanelTapGesture.Tapped += TapGesture_Tapped;
             _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
         }
-        //private void InitFunctions()
-        //{
-        //    FunctionAfterTitleTapped = new Func<int?>(()=> {
-        //        return (null);
-        //    });
-        //}
-        
+                
         private double CalculateNewDrawerPositionY(double totalY)
         {
             double bodyHeight = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
@@ -583,6 +562,40 @@ namespace DK.SlidingPanel.Interface
             }
 
             return (newPicturePositionY);
+        }
+
+        private void CollapseOrExpand()
+        {
+            if (_lastYMovement > 0)
+            {
+                ShowCollapsedPanel();
+            }
+            else
+            {
+                ShowExpandedPanel();
+            }
+        }
+        private void ShowNavigationBar(bool showNavBarNow)
+        {
+            if (_hideNavBarFeature == true && this.Parent != null)
+            {
+                if (showNavBarNow == false && NavigationPage.GetHasNavigationBar(this.Parent) == true)
+                {
+                    Device.OnPlatform(iOS: () =>
+                    {
+                        this.Padding = new Thickness(0, DEFAULT_IOS_STATUS_BAR_HEIGHT, 0, 0);
+                    });
+                    NavigationPage.SetHasNavigationBar(this.Parent, false);
+                }
+
+                if (showNavBarNow == true && NavigationPage.GetHasNavigationBar(this.Parent) == false)
+                {
+                    Device.OnPlatform(iOS: () => {
+                        this.Padding = new Thickness(0, 0, 0, 0);
+                    });
+                    NavigationPage.SetHasNavigationBar(this.Parent, true);
+                }
+            }
         }
 
         private void ApplyConfigToTitleBodyPanel(SlidingPanelConfig config)
@@ -715,41 +728,6 @@ namespace DK.SlidingPanel.Interface
                 _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
             }
         }
-
-        private void CollapseOrExpand(bool isAfterTapped)
-        {
-            if (_lastYMovement > 0)
-            {
-                ShowCollapsedPanel();
-            }
-            else
-            {
-                ShowExpandedPanel();
-            }
-        }
-
-        private void ShowNavigationBar(bool showNavBarNow)
-        {
-            if (_hideNavBarFeature == true && this.Parent != null)
-            {
-                if (showNavBarNow == false && NavigationPage.GetHasNavigationBar(this.Parent) == true)
-                {
-                    Device.OnPlatform(iOS: () =>
-                    {
-                        this.Padding = new Thickness(0, DEFAULT_IOS_STATUS_BAR_HEIGHT, 0, 0);
-                    });
-                    NavigationPage.SetHasNavigationBar(this.Parent, false);
-                }
-                
-                if (showNavBarNow == true && NavigationPage.GetHasNavigationBar(this.Parent) == false)
-                {
-                    Device.OnPlatform(iOS: () => {
-                        this.Padding = new Thickness(0, 0, 0, 0);
-                    });
-                    NavigationPage.SetHasNavigationBar(this.Parent, true);
-                }
-            }
-        }
         #endregion
 
         #region Gesture Implementations
@@ -776,19 +754,17 @@ namespace DK.SlidingPanel.Interface
             {
                 TapGesture_Tapped_Android(sender, e);
             }
-
-            if (Device.OS == TargetPlatform.iOS)
+            else if (Device.OS == TargetPlatform.iOS)
             {
                 TapGesture_Tapped_iOS(sender, e);
             }
-            //FunctionAfterTitleTapped();
         }
         private void TapGesture_Tapped_Android(object sender, EventArgs e)
         {
             if (_isPanRunning == true)
             {
                 _isPanRunning = false;
-                CollapseOrExpand(true);
+                CollapseOrExpand();
             }
         }
         private void TapGesture_Tapped_iOS(object sender, EventArgs e)
@@ -816,7 +792,7 @@ namespace DK.SlidingPanel.Interface
                         _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
                     });
 
-                    if (IsPictureImageNull == false)
+                    if (_pictureImage != null)
                     {
                         double newPicturePosition = CalculateNewPicturePositionY(totalY);
 
@@ -835,8 +811,7 @@ namespace DK.SlidingPanel.Interface
             {
                 PanGesture_PanUpdated_Android(sender, e);
             }
-
-            if (Device.OS == TargetPlatform.iOS)
+            else if (Device.OS == TargetPlatform.iOS)
             {
                 PanGesture_PanUpdated_iOS(sender, e);
             }
@@ -848,7 +823,7 @@ namespace DK.SlidingPanel.Interface
                 if (_isCollapsing == true)
                 {
                     _isPanRunning = false;
-                    CollapseOrExpand(false);
+                    CollapseOrExpand();
                     _isCollapsing = false;
                 }
             }
@@ -858,13 +833,21 @@ namespace DK.SlidingPanel.Interface
             if (e.StatusType == GestureStatus.Completed)
             {
                 _isPanRunning = false;
-                CollapseOrExpand(false);
+                CollapseOrExpand();
                 _isCollapsing = false;
             }
         }
         #endregion
 
         #region ISlidingPanel Implementations
+        public SlidingPanelState CurrentState
+        {
+            get
+            {
+                return (_currentSlidePanelState);
+            }
+        }
+
         public void HidePanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Hidden });
@@ -923,7 +906,7 @@ namespace DK.SlidingPanel.Interface
             });
             _currentSlidePanelState = SlidingPanelState.Collapsed;
 
-            if (IsPictureImageNull == false)
+            if (_pictureImage != null)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
                 pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
@@ -959,7 +942,7 @@ namespace DK.SlidingPanel.Interface
                 });
                 _currentSlidePanelState = SlidingPanelState.Expanded;
 
-                if (IsPictureImageNull == false)
+                if (_pictureImage != null)
                 {
                     Rectangle pictureExpandedPosition = _pictureAbsoluteLayout.Bounds;
                     pictureExpandedPosition.Y = 0;
