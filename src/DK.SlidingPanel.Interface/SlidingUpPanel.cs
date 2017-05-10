@@ -326,12 +326,9 @@ namespace DK.SlidingPanel.Interface
                         titlePanelTapGesture.Tapped += TapGesture_Tapped;
                         titleView.GestureRecognizers.Add(titlePanelTapGesture);
 
-                        if (_isPanSupport == true)
-                        {
-                            PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
-                            titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                            titleView.GestureRecognizers.Add(titlePanelPanGesture);
-                        }
+                        PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
+                        titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                        titleView.GestureRecognizers.Add(titlePanelPanGesture);
                     }
                 });
 
@@ -345,12 +342,9 @@ namespace DK.SlidingPanel.Interface
                         _currentBodyBackground = bodyView.BackgroundColor;
                         _bodyStackLayout.BackgroundColor = _currentBodyBackground;
 
-                        if (_isPanSupport == true)
-                        {
-                            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
-                            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                            _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
-                        }
+                        PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
+                        bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                        _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
 
                         _bodyStackLayout.Children.Add(bodyView);
                     }
@@ -375,12 +369,9 @@ namespace DK.SlidingPanel.Interface
 
                         _headerStackLayout.Children.Add(headerView);
 
-                        if (_isPanSupport == true)
-                        {
-                            PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
-                            headerPanGesture.PanUpdated += PanGesture_PanUpdated;
-                            _headerStackLayout.GestureRecognizers.Add(headerPanGesture);
-                        }
+                        PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
+                        headerPanGesture.PanUpdated += PanGesture_PanUpdated;
+                        _headerStackLayout.GestureRecognizers.Add(headerPanGesture);
                     }
                 });
             
@@ -409,12 +400,9 @@ namespace DK.SlidingPanel.Interface
                         Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
                         _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
 
-                        if (_isPanSupport == true)
-                        {
-                            PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                            pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
-                            _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
-                        }
+                        PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
+                        pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
+                        _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
                     }
                 });
             
@@ -776,44 +764,47 @@ namespace DK.SlidingPanel.Interface
 
         private void PanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            if (e.StatusType == GestureStatus.Running)
+            if (_isPanSupport == true)
             {
-                double totalY = e.TotalY;
-                _lastYMovement = totalY;
-
-                if ((_currentSlidePanelState == SlidingPanelState.Expanded && totalY > 0) || (_currentSlidePanelState == SlidingPanelState.Collapsed && totalY < 0))
+                if (e.StatusType == GestureStatus.Running)
                 {
-                    _isCollapsing = (totalY > 0);
-                    _isPanRunning = true;
+                    double totalY = e.TotalY;
+                    _lastYMovement = totalY;
 
-                    double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
-                    Device.BeginInvokeOnMainThread(() =>
+                    if ((_currentSlidePanelState == SlidingPanelState.Expanded && totalY > 0) || (_currentSlidePanelState == SlidingPanelState.Collapsed && totalY < 0))
                     {
-                        _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
-                    });
+                        _isCollapsing = (totalY > 0);
+                        _isPanRunning = true;
 
-                    if (_pictureImage != null)
-                    {
-                        double newPicturePosition = CalculateNewPicturePositionY(totalY);
-
+                        double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
+                            _slidingPanelAbsoluteLayout.TranslateTo(0, newDrawerPosition, 250, Easing.CubicOut);
                         });
+
+                        if (_pictureImage != null)
+                        {
+                            double newPicturePosition = CalculateNewPicturePositionY(totalY);
+
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
+                            });
+                        }
+
+                        //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
+                        //ShowNavigationBar(showNavBarNow);
                     }
-
-                    //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
-                    //ShowNavigationBar(showNavBarNow);
                 }
-            }
 
-            if (Device.OS == TargetPlatform.Android)
-            {
-                PanGesture_PanUpdated_Android(sender, e);
-            }
-            else if (Device.OS == TargetPlatform.iOS)
-            {
-                PanGesture_PanUpdated_iOS(sender, e);
+                if (Device.OS == TargetPlatform.Android)
+                {
+                    PanGesture_PanUpdated_Android(sender, e);
+                }
+                else if (Device.OS == TargetPlatform.iOS)
+                {
+                    PanGesture_PanUpdated_iOS(sender, e);
+                }
             }
         }
         private void PanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
