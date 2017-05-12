@@ -33,12 +33,15 @@
 		
         <releaseNotes>
           * New Version
+          1.7.4
+          [fix] Android - pan gesture is not working properly especially when it tries to be collapsed.
+          
           1.7.3
           [fix] fixed PanSupport to be reactive
-          
+
           1.7.2
           [fix] fixed collapsed panel height issue; fixed the big gap between title and body for the Max Panel Ratio(no picture) when expanding panel
-          
+
           1.7.1
           [fix] fixed the Panning gesture bug
 

@@ -28,6 +28,8 @@ namespace DK.SlidingPanel.Interface
 
         private const double PICTURE_PANEL_Y_FACTOR_WITH_PICTURE = 2;
         private const double PICTURE_PANEL_Y_FACTOR_WITHOUT_PICTURE = 1.1;
+
+        private const int DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS = 500;
         #endregion
 
         #region Private Fields
@@ -98,6 +100,8 @@ namespace DK.SlidingPanel.Interface
         private bool _hideTitleView { get; set; }
         private bool _isExpandable { get; set; } = true;
         private bool _isPanSupport { get; set; } = false;
+        private DateTime _lastPanCompleted { get; set; }
+
         private Color _currentTitleBackground { get; set; } = Color.Transparent;
         private Color _currentBodyBackground { get; set; } = Color.Transparent;
 
@@ -721,6 +725,49 @@ namespace DK.SlidingPanel.Interface
         #region Gesture Implementations
         private void TapGesture_Tapped(object sender, EventArgs e)
         {
+            if (Device.OS == TargetPlatform.Android)
+            {
+                TapGesture_Tapped_Android(sender, e);
+            }
+            else if (Device.OS == TargetPlatform.iOS)
+            {
+                TapGesture_Tapped_iOS(sender, e);
+            }
+        }
+        private void TapGesture_Tapped_Android(object sender, EventArgs e)
+        {
+            if (_isPanRunning == false)
+            {
+                if (_lastPanCompleted > DateTime.Now.AddMilliseconds(-1 * DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS) 
+                    && _lastPanCompleted < DateTime.Now.AddMilliseconds(DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS))
+                {
+                    // Do nothing if tap gesture triggered from pan
+                }
+                else
+                {
+                    switch (_currentSlidePanelState)
+                    {
+                        case SlidingPanelState.Collapsed:
+                            ShowExpandedPanel();
+                            break;
+                        case SlidingPanelState.Expanded:
+                            //_showingNavBar = true;
+                            ShowCollapsedPanel();
+                            break;
+                        case SlidingPanelState.Hidden:
+                        default:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                _isPanRunning = false;
+                CollapseOrExpand();
+            }
+        }
+        private void TapGesture_Tapped_iOS(object sender, EventArgs e)
+        {
             if (_isPanRunning == false)
             {
                 switch (_currentSlidePanelState)
@@ -737,29 +784,6 @@ namespace DK.SlidingPanel.Interface
                         break;
                 }
             }
-
-            if (Device.OS == TargetPlatform.Android)
-            {
-                TapGesture_Tapped_Android(sender, e);
-            }
-            else if (Device.OS == TargetPlatform.iOS)
-            {
-                TapGesture_Tapped_iOS(sender, e);
-            }
-        }
-        private void TapGesture_Tapped_Android(object sender, EventArgs e)
-        {
-            if (_isPanRunning == true)
-            {
-                _isPanRunning = false;
-                CollapseOrExpand();
-            }
-        }
-        private void TapGesture_Tapped_iOS(object sender, EventArgs e)
-        {
-            if (_isPanRunning == true)
-            {
-            }
         }
 
         private void PanGesture_PanUpdated(object sender, PanUpdatedEventArgs e)
@@ -770,11 +794,11 @@ namespace DK.SlidingPanel.Interface
                 {
                     double totalY = e.TotalY;
                     _lastYMovement = totalY;
+                    _isPanRunning = true;
 
                     if ((_currentSlidePanelState == SlidingPanelState.Expanded && totalY > 0) || (_currentSlidePanelState == SlidingPanelState.Collapsed && totalY < 0))
                     {
                         _isCollapsing = (totalY > 0);
-                        _isPanRunning = true;
 
                         double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
                         Device.BeginInvokeOnMainThread(() =>
@@ -796,37 +820,35 @@ namespace DK.SlidingPanel.Interface
                         //ShowNavigationBar(showNavBarNow);
                     }
                 }
+                else if (e.StatusType == GestureStatus.Completed)
+                {
+                    _lastPanCompleted = DateTime.Now;
 
-                if (Device.OS == TargetPlatform.Android)
-                {
-                    PanGesture_PanUpdated_Android(sender, e);
-                }
-                else if (Device.OS == TargetPlatform.iOS)
-                {
-                    PanGesture_PanUpdated_iOS(sender, e);
+                    if (Device.OS == TargetPlatform.Android)
+                    {
+                        PanGesture_PanUpdated_Android(sender, e);
+                    }
+                    else if (Device.OS == TargetPlatform.iOS)
+                    {
+                        PanGesture_PanUpdated_iOS(sender, e);
+                    }
                 }
             }
         }
         private void PanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
         {
-            if (e.StatusType == GestureStatus.Completed)
-            {
-                if (_isCollapsing == true)
-                {
-                    _isPanRunning = false;
-                    CollapseOrExpand();
-                    _isCollapsing = false;
-                }
-            }
-        }
-        private void PanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
-        {
-            if (e.StatusType == GestureStatus.Completed)
+            if (_isCollapsing == true)
             {
                 _isPanRunning = false;
                 CollapseOrExpand();
                 _isCollapsing = false;
             }
+        }
+        private void PanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
+        {
+            _isPanRunning = false;
+            CollapseOrExpand();
+            _isCollapsing = false;
         }
         #endregion
 
