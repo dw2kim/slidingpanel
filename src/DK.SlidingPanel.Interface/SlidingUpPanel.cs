@@ -346,14 +346,30 @@ namespace DK.SlidingPanel.Interface
                         _currentBodyBackground = bodyView.BackgroundColor;
                         _bodyStackLayout.BackgroundColor = _currentBodyBackground;
 
-                        PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
-                        bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                        _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
+                        var scrollView = BodyView as ScrollView;
+                        if (scrollView == null)
+                        {
+                            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
+                            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                            bodyView.GestureRecognizers.Add(bodyPanelPanGesture);
+                        }
 
                         _bodyStackLayout.Children.Add(bodyView);
                     }
                 });
 
+            //(this.BodyView as ScrollView)?.WhenAnyValue(x => x.Content.Height)
+            //    .Skip(1)
+            //    .Subscribe(contentHeight =>
+            //    {
+            //        if (contentHeight < (BodyView as ScrollView).Height)
+            //        {
+            //            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
+            //            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
+
+            //            _bodyStackLayout.Children[0]?.GestureRecognizers.Add(bodyPanelPanGesture);
+            //        }
+            //    });
 
             this.WhenAnyValue(x => x.HeaderView)
                 .Skip(1)
@@ -367,15 +383,15 @@ namespace DK.SlidingPanel.Interface
                         _headerStackLayout.BackgroundColor = headerView.BackgroundColor;
                         _headerStackLayout.HeightRequest = headerView.HeightRequest;
 
+                        _headerStackLayout.Children.Add(headerView);
+
                         TapGestureRecognizer headerTapGesture = new TapGestureRecognizer();
                         headerTapGesture.Tapped += TapGesture_Tapped;
-                        _headerStackLayout.GestureRecognizers.Add(headerTapGesture);
-
-                        _headerStackLayout.Children.Add(headerView);
+                        headerView.GestureRecognizers.Add(headerTapGesture);
 
                         PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
                         headerPanGesture.PanUpdated += PanGesture_PanUpdated;
-                        _headerStackLayout.GestureRecognizers.Add(headerPanGesture);
+                        headerView.GestureRecognizers.Add(headerPanGesture);
                     }
                 });
             
@@ -456,6 +472,7 @@ namespace DK.SlidingPanel.Interface
                     }
                 });
         }
+
         public SlidingUpPanel(SlidingPanelConfig config) : this()
         {
             ApplyConfig(config);

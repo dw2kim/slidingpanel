@@ -34,11 +34,10 @@ namespace Samples.UI
             base.OnBindingContextChanged();
 
             this.ViewModel = BindingContext as TestPageAllXamlViewModel;
-
-
+            
             this.spTest.SetBinding(SlidingUpPanel.PanelRatioProperty, new Binding { Path = "PanelRatio" });
             this.spTest.SetBinding(SlidingUpPanel.HideTitleViewProperty, new Binding { Path = "HideTitleView" });
-
+            
             this.spTest.WhenPanelRatioChanged += SpTest_WhenPanelRatioChanged;
             this.spTest.WhenSlidingPanelStateChanged += SpTest_WhenSlidingPanelStateChanged;
             //SetupSlidingPanel();
@@ -101,11 +100,6 @@ namespace Samples.UI
             }
         }
 
-        private void SpTest_WhenPanelRatioChanged(object sender, EventArgs e)
-        {
-            spTest.ShowCollapsedPanel();
-        }
-
         protected override bool OnBackButtonPressed()
         {
             return base.OnBackButtonPressed();
@@ -125,6 +119,11 @@ namespace Samples.UI
                     //NavigationPage.SetHasNavigationBar(this, true);
                     break;
             }
+        }
+
+        private void SpTest_WhenPanelRatioChanged(object sender, EventArgs e)
+        {
+            spTest.ShowCollapsedPanel();
         }
 
         #region Gesture Implemenetations
