@@ -9,20 +9,18 @@
 //------------------------------------------------------------------------------
 
 namespace Samples.UI {
-    using System;
-    using Xamarin.Forms;
-    using Xamarin.Forms.Xaml;
     
     
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\Repository\\DK.SlidingPanel\\src\\Samples.UI\\TestPage.xaml")]
     public partial class TestPage : global::Xamarin.Forms.ContentPage {
         
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private global::DK.SlidingPanel.Interface.SlidingUpPanel spTest;
         
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]
         private void InitializeComponent() {
-            this.LoadFromXaml(typeof(TestPage));
-            spTest = this.FindByName<global::DK.SlidingPanel.Interface.SlidingUpPanel>("spTest");
+            global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(TestPage));
+            spTest = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::DK.SlidingPanel.Interface.SlidingUpPanel>(this, "spTest");
         }
     }
 }

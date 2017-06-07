@@ -49,6 +49,8 @@ C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Xamarin.Forms.Platform.dl
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Xamarin.Forms.Xaml.dll
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\DK.SlidingPanel.Interface.pdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.pdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\ReactiveUI.pdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\ReactiveUI.xml
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\ReactiveUI.Fody.Helpers.pdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\System.Reactive.Core.xml
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\System.Reactive.Interfaces.xml
@@ -67,5 +69,7 @@ C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.TestPageAllXam
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.MenuPage.xaml.g.cs
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.pdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\obj\Debug\Samples.UI.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples.UI\bin\Debug\Samples.UI.dll.mdb

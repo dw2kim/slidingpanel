@@ -41,6 +41,8 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Xamarin.Forms.Core.d
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Xamarin.Forms.Platform.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Xamarin.Forms.Xaml.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\DK.SlidingPanel.Interface.pdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\ReactiveUI.pdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\ReactiveUI.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\ReactiveUI.Fody.Helpers.pdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\System.Reactive.Core.xml
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\System.Reactive.Interfaces.xml
@@ -54,6 +56,10 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Xamarin.Forms.Xaml.x
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.csprojResolveAssemblyReference.cache
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.pdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
+C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\bin\Debug\Samples.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples\obj\Debug\Samples.dll.mdb
