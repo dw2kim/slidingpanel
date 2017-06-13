@@ -106,6 +106,8 @@ namespace DK.SlidingPanel.Interface
         private Color _currentBodyBackground { get; set; } = Color.Transparent;
 
         private int _slideAnimationSpeed = DEFAULT_SLIDE_ANIMATION_SPEED;
+
+        private double _panelRatio = DEFAULT_PANEL_RATIO;
         #endregion
 
         #region Public Properties
@@ -431,22 +433,13 @@ namespace DK.SlidingPanel.Interface
                 .Skip(1)
                 .Subscribe(panelRatio =>
                 {
+                    _panelRatio = panelRatio;
+
                     if (panelRatio >= MAX_PANEL_RATIO)
                     {
-                        double picturePatio = 0;
-                        if (_headerStackLayout != null)
-                        {
-                            //var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
-                            var totalHeight = Application.Current.MainPage.Height;
-                            picturePatio = _headerStackLayout.Height / totalHeight;
-                        }
-
-                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, picturePatio));
-                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, MAX_PANEL_RATIO - picturePatio));
-
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            _slidingPanelAbsoluteLayout.TranslationY = _slidingPanelAbsoluteLayout.Height;
+                            //_slidingPanelAbsoluteLayout.TranslationY = Application.Current.MainPage.Height;
 
                             _titleStackLayout.BackgroundColor = _currentTitleBackground;
                             _bodyStackLayout.BackgroundColor = _currentBodyBackground;
@@ -454,15 +447,12 @@ namespace DK.SlidingPanel.Interface
                             WhenPanelRatioChanged?.Invoke(null, null);
                         });
                     }
-                    
-                    if(panelRatio > MIN_PANEL_RATIO && panelRatio < MAX_PANEL_RATIO)
-                    {
-                        AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (MAX_PANEL_RATIO - panelRatio)));
-                        AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
 
+                    if (panelRatio > MIN_PANEL_RATIO && panelRatio < MAX_PANEL_RATIO)
+                    {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            _slidingPanelAbsoluteLayout.TranslationY = _slidingPanelAbsoluteLayout.Height;
+                            //_slidingPanelAbsoluteLayout.TranslationY = _slidingPanelAbsoluteLayout.Height;
 
                             _titleStackLayout.BackgroundColor = _currentTitleBackground;
                             _bodyStackLayout.BackgroundColor = _currentBodyBackground;
@@ -737,6 +727,30 @@ namespace DK.SlidingPanel.Interface
                 _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
             }
         }
+
+        private void ApplyPanelRatio(double panelRatio)
+        {
+            if (panelRatio >= MAX_PANEL_RATIO)
+            {
+                double picturePatio = 0;
+                if (_headerStackLayout != null)
+                {
+                    //var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
+                    var totalHeight = Application.Current.MainPage.Height;
+                    picturePatio = _headerStackLayout.Height / totalHeight;
+                }
+
+                AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, picturePatio));
+                AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, MAX_PANEL_RATIO - picturePatio));
+            }
+
+            if (panelRatio > MIN_PANEL_RATIO && panelRatio < MAX_PANEL_RATIO)
+            {
+                AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (MAX_PANEL_RATIO - panelRatio)));
+                AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
+                
+            }
+        }
         #endregion
 
         #region Gesture Implementations
@@ -955,6 +969,8 @@ namespace DK.SlidingPanel.Interface
             if (_isExpandable == true)
             {
                 WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Expanded });
+
+                ApplyPanelRatio(_panelRatio);
 
                 ShowNavigationBar(false);
                 _showingNavBar = true;
