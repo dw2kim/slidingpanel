@@ -30,6 +30,8 @@ namespace DK.SlidingPanel.Interface
         private const double PICTURE_PANEL_Y_FACTOR_WITHOUT_PICTURE = 1.1;
 
         private const int DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS = 500;
+
+        private const double ANDROID_TOUCH_MOVEMENT_TOLERANCE = 8;
         #endregion
 
         #region Private Fields
@@ -565,13 +567,30 @@ namespace DK.SlidingPanel.Interface
 
         private void CollapseOrExpand()
         {
-            if (_lastYMovement > 0)
+            switch (_currentSlidePanelState)
             {
-                ShowCollapsedPanel();
-            }
-            else
-            {
-                ShowExpandedPanel();
+                case SlidingPanelState.Collapsed:
+                    if (_lastYMovement <= ANDROID_TOUCH_MOVEMENT_TOLERANCE)
+                    {
+                        ShowExpandedPanel();
+                    }
+                    break;
+                case SlidingPanelState.Expanded:
+                    if (_lastYMovement >= (ANDROID_TOUCH_MOVEMENT_TOLERANCE * -1))
+                    {
+                        ShowCollapsedPanel();
+                    }
+                    break;
+                default:
+                    if (_lastYMovement > 0)
+                    {
+                        ShowCollapsedPanel();
+                    }
+                    else
+                    {
+                        ShowExpandedPanel();
+                    }
+                    break;
             }
         }
         private void ShowNavigationBar(bool showNavBarNow)
