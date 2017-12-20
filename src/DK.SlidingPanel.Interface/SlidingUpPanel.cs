@@ -39,7 +39,7 @@ namespace DK.SlidingPanel.Interface
         private bool _isPanRunning = false;
         private SlidingPanelState _currentSlidePanelState = SlidingPanelState.Hidden;
         private double _lastYMovement = 0;
-        private bool _showingNavBar = false;
+        //private bool _showingNavBar = false;
 
         private bool _isFirst = true;
 
@@ -914,24 +914,28 @@ namespace DK.SlidingPanel.Interface
         public void HidePanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Hidden });
-
+            
+            // set HidePanelHeight
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
-            if (_hideNavBarFeature == true && _showingNavBar == true)
-            {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
-                _showingNavBar = false;
-            }
+            double drawerCollapsedPositionY = drawerCollapsedPosition.Y;
+            drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+
+            // No need the below code after XF 2.4.0.xxx
+            //if (_hideNavBarFeature == true && _showingNavBar == true)
+            //{
+                //drawerCollapsedPositionY -= NavigationBarHeight;
+                //_showingNavBar = false;
+            //}
 
             Device.BeginInvokeOnMainThread(() =>
             {
                 length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
-                _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+                _slidingPanelAbsoluteLayout.TranslateTo(0, drawerCollapsedPositionY, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Hidden;
 
             Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-            pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+            pictureBounds.Y = drawerCollapsedPositionY + _pictureAbsoluteLayout.Height;
             Device.BeginInvokeOnMainThread(() =>
             {
                 length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
@@ -948,31 +952,36 @@ namespace DK.SlidingPanel.Interface
 
             if (_hideTitleView)
                 _titleRelativeLayout.HeightRequest = _currentTitleHeight;
-            
-            Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
-            drawerCollapsedPosition.Y = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
-            drawerCollapsedPosition.Y -= _currentTitleHeight;
-            if (_hideNavBarFeature == true && _showingNavBar == true)
-            {
-                drawerCollapsedPosition.Y -= NavigationBarHeight;
-                _showingNavBar = false;
 
-                if (PanelRatio >= MAX_PANEL_RATIO)
-                {
-                    drawerCollapsedPosition.Y -= StatusBarHeight;
-                }
-            }
+            // set CollapsedPanelHeight
+            Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
+            double drawerCollapsedPositionY = drawerCollapsedPosition.Y;
+            drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+            drawerCollapsedPositionY -= _currentTitleHeight;
+
+            // No need the below code after XF 2.4.0.xxx
+            //if (_hideNavBarFeature == true && _showingNavBar == true)
+            //{
+            //drawerCollapsedPositionY -= NavigationBarHeight;
+            //_showingNavBar = false;
+
+            //    if (PanelRatio >= MAX_PANEL_RATIO)
+            //    {
+            //        drawerCollapsedPositionY -= StatusBarHeight;
+            //    }
+            //}
+
             Device.BeginInvokeOnMainThread(() =>
             {
                 length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
-                _slidingPanelAbsoluteLayout.TranslateTo(drawerCollapsedPosition.X, drawerCollapsedPosition.Y, length, Easing.CubicOut);
+                _slidingPanelAbsoluteLayout.TranslateTo(0, drawerCollapsedPositionY, length, Easing.CubicOut);
             });
             _currentSlidePanelState = SlidingPanelState.Collapsed;
 
             if (_pictureImage != null)
             {
                 Rectangle pictureBounds = _pictureAbsoluteLayout.Bounds;
-                pictureBounds.Y = drawerCollapsedPosition.Y + _pictureAbsoluteLayout.Height;
+                pictureBounds.Y = drawerCollapsedPositionY + _pictureAbsoluteLayout.Height;
                 pictureBounds.Y += _currentTitleHeight;
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -992,7 +1001,7 @@ namespace DK.SlidingPanel.Interface
                 ApplyPanelRatio(_panelRatio);
 
                 ShowNavigationBar(false);
-                _showingNavBar = true;
+                //_showingNavBar = true;
 
                 if (_hideTitleView)
                     _titleRelativeLayout.HeightRequest = 0;

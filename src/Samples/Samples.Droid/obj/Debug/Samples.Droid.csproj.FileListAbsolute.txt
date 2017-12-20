@@ -160,4 +160,3 @@ C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\Xamarin.Forms.Platform.Android.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\android\assets\Xamarin.Forms.Xaml.dll.mdb
 C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\obj\Debug\Samples.Droid.dll.mdb
-C:\Repository\DK.SlidingPanel\src\Samples\Samples.Droid\bin\Debug\Samples.Droid.dll.mdb
