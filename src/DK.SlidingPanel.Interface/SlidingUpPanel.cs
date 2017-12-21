@@ -39,7 +39,7 @@ namespace DK.SlidingPanel.Interface
         private bool _isPanRunning = false;
         private SlidingPanelState _currentSlidePanelState = SlidingPanelState.Hidden;
         private double _lastYMovement = 0;
-        //private bool _showingNavBar = false;
+        private bool _showingNavBar = false;
 
         private bool _isFirst = true;
 
@@ -920,12 +920,12 @@ namespace DK.SlidingPanel.Interface
             double drawerCollapsedPositionY = drawerCollapsedPosition.Y;
             drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
 
-            // No need the below code after XF 2.4.0.xxx
-            //if (_hideNavBarFeature == true && _showingNavBar == true)
-            //{
-                //drawerCollapsedPositionY -= NavigationBarHeight;
-                //_showingNavBar = false;
-            //}
+            // iOS only: No need the below code after XF 2.4.0.xxx
+            if (_hideNavBarFeature == true && _showingNavBar == true && Device.RuntimePlatform != Device.iOS)
+            {
+                drawerCollapsedPositionY -= NavigationBarHeight;
+                _showingNavBar = false;
+            }
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -959,17 +959,17 @@ namespace DK.SlidingPanel.Interface
             drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
             drawerCollapsedPositionY -= _currentTitleHeight;
 
-            // No need the below code after XF 2.4.0.xxx
-            //if (_hideNavBarFeature == true && _showingNavBar == true)
-            //{
-            //drawerCollapsedPositionY -= NavigationBarHeight;
-            //_showingNavBar = false;
+            // iOS only: No need the below code after XF 2.4.0.xxx
+            if (_hideNavBarFeature == true && _showingNavBar == true && Device.RuntimePlatform != Device.iOS)
+            {
+                drawerCollapsedPositionY -= NavigationBarHeight;
+                _showingNavBar = false;
 
-            //    if (PanelRatio >= MAX_PANEL_RATIO)
-            //    {
-            //        drawerCollapsedPositionY -= StatusBarHeight;
-            //    }
-            //}
+                if (PanelRatio >= MAX_PANEL_RATIO)
+                {
+                    drawerCollapsedPositionY -= StatusBarHeight;
+                }
+            }
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -1001,7 +1001,12 @@ namespace DK.SlidingPanel.Interface
                 ApplyPanelRatio(_panelRatio);
 
                 ShowNavigationBar(false);
-                //_showingNavBar = true;
+
+                // iOS only: No need the below code after XF 2.4.0.xxx
+                if (Device.RuntimePlatform != Device.iOS)
+                {
+                    _showingNavBar = true;
+                }
 
                 if (_hideTitleView)
                     _titleRelativeLayout.HeightRequest = 0;

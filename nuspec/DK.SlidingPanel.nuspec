@@ -31,6 +31,8 @@
 		
         <releaseNotes>
           * New Version
+          2.0.2
+          [fix] Android - The screen is retracted too much when using swipe or back-button
           2.0.1
           [feature] Only Supports from Xamarin.Forms 2.5.0.77107 (the below version will have major bug on the height of the collapsed state)
 
