@@ -240,3 +240,22 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+*.cache
+*.dll
+*.exe
+*.pdb
+/build/
+*.suo
+*.user
+_ReSharper.*/
+*.sdf
+*.opensdf
+*.tlog
+*.log
+TestResult.xml
+*.VisualState.xml
+Version.cs
+Version.h
+Version.cpp
+*DS_Store
