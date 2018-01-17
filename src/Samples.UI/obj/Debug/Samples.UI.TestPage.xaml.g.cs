@@ -11,7 +11,7 @@
 namespace Samples.UI {
     
     
-    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("C:\\Repository\\slidingpanel\\src\\Samples.UI\\TestPage.xaml")]
+    [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("/Users/daewonkim/Repository/slidingpanel/src/Samples.UI/TestPage.xaml")]
     public partial class TestPage : global::Xamarin.Forms.ContentPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "0.0.0.0")]

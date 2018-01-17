@@ -32,10 +32,14 @@ namespace DK.SlidingPanel.Interface
         private const int DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS = 500;
 
         private const double ANDROID_TOUCH_MOVEMENT_TOLERANCE = 8;
+
+        // todo: https://forums.xamarin.com/discussion/61599/gesture-not-updating-its-status-as-completed
+        // In Pan gesture, the "completed" status only gets called when you "flick", it does not fire when you pan/drag slowly or when you have stopped swiping/panning and then release
+        //private int _numOfPanGestureTriggered { get; set; } = 0;
+        //private const int MAX_PAN_GESTURE_DETECTION = 50;
         #endregion
 
         #region Private Fields
-        private bool _isCollapsing = false;
         private bool _isPanRunning = false;
         private SlidingPanelState _currentSlidePanelState = SlidingPanelState.Hidden;
         private double _lastYMovement = 0;
@@ -69,13 +73,15 @@ namespace DK.SlidingPanel.Interface
             get
             {
                 double height = 0;
-                Device.OnPlatform(iOS: () =>
+
+                if(Device.RuntimePlatform == Device.iOS)
                 {
                     height = DEFAULT_NAV_BAR_HEIGHT_IOS;
-                }, Android: () =>
+                }
+                if(Device.RuntimePlatform == Device.Android)
                 {
                     height = DEFAULT_NAV_BAR_HEIGHT_ANDROID;
-                });
+                }
 
                 return (height);
             }
@@ -85,13 +91,15 @@ namespace DK.SlidingPanel.Interface
             get
             {
                 double height = 0;
-                Device.OnPlatform(iOS: () =>
+
+                if (Device.RuntimePlatform == Device.iOS)
                 {
                     height = DEFAULT_IOS_STATUS_BAR_HEIGHT;
-                }, Android: () =>
+                }
+                if (Device.RuntimePlatform == Device.Android)
                 {
                     height = DEFAULT_ANDROID_STATUS_BAR_HEIGHT;
-                });
+                }
 
                 return (height);
             }
@@ -110,6 +118,8 @@ namespace DK.SlidingPanel.Interface
         private int _slideAnimationSpeed = DEFAULT_SLIDE_ANIMATION_SPEED;
 
         private double _panelRatio = DEFAULT_PANEL_RATIO;
+
+        PanGestureRecognizer _panelPanGesture { get; set; } = new PanGestureRecognizer();
         #endregion
 
         #region Public Properties
@@ -245,6 +255,11 @@ namespace DK.SlidingPanel.Interface
         {
             InitViews();
 
+            if (_panelPanGesture != null)
+            {
+                _panelPanGesture.PanUpdated += PanGesture_PanUpdated;
+            }
+
             this._slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
                 .Subscribe(actualHeight =>
                 {
@@ -334,9 +349,10 @@ namespace DK.SlidingPanel.Interface
                         titlePanelTapGesture.Tapped += TapGesture_Tapped;
                         titleView.GestureRecognizers.Add(titlePanelTapGesture);
 
-                        PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
-                        titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                        titleView.GestureRecognizers.Add(titlePanelPanGesture);
+                        if (_panelPanGesture != null)
+                        {
+                            titleView.GestureRecognizers.Add(_panelPanGesture);
+                        }
                     }
                 });
 
@@ -353,9 +369,10 @@ namespace DK.SlidingPanel.Interface
                         var scrollView = BodyView as ScrollView;
                         if (scrollView == null)
                         {
-                            PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
-                            bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                            bodyView.GestureRecognizers.Add(bodyPanelPanGesture);
+                            if (_panelPanGesture != null)
+                            {
+                                bodyView.GestureRecognizers.Add(_panelPanGesture);
+                            }
                         }
 
                         _bodyStackLayout.Children.Add(bodyView);
@@ -393,9 +410,10 @@ namespace DK.SlidingPanel.Interface
                         headerTapGesture.Tapped += TapGesture_Tapped;
                         headerView.GestureRecognizers.Add(headerTapGesture);
 
-                        PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
-                        headerPanGesture.PanUpdated += PanGesture_PanUpdated;
-                        headerView.GestureRecognizers.Add(headerPanGesture);
+                        if (_panelPanGesture != null)
+                        {
+                            headerView.GestureRecognizers.Add(_panelPanGesture);
+                        }
                     }
                 });
             
@@ -424,9 +442,10 @@ namespace DK.SlidingPanel.Interface
                         Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
                         _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
 
-                        PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                        pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
-                        _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+                        if (_panelPanGesture != null)
+                        {
+                            _pictureImage.GestureRecognizers.Add(_panelPanGesture);
+                        }
                     }
                 });
             
@@ -639,11 +658,9 @@ namespace DK.SlidingPanel.Interface
                 heightConstraint: Constraint.Constant(config.TitleHeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
             _titleRelativeLayout.HeightRequest = config.TitleHeightRequest + (this._primaryFloatingActionButtonHeight / 2);
 
-            if (config.IsPanSupport == true)
+            if (config.IsPanSupport == true && _panelPanGesture != null)
             {
-                PanGestureRecognizer titlePanelPanGesture = new PanGestureRecognizer();
-                titlePanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                _titleStackLayout.GestureRecognizers.Add(titlePanelPanGesture);
+                _titleStackLayout.GestureRecognizers.Add(_panelPanGesture);
             }
 
             // PrimaryFloatingActionButton section
@@ -681,11 +698,9 @@ namespace DK.SlidingPanel.Interface
                 _titleStackLayout.Children.Add(config.TitleView);
             }
             
-            if (config.IsPanSupport == true)
+            if (config.IsPanSupport == true && _panelPanGesture != null)
             {
-                PanGestureRecognizer bodyPanelPanGesture = new PanGestureRecognizer();
-                bodyPanelPanGesture.PanUpdated += PanGesture_PanUpdated;
-                _bodyStackLayout.GestureRecognizers.Add(bodyPanelPanGesture);
+                _bodyStackLayout.GestureRecognizers.Add(_panelPanGesture);
             }
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
 
@@ -707,11 +722,9 @@ namespace DK.SlidingPanel.Interface
                 headerTapGesture.Tapped += TapGesture_Tapped;
                 _headerStackLayout.GestureRecognizers.Add(headerTapGesture);
 
-                if (config.IsPanSupport == true)
+                if (config.IsPanSupport == true && _panelPanGesture != null)
                 {
-                    PanGestureRecognizer headerPanGesture = new PanGestureRecognizer();
-                    headerPanGesture.PanUpdated += PanGesture_PanUpdated;
-                    _headerStackLayout.GestureRecognizers.Add(headerPanGesture);
+                    _headerStackLayout.GestureRecognizers.Add(_panelPanGesture);
                 }
 
 
@@ -734,11 +747,9 @@ namespace DK.SlidingPanel.Interface
                 _pictureMainStackLayout.Children.Add(_headerStackLayout);
 
                 _pictureImage = config.PictureImage;
-                if (config.IsPanSupport == true)
+                if (config.IsPanSupport == true && _panelPanGesture != null)
                 {
-                    PanGestureRecognizer pictureImagePanGesture = new PanGestureRecognizer();
-                    pictureImagePanGesture.PanUpdated += PanGesture_PanUpdated;
-                    _pictureImage.GestureRecognizers.Add(pictureImagePanGesture);
+                    _pictureImage.GestureRecognizers.Add(_panelPanGesture);
                 }
                 _pictureMainStackLayout.Children.Add(_pictureImage);
 
@@ -840,6 +851,10 @@ namespace DK.SlidingPanel.Interface
         {
             if (_isPanSupport == true)
             {
+                if(e.StatusType == GestureStatus.Started)
+                {
+                }
+
                 if (e.StatusType == GestureStatus.Running)
                 {
                     double totalY = e.TotalY;
@@ -848,8 +863,6 @@ namespace DK.SlidingPanel.Interface
 
                     if ((_currentSlidePanelState == SlidingPanelState.Expanded && totalY > 0) || (_currentSlidePanelState == SlidingPanelState.Collapsed && totalY < 0))
                     {
-                        _isCollapsing = (totalY > 0);
-
                         double newDrawerPosition = CalculateNewDrawerPositionY(totalY);
                         Device.BeginInvokeOnMainThread(() =>
                         {
@@ -865,20 +878,20 @@ namespace DK.SlidingPanel.Interface
                                 _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
                             });
                         }
-
-                        //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
-                        //ShowNavigationBar(showNavBarNow);
+                            //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
+                            //ShowNavigationBar(showNavBarNow);
                     }
                 }
                 else if (e.StatusType == GestureStatus.Completed)
                 {
                     _lastPanCompleted = DateTime.Now;
 
-                    if (Device.OS == TargetPlatform.Android)
+                    if (Device.RuntimePlatform == Device.Android)
                     {
                         PanGesture_PanUpdated_Android(sender, e);
                     }
-                    else if (Device.OS == TargetPlatform.iOS)
+
+                    if (Device.RuntimePlatform == Device.iOS)
                     {
                         PanGesture_PanUpdated_iOS(sender, e);
                     }
@@ -887,18 +900,13 @@ namespace DK.SlidingPanel.Interface
         }
         private void PanGesture_PanUpdated_Android(object sender, PanUpdatedEventArgs e)
         {
-            if (_isCollapsing == true)
-            {
-                _isPanRunning = false;
-                CollapseOrExpand();
-                _isCollapsing = false;
-            }
+            _isPanRunning = false;
+            CollapseOrExpand();
         }
         private void PanGesture_PanUpdated_iOS(object sender, PanUpdatedEventArgs e)
         {
             _isPanRunning = false;
             CollapseOrExpand();
-            _isCollapsing = false;
         }
         #endregion
 
