@@ -1,63 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Paths>
-  <Jars>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/0/jl/formsviewgroup.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/11/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/12/jl/support-annotations.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/13/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/14/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/15/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/16/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/17/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/18/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/19/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/20/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/21/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/22/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/23/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/24/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/25/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/26/jl/bin/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/33/jl/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/34/jl/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/35/jl/classes.jar</Jar>
-    <Jar>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/36/jl/classes.jar</Jar>
-  </Jars>
+  <Jars></Jars>
   <ResolvedResourceDirectories>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/1/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/4/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/16/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/19/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/20/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/21/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/22/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/23/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/25/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/28/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/33/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/34/jl/res</ResolvedResourceDirectory>
-    <ResolvedResourceDirectory>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/35/jl/res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\ReactiveUI\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Splat\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.Design\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.Transition\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v4\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.AppCompat\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.CardView\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.MediaRouter\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.RecyclerView\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Forms.GoogleMaps.Android\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Base\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Basement\library_project_imports\res</ResolvedResourceDirectory>
+    <ResolvedResourceDirectory>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Maps\library_project_imports\res</ResolvedResourceDirectory>
   </ResolvedResourceDirectories>
   <ResolvedAssetDirectories>
-    <ResolvedAssetDirectory>obj/Debug/lp/1/jl/assets</ResolvedAssetDirectory>
-    <ResolvedAssetDirectory>obj/Debug/lp/4/jl/assets</ResolvedAssetDirectory>
-    <ResolvedAssetDirectory>obj/Debug/lp/20/jl/assets</ResolvedAssetDirectory>
-    <ResolvedAssetDirectory>obj/Debug/lp/28/jl/assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\ReactiveUI\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Splat\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Xamarin.Android.Support.v4\library_project_imports\assets</ResolvedAssetDirectory>
+    <ResolvedAssetDirectory>obj\Debug\__library_projects__\Xamarin.Forms.GoogleMaps.Android\library_project_imports\assets</ResolvedAssetDirectory>
   </ResolvedAssetDirectories>
   <ResolvedEnvironmentFiles />
   <ResolvedResourceDirectoryStamps>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/1.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/4.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/16.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/19.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/20.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/21.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/22.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/23.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/25.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/28.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/33.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/34.stamp</ResolvedResourceDirectoryStamp>
-    <ResolvedResourceDirectoryStamp>/Users/daewonkim/Repository/slidingpanel/src/Samples/Samples.Droid/obj/Debug/lp/35.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\ReactiveUI.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Splat.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.Design.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.Transition.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v4.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.AppCompat.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.CardView.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.MediaRouter.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Android.Support.v7.RecyclerView.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.Forms.GoogleMaps.Android.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Base.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Basement.stamp</ResolvedResourceDirectoryStamp>
+    <ResolvedResourceDirectoryStamp>C:\Repository\slidingpanel\src\Samples\Samples.Droid\obj\Debug\__library_projects__\Xamarin.GooglePlayServices.Maps.stamp</ResolvedResourceDirectoryStamp>
   </ResolvedResourceDirectoryStamps>
 </Paths>

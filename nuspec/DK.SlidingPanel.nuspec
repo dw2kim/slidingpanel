@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>DK.SlidingPanel</id>
-        <version>2.0.2</version>
+        <version>2.0.3</version>
         <title>DK Sliding Panel Plugin for Xamarin.Forms</title>
         <summary>Generates a Panel sliding up from bottom of the screen for Xamarin.Forms pages</summary>
         <description>Generates a Panel sliding up from bottom of the screen for Xamarin.Forms pages
@@ -31,6 +31,9 @@
 		
         <releaseNotes>
           * New Version
+          2.0.3
+          [fix] Android - Can't fully expand window when manually swiping for expand; Refactored code - Reuse PanGesture over the controls
+          
           2.0.2
           [fix] Android - The screen is retracted too much when using swipe or back-button
           2.0.1
