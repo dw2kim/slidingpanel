@@ -614,25 +614,51 @@ namespace DK.SlidingPanel.Interface
         }
         private void ShowNavigationBar(bool showNavBarNow)
         {
-            if (_hideNavBarFeature == true && this.Parent != null)
+            var currentPage = GetCurrentPage();
+
+            if (_hideNavBarFeature == true && currentPage != null)
             {
-                if (showNavBarNow == false && NavigationPage.GetHasNavigationBar(this.Parent) == true)
+                if (showNavBarNow == false && NavigationPage.GetHasNavigationBar(currentPage) == true)
                 {
-                    Device.OnPlatform(iOS: () =>
+                    if (Device.RuntimePlatform == Device.iOS)
                     {
                         this.Padding = new Thickness(0, DEFAULT_IOS_STATUS_BAR_HEIGHT, 0, 0);
-                    });
-                    NavigationPage.SetHasNavigationBar(this.Parent, false);
+                    }
+
+                    NavigationPage.SetHasNavigationBar(currentPage, false);
                 }
 
-                if (showNavBarNow == true && NavigationPage.GetHasNavigationBar(this.Parent) == false)
+                if (showNavBarNow == true && NavigationPage.GetHasNavigationBar(currentPage) == false)
                 {
-                    Device.OnPlatform(iOS: () => {
+                    if (Device.RuntimePlatform == Device.iOS)
+                    {
                         this.Padding = new Thickness(0, 0, 0, 0);
-                    });
-                    NavigationPage.SetHasNavigationBar(this.Parent, true);
+                    }
+
+                    NavigationPage.SetHasNavigationBar(currentPage, true);
                 }
             }
+        }
+        private Page GetCurrentPage()
+        {
+            Page currentPage = null;
+
+            var parentElement = this.Parent;
+            while (parentElement != null)
+            {
+                var page = parentElement as Page;
+                if(page != null)
+                {
+                    currentPage = page;
+                    break;
+                }
+                else
+                {
+                    parentElement = parentElement.Parent;
+                }
+            }
+
+            return (currentPage);
         }
 
         private void ApplyConfigToTitleBodyPanel(SlidingPanelConfig config)
