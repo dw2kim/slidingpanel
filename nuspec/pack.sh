@@ -1,0 +1,1 @@
+nuget pack DK.SlidingPanel.nuspec
