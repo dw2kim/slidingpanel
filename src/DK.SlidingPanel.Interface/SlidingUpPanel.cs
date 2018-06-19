@@ -812,11 +812,12 @@ namespace DK.SlidingPanel.Interface
         #region Gesture Implementations
         private void TapGesture_Tapped(object sender, EventArgs e)
         {
-            if (Device.OS == TargetPlatform.Android)
+            if (Device.RuntimePlatform == Device.Android)
             {
                 TapGesture_Tapped_Android(sender, e);
             }
-            else if (Device.OS == TargetPlatform.iOS)
+
+            if (Device.RuntimePlatform == Device.iOS)
             {
                 TapGesture_Tapped_iOS(sender, e);
             }
