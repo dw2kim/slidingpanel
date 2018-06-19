@@ -98,6 +98,9 @@ namespace Samples.UI
                         }
                     });
             }
+
+            primaryFABImage.GestureRecognizers.Add(spTest.TitlePanelTapGesture);
+            primaryFABImage.GestureRecognizers.Add(spTest.PanelPanGesture);
         }
 
         protected override bool OnBackButtonPressed()
@@ -112,10 +115,16 @@ namespace Samples.UI
             {
                 case SlidingPanelState.Expanded:
                     //NavigationPage.SetHasNavigationBar(this, false);
+                    primaryFABImage.IsVisible = false;
                     break;
                 case SlidingPanelState.Collapsed:
+                    primaryFABImage.IsVisible = true;
+                    break;
                 case SlidingPanelState.Hidden:
+                    primaryFABImage.IsVisible = false;
+                    break;
                 default:
+                    primaryFABImage.IsVisible = false;
                     //NavigationPage.SetHasNavigationBar(this, true);
                     break;
             }

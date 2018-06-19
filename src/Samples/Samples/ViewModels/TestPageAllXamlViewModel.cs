@@ -95,6 +95,14 @@ namespace Samples.ViewModels
             }
         }
 
+        public ImageSource StopButtonImage
+        {
+            get
+            {
+                return ImageSource.FromFile(StopButtonImageFileName);
+            }
+        }
+
         public ICommand PlayCommand { get; set; }
 
         public ICommand ShowCommand { get; set; }

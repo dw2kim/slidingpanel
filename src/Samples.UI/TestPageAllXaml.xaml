@@ -15,6 +15,10 @@
 
             <DK:SlidingUpPanel.HideNavBar>True</DK:SlidingUpPanel.HideNavBar>
 
+            <DK:SlidingUpPanel.PrimaryFloatingActionButton>
+                <Image x:Name="primaryFABImage" Source="{Binding StopButtonImage}" HeightRequest="36" WidthRequest="36" />
+            </DK:SlidingUpPanel.PrimaryFloatingActionButton>
+            
             <DK:SlidingUpPanel.HeaderView>
                 <StackLayout Orientation="Horizontal" HeightRequest="48" Padding="0, 12, 0, 12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#303030">
                     <Image HeightRequest="24" WidthRequest="24" Source="{Binding BackButtonImage}" HorizontalOptions="Start" VerticalOptions="FillAndExpand">

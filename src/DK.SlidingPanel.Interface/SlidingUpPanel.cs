@@ -118,11 +118,12 @@ namespace DK.SlidingPanel.Interface
         private int _slideAnimationSpeed = DEFAULT_SLIDE_ANIMATION_SPEED;
 
         private double _panelRatio = DEFAULT_PANEL_RATIO;
-
-        PanGestureRecognizer _panelPanGesture { get; set; } = new PanGestureRecognizer();
         #endregion
 
         #region Public Properties
+        public TapGestureRecognizer TitlePanelTapGesture { get; set; } = new TapGestureRecognizer();
+        public PanGestureRecognizer PanelPanGesture { get; set; } = new PanGestureRecognizer();
+
         public static readonly BindableProperty HideNavBarProperty = BindableProperty.Create(
           propertyName: "HideNavBar",
           returnType: typeof(bool),
@@ -212,6 +213,17 @@ namespace DK.SlidingPanel.Interface
             set { SetValue(TitleViewProperty, value); }
         }
 
+        public static readonly BindableProperty PrimaryFloatingActionButtonProperty = BindableProperty.Create(
+            propertyName: "PrimaryFloatingActionButton",
+          returnType: typeof(View),
+          declaringType: typeof(SlidingUpPanel),
+          defaultValue: new StackLayout());
+        public View PrimaryFloatingActionButton
+        {
+            get { return (View)GetValue(PrimaryFloatingActionButtonProperty); }
+            set { SetValue(PrimaryFloatingActionButtonProperty, value); }
+        }
+
         public static readonly BindableProperty BodyViewProperty = BindableProperty.Create(
           propertyName: "BodyView",
           returnType: typeof(View),
@@ -255,9 +267,9 @@ namespace DK.SlidingPanel.Interface
         {
             InitViews();
 
-            if (_panelPanGesture != null)
+            if (PanelPanGesture != null)
             {
-                _panelPanGesture.PanUpdated += PanGesture_PanUpdated;
+                PanelPanGesture.PanUpdated += PanGesture_PanUpdated;
             }
 
             this._slidingPanelAbsoluteLayout.WhenAnyValue(x => x.Height)
@@ -317,6 +329,19 @@ namespace DK.SlidingPanel.Interface
                     }
                 });
 
+            this.WhenAnyValue(x => x.PrimaryFloatingActionButton)
+                .Skip(1)
+                .Subscribe(x =>
+            {
+                    _primaryFloatingActionButtonHeight = (x.HeightRequest > 0) ? x.HeightRequest : DEFAULT_FAB_HEIGHT;
+
+                    // PrimaryFloatingActionButton section
+                    if (x != null)
+                    {
+                        _primaryFloatingActionButton = x;
+                    }
+                });
+
             this.WhenAnyValue(x => x.TitleView)
                 .Skip(1)
                 .Subscribe(titleView =>
@@ -344,18 +369,27 @@ namespace DK.SlidingPanel.Interface
                         _titleRelativeLayout.HeightRequest = _currentTitleHeight;
 
                         _titleStackLayout.Children.Add(titleView);
-                        
-                        TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
-                        titlePanelTapGesture.Tapped += TapGesture_Tapped;
-                        titleView.GestureRecognizers.Add(titlePanelTapGesture);
 
-                        if (_panelPanGesture != null)
+                        TitlePanelTapGesture.Tapped += TapGesture_Tapped;
+                        titleView.GestureRecognizers.Add(TitlePanelTapGesture);
+
+                        if (PanelPanGesture != null)
                         {
-                            titleView.GestureRecognizers.Add(_panelPanGesture);
+                            titleView.GestureRecognizers.Add(PanelPanGesture);
+                        }
+
+                        if (_primaryFloatingActionButton != null)
+                        {
+                            _titleRelativeLayout.Children.Add(_primaryFloatingActionButton,
+                                xConstraint: Constraint.RelativeToParent((parent) =>
+                                {
+                                    return (parent.Width - (_primaryFloatingActionButton.WidthRequest * 1.5));
+                                }),
+                                yConstraint: Constraint.Constant(0)
+                            );
                         }
                     }
                 });
-
 
             this.WhenAnyValue(x => x.BodyView)
                 .Skip(1)
@@ -369,9 +403,9 @@ namespace DK.SlidingPanel.Interface
                         var scrollView = BodyView as ScrollView;
                         if (scrollView == null)
                         {
-                            if (_panelPanGesture != null)
+                            if (PanelPanGesture != null)
                             {
-                                bodyView.GestureRecognizers.Add(_panelPanGesture);
+                                bodyView.GestureRecognizers.Add(PanelPanGesture);
                             }
                         }
 
@@ -410,9 +444,9 @@ namespace DK.SlidingPanel.Interface
                         headerTapGesture.Tapped += TapGesture_Tapped;
                         headerView.GestureRecognizers.Add(headerTapGesture);
 
-                        if (_panelPanGesture != null)
+                        if (PanelPanGesture != null)
                         {
-                            headerView.GestureRecognizers.Add(_panelPanGesture);
+                            headerView.GestureRecognizers.Add(PanelPanGesture);
                         }
                     }
                 });
@@ -442,9 +476,9 @@ namespace DK.SlidingPanel.Interface
                         Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
                         _pictureAbsoluteLayout.Children.Add(_pictureMainStackLayout, layoutBound, AbsoluteLayoutFlags.All);
 
-                        if (_panelPanGesture != null)
+                        if (PanelPanGesture != null)
                         {
-                            _pictureImage.GestureRecognizers.Add(_panelPanGesture);
+                            _pictureImage.GestureRecognizers.Add(PanelPanGesture);
                         }
                     }
                 });
@@ -534,9 +568,8 @@ namespace DK.SlidingPanel.Interface
         }
         private void InitGestures()
         {
-            TapGestureRecognizer titlePanelTapGesture = new TapGestureRecognizer();
-            titlePanelTapGesture.Tapped += TapGesture_Tapped;
-            _titleStackLayout.GestureRecognizers.Add(titlePanelTapGesture);
+            TitlePanelTapGesture.Tapped += TapGesture_Tapped;
+            _titleStackLayout.GestureRecognizers.Add(TitlePanelTapGesture);
         }
                 
         private double CalculateNewDrawerPositionY(double totalY)
@@ -684,9 +717,9 @@ namespace DK.SlidingPanel.Interface
                 heightConstraint: Constraint.Constant(config.TitleHeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
             _titleRelativeLayout.HeightRequest = config.TitleHeightRequest + (this._primaryFloatingActionButtonHeight / 2);
 
-            if (config.IsPanSupport == true && _panelPanGesture != null)
+            if (config.IsPanSupport == true && PanelPanGesture != null)
             {
-                _titleStackLayout.GestureRecognizers.Add(_panelPanGesture);
+                _titleStackLayout.GestureRecognizers.Add(PanelPanGesture);
             }
 
             // PrimaryFloatingActionButton section
@@ -724,9 +757,9 @@ namespace DK.SlidingPanel.Interface
                 _titleStackLayout.Children.Add(config.TitleView);
             }
             
-            if (config.IsPanSupport == true && _panelPanGesture != null)
+            if (config.IsPanSupport == true && PanelPanGesture != null)
             {
-                _bodyStackLayout.GestureRecognizers.Add(_panelPanGesture);
+                _bodyStackLayout.GestureRecognizers.Add(PanelPanGesture);
             }
             _bodyStackLayout.BackgroundColor = config.BodyBackgroundColor;
 
@@ -748,9 +781,9 @@ namespace DK.SlidingPanel.Interface
                 headerTapGesture.Tapped += TapGesture_Tapped;
                 _headerStackLayout.GestureRecognizers.Add(headerTapGesture);
 
-                if (config.IsPanSupport == true && _panelPanGesture != null)
+                if (config.IsPanSupport == true && PanelPanGesture != null)
                 {
-                    _headerStackLayout.GestureRecognizers.Add(_panelPanGesture);
+                    _headerStackLayout.GestureRecognizers.Add(PanelPanGesture);
                 }
 
 
@@ -773,9 +806,9 @@ namespace DK.SlidingPanel.Interface
                 _pictureMainStackLayout.Children.Add(_headerStackLayout);
 
                 _pictureImage = config.PictureImage;
-                if (config.IsPanSupport == true && _panelPanGesture != null)
+                if (config.IsPanSupport == true && PanelPanGesture != null)
                 {
-                    _pictureImage.GestureRecognizers.Add(_panelPanGesture);
+                    _pictureImage.GestureRecognizers.Add(PanelPanGesture);
                 }
                 _pictureMainStackLayout.Children.Add(_pictureImage);
 
@@ -791,9 +824,8 @@ namespace DK.SlidingPanel.Interface
                 double picturePatio = 0;
                 if (_headerStackLayout != null)
                 {
-                    //var totalHeight = (_pictureAbsoluteLayout?.Bounds.Height ?? 0) + (_slidingPanelAbsoluteLayout?.Bounds.Height ?? 0);
                     var totalHeight = Application.Current.MainPage.Height;
-                    picturePatio = _headerStackLayout.Height / totalHeight;
+                    picturePatio = (_headerStackLayout.Height - (_primaryFloatingActionButtonHeight < 0 ? 0 : _primaryFloatingActionButtonHeight / 2)) / totalHeight;
                 }
 
                 AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, picturePatio));
