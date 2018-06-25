@@ -65,7 +65,7 @@ namespace DK.SlidingPanel.Interface
         private StackLayout _pictureMainStackLayout { get; set; }
         private StackLayout _headerStackLayout { get; set; }
         private View _pictureImage { get; set; }
-        
+
         private bool _hideNavBarFeature { get; set; }
 
         private double NavigationBarHeight
@@ -74,11 +74,11 @@ namespace DK.SlidingPanel.Interface
             {
                 double height = 0;
 
-                if(Device.RuntimePlatform == Device.iOS)
+                if (Device.RuntimePlatform == Device.iOS)
                 {
                     height = DEFAULT_NAV_BAR_HEIGHT_IOS;
                 }
-                if(Device.RuntimePlatform == Device.Android)
+                if (Device.RuntimePlatform == Device.Android)
                 {
                     height = DEFAULT_NAV_BAR_HEIGHT_ANDROID;
                 }
@@ -145,7 +145,7 @@ namespace DK.SlidingPanel.Interface
             get { return (bool)GetValue(HideTitleViewProperty); }
             set { SetValue(HideTitleViewProperty, value); }
         }
-        
+
         public static readonly BindableProperty IsExpandableProperty = BindableProperty.Create(
           propertyName: "IsExpandable",
           returnType: typeof(bool),
@@ -179,7 +179,7 @@ namespace DK.SlidingPanel.Interface
             get { return (double)GetValue(PanelRatioProperty); }
             set { SetValue(PanelRatioProperty, value); }
         }
-        
+
         public static readonly BindableProperty SlideAnimationSpeedProperty = BindableProperty.Create(
           propertyName: "SlideAnimationSpeed",
           returnType: typeof(int),
@@ -303,7 +303,7 @@ namespace DK.SlidingPanel.Interface
                 {
                     this._hideNavBarFeature = hideNavBar;
                 });
-            
+
             this.WhenAnyValue(x => x.IsExpandable)
                 .Skip(1)
                 .Subscribe(isExpandable =>
@@ -333,14 +333,14 @@ namespace DK.SlidingPanel.Interface
                 .Skip(1)
                 .Subscribe(x =>
             {
-                    _primaryFloatingActionButtonHeight = (x.HeightRequest > 0) ? x.HeightRequest : DEFAULT_FAB_HEIGHT;
+                _primaryFloatingActionButtonHeight = (x.HeightRequest > 0) ? x.HeightRequest : DEFAULT_FAB_HEIGHT;
 
-                    // PrimaryFloatingActionButton section
-                    if (x != null)
-                    {
-                        _primaryFloatingActionButton = x;
-                    }
-                });
+                // PrimaryFloatingActionButton section
+                if (x != null)
+                {
+                    _primaryFloatingActionButton = x;
+                }
+            });
 
             this.WhenAnyValue(x => x.TitleView)
                 .Skip(1)
@@ -355,16 +355,17 @@ namespace DK.SlidingPanel.Interface
                         _titleStackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
                         _titleStackLayout.VerticalOptions = LayoutOptions.Fill;
                         _titleRelativeLayout.Children.Add(_titleStackLayout,
-                            xConstraint: Constraint.Constant(0),
-                            yConstraint: Constraint.RelativeToParent((parent) =>
+                            Constraint.Constant(0),
+                            Constraint.RelativeToParent((parent) =>
                             {
                                 return (this._primaryFloatingActionButtonHeight / 2);
                             }),
-                            widthConstraint: Constraint.RelativeToParent((parent) =>
+                            Constraint.RelativeToParent((parent) =>
                             {
                                 return (parent.Width);
                             }),
-                            heightConstraint: Constraint.Constant(titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
+                            Constraint.Constant(titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2)));
+
                         _currentTitleHeight = titleView.HeightRequest + (this._primaryFloatingActionButtonHeight / 2);
                         _titleRelativeLayout.HeightRequest = _currentTitleHeight;
 
@@ -450,7 +451,7 @@ namespace DK.SlidingPanel.Interface
                         }
                     }
                 });
-            
+
 
             this.WhenAnyValue(x => x.PictureView)
                 .Skip(1)
@@ -482,7 +483,7 @@ namespace DK.SlidingPanel.Interface
                         }
                     }
                 });
-            
+
 
             this.WhenAnyValue(x => x.PanelRatio)
                 .Skip(1)
@@ -539,13 +540,13 @@ namespace DK.SlidingPanel.Interface
             AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, 1 - DEFAULT_PANEL_RATIO));
             AbsoluteLayout.SetLayoutFlags(_pictureAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_pictureAbsoluteLayout);
-            
+
             // Drawer
             _slidingPanelAbsoluteLayout = new AbsoluteLayout();
             AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, DEFAULT_PANEL_RATIO));
             AbsoluteLayout.SetLayoutFlags(_slidingPanelAbsoluteLayout, AbsoluteLayoutFlags.All);
             this.Children.Add(_slidingPanelAbsoluteLayout);
-            
+
             StackLayout slidingPanelStackLayout = new StackLayout();
             slidingPanelStackLayout.Spacing = 0;
             Rectangle layoutBound = new Rectangle(1, 1, 1, 1);
@@ -557,7 +558,7 @@ namespace DK.SlidingPanel.Interface
             _titleRelativeLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
             _titleRelativeLayout.VerticalOptions = LayoutOptions.Fill;
             slidingPanelStackLayout.Children.Add(_titleRelativeLayout);
-            
+
             // Body Section
             _bodyStackLayout = new StackLayout();
             _bodyStackLayout.Spacing = 0;
@@ -571,7 +572,7 @@ namespace DK.SlidingPanel.Interface
             TitlePanelTapGesture.Tapped += TapGesture_Tapped;
             _titleStackLayout.GestureRecognizers.Add(TitlePanelTapGesture);
         }
-                
+
         private double CalculateNewDrawerPositionY(double totalY)
         {
             double bodyHeight = _slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height;
@@ -596,7 +597,7 @@ namespace DK.SlidingPanel.Interface
         {
             double minPicturePostion = _pictureAbsoluteLayout.Height + (_slidingPanelAbsoluteLayout.Height - _titleRelativeLayout.Height);
             double maxPicturePosition = 0;
-            
+
             double titleHeight = _titleRelativeLayout.Height;
             double bodyHeight = _slidingPanelAbsoluteLayout.Height - titleHeight;
             double screenHeight = this.Height;
@@ -680,7 +681,7 @@ namespace DK.SlidingPanel.Interface
             while (parentElement != null)
             {
                 var page = parentElement as Page;
-                if(page != null)
+                if (page != null)
                 {
                     currentPage = page;
                     break;
@@ -742,7 +743,7 @@ namespace DK.SlidingPanel.Interface
                 _secondaryFloatingActionButton = config.SecondaryFloatingActionButton;
 
                 double marginTop = (config.PrimaryFloatingActionButton != null) ? config.PrimaryFloatingActionButton.HeightRequest : 0;
-                
+
                 _titleRelativeLayout.Children.Add(_secondaryFloatingActionButton,
                     xConstraint: Constraint.RelativeToParent((parent) =>
                     {
@@ -756,7 +757,7 @@ namespace DK.SlidingPanel.Interface
             {
                 _titleStackLayout.Children.Add(config.TitleView);
             }
-            
+
             if (config.IsPanSupport == true && PanelPanGesture != null)
             {
                 _bodyStackLayout.GestureRecognizers.Add(PanelPanGesture);
@@ -825,7 +826,7 @@ namespace DK.SlidingPanel.Interface
                 if (_headerStackLayout != null)
                 {
                     var totalHeight = Application.Current.MainPage.Height;
-                    picturePatio = (_headerStackLayout.Height - (_primaryFloatingActionButtonHeight < 0 ? 0 : _primaryFloatingActionButtonHeight / 2)) / totalHeight;
+                    picturePatio = (_headerStackLayout.Height) / totalHeight;
                 }
 
                 AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, picturePatio));
@@ -836,7 +837,7 @@ namespace DK.SlidingPanel.Interface
             {
                 AbsoluteLayout.SetLayoutBounds(_pictureAbsoluteLayout, new Rectangle(1, 0, 1, (MAX_PANEL_RATIO - panelRatio)));
                 AbsoluteLayout.SetLayoutBounds(_slidingPanelAbsoluteLayout, new Rectangle(1, 1, 1, panelRatio));
-                
+
             }
         }
         #endregion
@@ -858,7 +859,7 @@ namespace DK.SlidingPanel.Interface
         {
             if (_isPanRunning == false)
             {
-                if (_lastPanCompleted > DateTime.Now.AddMilliseconds(-1 * DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS) 
+                if (_lastPanCompleted > DateTime.Now.AddMilliseconds(-1 * DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS)
                     && _lastPanCompleted < DateTime.Now.AddMilliseconds(DEFAULT_PAN_GESTURE_EXPIRY_IN_MILLISECONDS))
                 {
                     // Do nothing if tap gesture triggered from pan
@@ -910,7 +911,7 @@ namespace DK.SlidingPanel.Interface
         {
             if (_isPanSupport == true)
             {
-                if(e.StatusType == GestureStatus.Started)
+                if (e.StatusType == GestureStatus.Started)
                 {
                 }
 
@@ -937,8 +938,8 @@ namespace DK.SlidingPanel.Interface
                                 _pictureAbsoluteLayout.TranslateTo(0, newPicturePosition, 250, Easing.CubicOut);
                             });
                         }
-                            //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
-                            //ShowNavigationBar(showNavBarNow);
+                        //bool showNavBarNow = (_isCollapsing == true); // show/hide nav bar as swiped (not on completed)
+                        //ShowNavigationBar(showNavBarNow);
                     }
                 }
                 else if (e.StatusType == GestureStatus.Completed)
@@ -981,7 +982,7 @@ namespace DK.SlidingPanel.Interface
         public void HidePanel(uint length = DEFAULT_SLIDE_ANIMATION_SPEED)
         {
             WhenSlidingPanelStateChanging?.Invoke(null, new StateChangingEventArgs() { OldState = _currentSlidePanelState, NewState = SlidingPanelState.Hidden });
-            
+
             // set HidePanelHeight
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             double drawerCollapsedPositionY = drawerCollapsedPosition.Y;
@@ -1023,7 +1024,7 @@ namespace DK.SlidingPanel.Interface
             // set CollapsedPanelHeight
             Rectangle drawerCollapsedPosition = _slidingPanelAbsoluteLayout.Bounds;
             double drawerCollapsedPositionY = drawerCollapsedPosition.Y;
-            drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height + (this._primaryFloatingActionButtonHeight / 2);
+            drawerCollapsedPositionY = _slidingPanelAbsoluteLayout.Height;
             drawerCollapsedPositionY -= _currentTitleHeight;
 
             // iOS only: No need the below code after XF 2.4.0.xxx
@@ -1081,6 +1082,10 @@ namespace DK.SlidingPanel.Interface
                 Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
                 drawerExpandedPosition.Y = 0;
 
+                // handling hide primary fab button
+                _slidingPanelAbsoluteLayout.Padding = new Thickness(0, 0, 0, _primaryFloatingActionButtonHeight/2 * -1);
+                drawerExpandedPosition.Y -= (_primaryFloatingActionButtonHeight / 2);
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     length = (length == DEFAULT_SLIDE_ANIMATION_SPEED) ? (uint)_slideAnimationSpeed : length;
@@ -1123,3 +1128,4 @@ namespace DK.SlidingPanel.Interface
         #endregion
     }
 }
+ 
