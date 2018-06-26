@@ -6,7 +6,8 @@
              x:Class="Samples.UI.TestPageAllXaml">
 
     <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        <DK:SlidingUpPanel x:Name="spTest" BackgroundColor="#303030" SlideAnimationSpeed="250" IsExpandable="True" IsPanSupport="True">
+        <DK:SlidingUpPanel x:Name="spTest" BackgroundColor="#303030" SlideAnimationSpeed="250" IsExpandable="True"
+                           IsPanSupport="True" HideTitleView="{Binding HideTitleView}">
             <DK:SlidingUpPanel.MainView> 
                 <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                     <maps:Map x:Name="GoogleMapInstance"></maps:Map>
@@ -21,13 +22,15 @@
             
             <DK:SlidingUpPanel.HeaderView>
                 <StackLayout Orientation="Horizontal" HeightRequest="56" Padding="0, 20, 0, 12" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#303030">
-                    <Image HeightRequest="24" WidthRequest="24" Source="{Binding BackButtonImage}" HorizontalOptions="Start" VerticalOptions="FillAndExpand">
+                    <Image HeightRequest="48" WidthRequest="48" Source="{Binding BackButtonImage}" HorizontalOptions="Start" VerticalOptions="FillAndExpand">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="BackButtonTapGesture_Tapped"></TapGestureRecognizer>
                         </Image.GestureRecognizers>
                     </Image>
 
                     <Label Text="Title" HorizontalOptions="CenterAndExpand" TextColor="White"></Label>
+                    
+                    <BoxView WidthRequest="48" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center"/>
                 </StackLayout>
             </DK:SlidingUpPanel.HeaderView>
             <DK:SlidingUpPanel.PictureView>

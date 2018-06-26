@@ -1077,7 +1077,7 @@ namespace DK.SlidingPanel.Interface
                 }
 
                 if (_hideTitleView)
-                    _titleRelativeLayout.HeightRequest = 0;
+                    _titleRelativeLayout.HeightRequest = _primaryFloatingActionButtonHeight / 2;
 
                 Rectangle drawerExpandedPosition = _slidingPanelAbsoluteLayout.Bounds;
                 drawerExpandedPosition.Y = 0;

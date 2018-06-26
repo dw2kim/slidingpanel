@@ -36,7 +36,6 @@ namespace Samples.UI
             this.ViewModel = BindingContext as TestPageAllXamlViewModel;
             
             this.spTest.SetBinding(SlidingUpPanel.PanelRatioProperty, new Binding { Path = "PanelRatio" });
-            this.spTest.SetBinding(SlidingUpPanel.HideTitleViewProperty, new Binding { Path = "HideTitleView" });
             
             this.spTest.WhenPanelRatioChanged += SpTest_WhenPanelRatioChanged;
             this.spTest.WhenSlidingPanelStateChanged += SpTest_WhenSlidingPanelStateChanged;
@@ -85,7 +84,7 @@ namespace Samples.UI
                             if (selectedPin.Label == "Test Pin Full Ratio")
                             {
                                 this.ViewModel.PanelRatio = 1;
-                                this.ViewModel.HideTitleView = false;
+                                this.ViewModel.HideTitleView = true;
                             }
 
                             if (selectedPin.Label == "Test Pin Half Ratio")
